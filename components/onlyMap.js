@@ -81,23 +81,25 @@ export default function Map() {
     mapRef.current = map;
   }, []);
 
-  // const putPin = React.useCallback(({ lat, lng }) => {
-  //   mapRef.current.putPin({ lat, lng }); //some isue here.mapRef.current.putPin is not a function. Find a way to zoom in and add a pin
-  //   mapRef.current.setZoom(14);
-  // }, []);
+  const panTo = React.useCallback(({ lat, lng }) => {
+    mapRef.current.panTo({ lat, lng });
+    mapRef.current.setZoom(14);
+  }, []);
 
-  if (loadError) return 'Error';
-  if (!isLoaded) return 'Loading';
+  if (loadError) return 'Error loading Maps';
+  if (!isLoaded) return 'Loading Maps';
 
   const image =
     'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
 
-  return (
+  {
+    /* <Search/> */
+  }
+
+  return isLoaded ? (
     <div>
-      <Search />
-      {/* putPin={putPin} */}
       <GoogleMap
-        id="map"
+        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNUiZqrIsqP9MiPrVoqjil8Oz8Nah2CVo"
         mapContainerStyle={mapContainerStyle}
         center={center}
         zoom={13}
@@ -105,18 +107,18 @@ export default function Map() {
         onClick={onMapClick}
         onLoad={onMapLoad}
       >
+        <Search panTo={panTo} />
         {markers.map((marker) => (
           <Marker
-            key={`${marker.lat}-${marker.lng}`}
             position={{ lat: marker.lat, lng: marker.lng }}
-            onClick={() => {
-              setSelected(marker);
-            }}
             icon={{
               // url:'' to load here a svg instead of the boring google one
               scaledSize: new window.google.maps.Size(30, 30), //for size
               origin: new window.google.maps.Point(0, 0),
               anchor: new window.google.maps.Point(15, 15),
+            }}
+            onClick={() => {
+              setSelected(marker);
             }}
           />
         ))}
@@ -146,20 +148,22 @@ export default function Map() {
             anchor: new google.maps.Point(5, 58),
           }}
         />
+        <></>
       </GoogleMap>
     </div>
+  ) : (
+    <></>
   );
 }
 
-// function Locate() {  //corner right top center position
-//   //{putPin}
+// function Locate({ panTo }) {
 //   return (
 //     <button
 //       className="locate"
 //       onClick={() => {
 //         navigator.geolocation.getCurrentPosition(
 //           (position) => {
-//             putPin({
+//             panTo({
 //               lat: position.coords.latitude,
 //               lng: position.coords.longitude,
 //             });
@@ -174,7 +178,6 @@ export default function Map() {
 // }
 
 export function Search() {
-  //{ putPin }
   const {
     ready,
     value,
@@ -200,20 +203,21 @@ export function Search() {
       const results = await getGeocode({ address });
       console.log(results);
       const { lat, lng } = await getLatLng(results[0]);
-      // putPin({ lat, lng });
+      // panTo({ lat, lng });
+      console.log(results[0]);
     } catch (error) {
-      console.log('😱 Error: ', error);
+      console.log(address);
     }
   };
 
   return (
-    <div className="search">
+    <div css={search}>
       <Combobox onSelect={handleSelect}>
         <ComboboxInput
           value={value}
           onChange={handleInput}
           disabled={!ready}
-          placeholder="Search your location"
+          placeholder="Enter an address"
         />
         <ComboboxPopover>
           <ComboboxList>
@@ -228,6 +232,7 @@ export function Search() {
   );
 }
 
+// export default React.memo(Map);
 // import { useCallback, useRef, useState } from 'react';
 // import {
 //   GoogleMap,
