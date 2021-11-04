@@ -4,9 +4,9 @@ import Header from './Header';
 function Layout(props) {
   return (
     <div>
-      <Header/>
-       {props.children}
-      <Footer/>
+      <Header username={props.username} />
+      <main>{props.children}</main>
+      <Footer />
     </div>
   );
 }

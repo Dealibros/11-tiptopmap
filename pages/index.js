@@ -1,14 +1,12 @@
-import { css, Global } from '@emotion/react';
+import { css } from '@emotion/react';
 import Head from 'next/head';
 // import Image from 'next/image';
-// import Link from 'next/link';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 
-// import portada from '../public/images/portada.jpg';
-
-// import { myGlobalStyles } from '../styles/myGlobalStyles';
-
 const main = css`
+  text-align: center;
   margin-top: 0;
   /* padding-top: 5rem; */
   width: 100vw;
@@ -20,21 +18,37 @@ const main = css`
 
 const title = css`
   font-family: 'New Tegomin';
-  margin-top: 1rem;
+  margin-top: 4rem;
   color: black;
   font-weight: 700;
   font-size: 4.6rem;
   text-align: center;
-  margin-bottom:0;
+  margin-bottom: 0;
 `;
 
-// const portadaStyle = css`
-//   min-height: 70vh;
-//   height: 5rem;
-//   width: 10rem;
-// `;
+const button = css`
+  font-family: 'New Tegomin';
+  color: black;
+  border-radius: 10px;
+  border-color: black;
+  margin-top: 7rem;
+  width: 180px;
+  height: 55px;
+  background-color: #f3ecec;
+  border: black;
+  font-weight: 300;
+  font-size: 16px;
+  &:hover {
+    background-color: #c2a2e2;
+  }
+`;
 
-export default function Home() {
+export default function Home(props) {
+  useEffect(() => {
+    props.refreshUsername();
+    console.log(1213);
+  }, []);
+
   return (
     <div>
       <Head>
@@ -43,12 +57,16 @@ export default function Home() {
         <link rel="icon" href="/favicon.svg" />
       </Head>
 
-      <Layout>
+      <Layout username={props.username}>
         <main css={main}>
           <p css={title}>TopTip Map</p>
+          <Link href="/register">
+            <a>
+              <button css={button}>Register</button>
+            </a>
+          </Link>
           {/* <Image css={portadaStyle} src={portada} alt="portada" /> */}
         </main>
-
       </Layout>
     </div>
   );

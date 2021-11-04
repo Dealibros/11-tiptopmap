@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import Layout from '../components/Layout';
 
@@ -58,11 +59,11 @@ const button = css`
   color: white;
 `;
 
-function Contact() {
+export default function Contact(props) {
   return (
     <div>
       <div>
-        <Layout>
+        <Layout username={props.username}>
           <Head>
             <title>About Ecommerce </title>
           </Head>
@@ -116,4 +117,29 @@ function Contact() {
   );
 }
 
-export default Contact;
+// This function redirects the user to the login page if he tries to access in this case the about page without being login.
+export async function getServerSideProps(context) {
+  const { getValidSessionByToken } = await import('../util/database');
+
+  const sessionToken = context.req.cookies.sessionToken;
+
+  const session = await getValidSessionByToken(sessionToken);
+
+  console.log(session);
+
+  if (!session) {
+    // Redirect the user when they have a session
+    // token by returning an object with the `redirect` prop
+    // https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
+    return {
+      redirect: {
+        destination: '/login?returnTo=/about-us',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+}

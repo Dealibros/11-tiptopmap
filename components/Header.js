@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import sunshine from '../public/images/sunshine.svg';
 
 const navContainer = css`
@@ -10,7 +11,7 @@ const navContainer = css`
 `;
 
 const nav = css`
-  font-family:"New Tegomin";
+  font-family: 'New Tegomin';
   margin-bottom: 0;
   font-size: 1rem;
   display: flex;
@@ -54,7 +55,9 @@ const navLi = css`
     color: white;
   }
 `;
-
+const navLiul = css`
+  list-style-type: none;
+`;
 // const navUl = css`
 // margin: 0!important;
 // padding:0!important;
@@ -65,13 +68,35 @@ const navLi = css`
 // `
 
 const a = css`
+  font-size: 1.3rem;
   text-decoration: none;
   color: white !important;
+  margin-left: 0.8rem;
   :hover {
     color: #a5966d;
   }
 `;
 
+const ab = css`
+  font-size: 1.3rem;
+  text-decoration: none;
+  color: white !important;
+  margin-right: 7rem;
+
+  :hover  {
+    color: #a5966d;
+  }
+`;
+
+const myProfile = css`
+  font-size: 1.3rem;
+  margin-left: 2rem;
+`;
+
+const logout = css`
+  font-size: 1.3rem;
+  margin-right: 5rem;
+`;
 const sunshineLogo = css`
   z-index: 10;
   width: 2rem;
@@ -79,17 +104,24 @@ const sunshineLogo = css`
   padding-left: 2rem;
 `;
 
+const notThere = css`
+  display: none;
+`;
+function Header(props) {
+  console.log('render header');
+  console.log('render header', props.username);
 
-function Header() {
-  const authenticated = false;
-  const Logout = ()=> null;
+  // const authenticated = false;
+  // const Logout = () => null;
   return (
-    <div css={navContainer}>
+    <header css={navContainer}>
       <nav>
-
         <ul css={nav}>
           <div css={navdiv}>
             <Image css={sunshineLogo} src={sunshine} alt="logo" />
+            <span>
+              {props.username ? <> {props.username} </> : 'Not logged in'}
+            </span>
           </div>
           <div css={navdiv}>
             <li css={navLi}>
@@ -107,29 +139,45 @@ function Header() {
                 <a css={a}>About Us</a>
               </Link>
             </li>
-            </div>
-              <div >
-                <div>
-            <li css={navLi}>
-              {authenticated ? (
-                <>
-              <Link href="/places/add">
-                <a>Add a place</a>
-              </Link>
-              <button onClick={Logout}> Logout</button>
-              </>) : (
-
-              // <li css={navLi}>
-              <Link href="/auth">
-                <a css={a}>Log In / Signup</a>
-              </Link>
-              )}
-            </li>
+            {!props.username && (
+              <li css={notThere}>
+                <Link href={`/users-profiles/${props.username}`}>
+                  <a css={myProfile}>My Profile</a>
+                </Link>
+              </li>
+            )}
+            {props.username && (
+              <li>
+                <Link href={`/users-profiles/${props.username}`}>
+                  <a css={myProfile}>My Profile</a>
+                </Link>
+              </li>
+            )}
+          </div>
+          <div>
+            <div>
+              <ul css={navLiul}>
+                {!props.username && (
+                  <>
+                    <Link href="/register">
+                      <a css={a}>Register/</a>
+                    </Link>
+                    <Link href="/login">
+                      <a css={ab}>Login</a>
+                    </Link>
+                  </>
+                )}
+                {props.username && (
+                  <Link href="/logout">
+                    <a css={logout}>Logout</a>
+                  </Link>
+                )}
+              </ul>
             </div>
           </div>
         </ul>
       </nav>
-    </div>
+    </header>
   );
 }
 
