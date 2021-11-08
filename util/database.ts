@@ -407,3 +407,13 @@ export async function deleteSessionByToken(token: string) {
   return sessions.map((session) => camelcaseKeys(session))[0];
 }
 console.log(insertUser);
+
+// ///////////////////////Restaurant Databases///////////////////////////
+
+export async function getRestaurants() {
+  const restaurants = await sql`
+  SELECT * FROM restaurants;
+  `;
+
+  return restaurants.map((restaurant) => camelcaseKeys(restaurant));
+}

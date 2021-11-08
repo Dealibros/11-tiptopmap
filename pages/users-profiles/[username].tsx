@@ -251,7 +251,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   //
   // This is using the node-fetch library internally
   //
-  console.log('hello');
+
   // await fetch(
   //   `${process.env.BASE_URL}/users-profiles/${context.query.username}`,
   //   {

@@ -108,9 +108,6 @@ const notThere = css`
   display: none;
 `;
 function Header(props) {
-  console.log('render header');
-  console.log('render header', props.username);
-
   // const authenticated = false;
   // const Logout = () => null;
   return (
