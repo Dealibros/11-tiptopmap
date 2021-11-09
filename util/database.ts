@@ -409,11 +409,54 @@ export async function deleteSessionByToken(token: string) {
 console.log(insertUser);
 
 // ///////////////////////Restaurant Databases///////////////////////////
-
+// getCarsData & createAdds (getcardata is with id)
+// To display  the restaurants that are already in the Database
 export async function getRestaurants() {
   const restaurants = await sql`
   SELECT * FROM restaurants;
   `;
 
   return restaurants.map((restaurant) => camelcaseKeys(restaurant));
+}
+
+// To add into the Database the new restaurants added.
+
+export async function createRestaurants({
+  restaurantname,
+  addressplace,
+  descriptionplace,
+  photo,
+  rating,
+  price,
+  website,
+  openinghours,
+  coordinates,
+}: {
+  restaurantname: string;
+  addressplace: string;
+  descriptionplace: string;
+  photo: string;
+  rating: string;
+  price: string;
+  website: string;
+  openinghours: string;
+  coordinates: string;
+}) {
+  const [restaurants] = await sql`
+    INSERT INTO restaurants
+      ( restaurantname, addressplace, descriptionplace, photo, rating, price, website, openinghours, coordinates)
+    VALUES
+      (${restaurantname}, ${addressplace}, ${descriptionplace}, ${photo},${rating}, ${price}, ${website}, ${openinghours}, ${coordinates})
+    RETURNING
+      restaurantname,
+      addressplace,
+      descriptionplace,
+      photo,
+      rating,
+      price,
+      website,
+      openinghours,
+      coordinates
+  `;
+  return camelcaseKeys(restaurants);
 }

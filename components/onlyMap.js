@@ -16,6 +16,7 @@ import {
   useLoadScript,
 } from '@react-google-maps/api';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { RiContactsBookLine } from 'react-icons/ri';
 import usePlacesAutocomplete, {
@@ -23,6 +24,7 @@ import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from 'use-places-autocomplete';
+import { getParsedCookie, setParsedCookie } from '../util/cookies';
 import mapStyles from './mapStyles';
 import SearchForm from './searchForm';
 
@@ -91,42 +93,96 @@ export default function Map(props) {
     googleMapsApiKey: 'AIzaSyCNUiZqrIsqP9MiPrVoqjil8Oz8Nah2CVo',
     libraries,
   });
-
+  //
   // To set up the much needed Markers
   const [markers, setMarkers] = useState([]);
   const [selected, setSelected] = useState(null);
   const [points, setPoints] = useState();
   const [theAddress, setTheAddress] = useState(5);
   const [info, setInfo] = useState();
-  console.log(theAddress);
+  const [places, setPlaces] = useState();
+  const [idPlace, setIdPlace] = useState();
 
-  //  useEffect(() => {
-  //    const getInfo = async () => {
-  //      const url =
-  //        'https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJc-yoiAcHbUcR3YoJUXXn4B4&fields=name%2Crating%2Cformatted_address%2Ctypes%2Cphoto&key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM&';
+  // //////////////////Spot for the database adding/////////////////////
 
-  //      const res = await fetch(url);
-  //      const resJson = await res.json();
-  //      setInfo(resJson);
-  //      const data = {
-  //        status: responseJson.status,
-  //        result: responseJson.result,
-  //      };
-  //      console.log(data);
-  //      console.log('info here', info);
-  //    };
-  //    getInfo();
-  //  }, []);
-
-  const onMapClick = useCallback((e) => {
-    setMarkers((current) => [
-      ...current,
-      {
-        lat: parseFloat(e.latLng.lat()),
-        lng: parseFloat(e.latLng.lng()),
-      },
-    ]);
+  const [restaurantName, setRestaurantName] = useState('');
+  const [addressplace, setAddressplace] = useState('');
+  const [descriptionplace, setDescriptionplace] = useState('');
+  const [photo, setPhoto] = useState('');
+  const [rating, setRating] = useState('');
+  const [price, setPrice] = useState('');
+  const [website, setWebsite] = useState('');
+  const [openinghours, setOpeninghours] = useState('');
+  const [coordinates, setCoordinates] = useState('');
+  console.log('this is the id place in map', idPlace);
+  useEffect(() => {
+    async function create(
+      restaurantname,
+      addressplace,
+      descriptionplace,
+      photo,
+      rating,
+      price,
+      website,
+      openinghours,
+      coordinates,
+    ) {
+      const restaurantsResponse = await fetch('..pages/api/restaurants', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          restaurantname,
+          addressplace,
+          descriptionplace,
+          photo,
+          rating,
+          price,
+          website,
+          openinghours,
+          coordinates,
+        }),
+      });
+      const restaurant = restaurantsResponse.json();
+      console.log(restaurant);
+    }
   }, []);
+
+  // useEffect(() => {
+  //   getInfo().then((data) => {
+  //     console.log(data);
+  //     setPlaces(data);
+  //   });
+  // }, []);
+
+  useEffect(() => {
+    const getInfo = async () => {
+      const res = await fetch('/api/mainApi');
+
+      const resJson = await res.json();
+      console.log(resJson);
+      //   setInfo(resJson);
+      //   const data = {
+      //     status: responseJson.status,
+      //     result: responseJson.result,
+      //   };
+      //   console.log(data);
+      //   console.log('info here', info);
+    };
+    getInfo();
+  }, []);
+  // //////////////////////////////////////////77
+
+  // const onMapClick = useCallback((e) => {
+  //   setMarkers((current) => [
+  //     ...current,
+  //     {
+  //       lat: parseFloat(e.latLng.lat()),
+  //       lng: parseFloat(e.latLng.lng()),
+  //     },
+  //   ]);
+  // }, []);
 
   const mapRef = useRef();
   const onMapLoad = useCallback((map) => {
@@ -153,7 +209,7 @@ export default function Map(props) {
       mapContainerStyle={mapContainerStyle}
       zoom={13}
       options={options}
-      onClick={onMapClick}
+      // onClick={onMapClick}
       onLoad={onMapLoad}
       center={center}
     >
@@ -162,6 +218,8 @@ export default function Map(props) {
         panTo={panTo}
         theAddress={theAddress}
         setTheAddress={setTheAddress}
+        idPlace={idPlace}
+        setIdPlace={setIdPlace}
       />
 
       <Locate panTo={panTo} />
@@ -186,6 +244,10 @@ export default function Map(props) {
           // css={infowindow}
           position={{ lat: selected.lat, lng: selected.lng }}
           clickable={true}
+          // setSelected={!null}
+          open
+          // anchor={null}
+          // disableAutoPan
           onCloseClick={() => {
             setSelected(null);
           }}
@@ -207,11 +269,27 @@ export default function Map(props) {
                 width="80"
                 height="80"
               >
-
               </img> */}
             <label htmlFor>Rating</label>
             <br />
-            <button css={minibutton}>+</button>
+            <button
+              css={minibutton}
+              onClick={() =>
+                create(
+                  restaurantName,
+                  addressplace,
+                  descriptionplace,
+                  photo,
+                  rating,
+                  price,
+                  website,
+                  openinghours,
+                  coordinates,
+                )
+              }
+            >
+              +
+            </button>
           </div>
         </InfoWindow>
       ) : null}
@@ -226,51 +304,16 @@ export default function Map(props) {
   );
 }
 
-// export function GetMainApi() {
-//   let [info, setInfo] = useState();
-//   console.log(info);
-
-//   useEffect(() => {
-//     async function getInfo() {
-//       const url =
-//         'https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJc-yoiAcHbUcR3YoJUXXn4B4&fields=name%2Crating%2Cformatted_address%2Ctypes%2Cphoto&key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM&';
-
-//       const response = await fetch(url);
-//       const responseJson = await response.json();
-//       const data = {
-//         status: responseJson.status,
-//         result: responseJson.result,
-//       };
-//       setInfo(data);
-//       console.log('info here', info);
-//     }
-//     getInfo();
-//   }, []);
-
-//   return {
-//     props: {
-//       data,
-//     },
-//   };
-// }
-
-// candidates: resJson.candidates,
-// let image = '';
-
-// if ('photos' in item)
-//   image = `https://maps.googleapis.com/maps/api/place/photo?key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM&maxwidth=400&photoreference=${item.photos[0].photo_reference}`
-// }
-
-// return {
-//   formatted_address: item.formatted_address,
-//   name: item.name,
-//   place_id: item.place_id,
-//   types: item.types,
-//   image: image,
-// };
 // /////////////////////////Function SEARCH///////////////////////////////////
 // ({destructuring props => dont need to write props or call with props.something})
-export function Search({ panTo, setMarkers, setTheAddress, theAddress }) {
+export function Search({
+  panTo,
+  setMarkers,
+  setTheAddress,
+  theAddress,
+  idPlace,
+  setIdPlace,
+}) {
   const {
     ready,
     value,
@@ -305,7 +348,7 @@ export function Search({ panTo, setMarkers, setTheAddress, theAddress }) {
       // setIdPlace = results[0].place_id;
 
       let idPlace = results[0].place_id;
-
+      setIdPlace(idPlace);
       console.log('this is the IdPLace in search', idPlace);
       console.log(results); // gives dirrection from place and other properties
       // getLatlng shows the needed coordinates
@@ -326,8 +369,12 @@ export function Search({ panTo, setMarkers, setTheAddress, theAddress }) {
 
       // console.log(address);
       setTheAddress(address);
+      console.log(idPlace);
       // const handleClick = () => setTheAddress(address);
+      setParsedCookie('idPlaceValue', idPlace);
     } catch (error) {}
+
+    //  getParsedCookie(idPlaceValue);
   };
 
   return (

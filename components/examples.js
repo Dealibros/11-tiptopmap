@@ -8,85 +8,85 @@
 // Price
 // Website
 // Opening Hours
-import '@reach/combobox/styles.css';
-import { css } from '@emotion/react';
-import {
-  Combobox,
-  ComboboxInput,
-  ComboboxList,
-  ComboboxOption,
-  ComboboxPopover,
-} from '@reach/combobox';
-import {
-  GoogleMap,
-  InfoWindow,
-  LoadScript,
-  Marker,
-  useJsApiLoader,
-  useLoadScript,
-} from '@react-google-maps/api';
-import axios from 'axios';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { RiContactsBookLine } from 'react-icons/ri';
-import usePlacesAutocomplete, {
-  getDetails,
-  getGeocode,
-  getLatLng,
-} from 'use-places-autocomplete';
-import mapStyles from './mapStyles';
-import SearchForm from './searchForm';
+// import '@reach/combobox/styles.css';
+// import { css } from '@emotion/react';
+// import {
+//   Combobox,
+//   ComboboxInput,
+//   ComboboxList,
+//   ComboboxOption,
+//   ComboboxPopover,
+// } from '@reach/combobox';
+// import {
+//   GoogleMap,
+//   InfoWindow,
+//   LoadScript,
+//   Marker,
+//   useJsApiLoader,
+//   useLoadScript,
+// } from '@react-google-maps/api';
+// import axios from 'axios';
+// import React, { useCallback, useEffect, useRef, useState } from 'react';
+// import { RiContactsBookLine } from 'react-icons/ri';
+// import usePlacesAutocomplete, {
+//   getDetails,
+//   getGeocode,
+//   getLatLng,
+// } from 'use-places-autocomplete';
+// import mapStyles from './mapStyles';
+// import SearchForm from './searchForm';
 
-///////////////////////////////////////////////////////
-const { getTours } = await import('../../util/database');
+// ///////////////////////////////////////////////////////
+// const { getTours } = await import('../../util/database');
 
-const tours = await getTours();
+// const tours = await getTours();
 
-// console.log(tours);
-// const reqCookie = JSON.parse(context.req.cookies.toursSelected);
-// console.log(reqCookie);
+// // console.log(tours);
+// // const reqCookie = JSON.parse(context.req.cookies.toursSelected);
+// // console.log(reqCookie);
 
-return {
-  props: {
-    tours,
-  },
-};
+// return {
+//   props: {
+//     tours,
+//   },
+// };
 
-return {
-  props: {
-    restaurants,
-  },
-};
+// return {
+//   props: {
+//     restaurants,
+//   },
+// };
 
-export function GetMainApi() {
-  useEffect(() => {
-    const myData = async () => {
-      const url =
-        'https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJc-yoiAcHbUcR3YoJUXXn4B4&fields=name%2Crating%2Cformatted_address%2Ctypes%2Cphoto&key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM&';
-      const res = await fetch(url);
-      const resJson = await res.json();
-      const data = {
-        status: resJson.status,
-        result: resJson.result,
-      };
-      console.log(data);
-      return {
-        props: {
-          data,
-        },
-      };
-    };
-  });
-}
+// export function GetMainApi() {
+//   useEffect(() => {
+//     const myData = async () => {
+//       const url =
+//         'https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJc-yoiAcHbUcR3YoJUXXn4B4&fields=name%2Crating%2Cformatted_address%2Ctypes%2Cphoto&key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM&';
+//       const res = await fetch(url);
+//       const resJson = await res.json();
+//       const data = {
+//         status: resJson.status,
+//         result: resJson.result,
+//       };
+//       console.log(data);
+//       return {
+//         props: {
+//           data,
+//         },
+//       };
+//     };
+//   });
+// }
 
-const onMapClick = useCallback((e) => {
-  setMarkers((current) => [
-    ...current,
-    {
-      lat: e.latLng.lat(),
-      lng: e.latLng.lng(),
-    },
-  ]);
-}, []);
+// const onMapClick = useCallback((e) => {
+//   setMarkers((current) => [
+//     ...current,
+//     {
+//       lat: e.latLng.lat(),
+//       lng: e.latLng.lng(),
+//     },
+//   ]);
+// }, []);
 
 // useEffect(() => {
 //   navigator.geolocation.getCurrentPosition(
