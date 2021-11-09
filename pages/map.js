@@ -287,6 +287,15 @@ export async function getServerSideProps(context) {
     };
   }
 
+  // await fetch('http://localhost:3000/map', {
+  //   method: 'GET',
+  //   headers: {
+  //     // This forwards the cookie to the API route
+  //     cookie: context.req.headers.cookie || '',
+  //   },
+  // });
+  // console.log(context.req.headers.cookie);
+
   const { getRestaurants } = await import('../util/database');
   const restaurants = await getRestaurants();
   console.log('aha', restaurants);

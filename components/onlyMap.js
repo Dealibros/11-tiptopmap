@@ -107,7 +107,7 @@ export default function Map(props) {
 
   const [restaurantName, setRestaurantName] = useState('');
   const [addressplace, setAddressplace] = useState('');
-  const [descriptionplace, setDescriptionplace] = useState('');
+  const [reviewplace, setReviewplace] = useState('');
   const [photo, setPhoto] = useState('');
   const [rating, setRating] = useState('');
   const [price, setPrice] = useState('');
@@ -115,6 +115,7 @@ export default function Map(props) {
   const [openinghours, setOpeninghours] = useState('');
   const [coordinates, setCoordinates] = useState('');
   console.log('this is the id place in map', idPlace);
+  console.log('coor', reviewplace);
   useEffect(() => {
     async function create(
       restaurantname,
@@ -157,21 +158,62 @@ export default function Map(props) {
   // }, []);
 
   useEffect(() => {
+    console.log('r', restaurantName);
     const getInfo = async () => {
       const res = await fetch('/api/mainApi');
 
       const resJson = await res.json();
-      console.log(resJson);
-      //   setInfo(resJson);
-      //   const data = {
-      //     status: responseJson.status,
-      //     result: responseJson.result,
-      //   };
-      //   console.log(data);
-      //   console.log('info here', info);
+      const result = resJson.result;
+
+      console.log('from the Api, missing right idplace', resJson);
+      console.log('whats this', resJson.status);
+      console.log('whats this 2', result);
+
+      setRestaurantName(result.name);
+      setAddressplace(result.formatted_address);
+      setReviewplace(result.reviews[1].text);
+      setPhoto(
+        `https://maps.googleapis.com/maps/api/place/photo?key(IzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM&maxwidth(00&photoreference({resJson.result.photos[0].photo_reference}`,
+      );
+      setRating(result.rating);
+      setPrice(result.price);
+      setWebsite(result.website);
+      setOpeninghours(result.opening_hours.weekday_text[0]);
+      //need to correct this format
+      setCoordinates(result.geometry.location);
+
+      //
+      //
+      return {};
+
+      //
+      // };
+      // return {
+      //   // place_id: item.place_id,
+      // };
     };
+    // const data = {
+    //   status: resJson.status,
+    //   result: resJson.result[1].map((item) => {
+    //     let image = '';
+
+    //     if ('photos' in item) {
+    //       image = `https:maps.googleapis.com/maps/api/place/photo?key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM&maxwidth=400&photoreference=${item.photos[0].photo_reference}`;
+    //     }
+    //     console.log(image);
+    //     return {
+    //       formatted_address: item.formatted_address,
+    //       icon: item.icon,
+    //       name: item.name,
+    //       place_id: item.place_id,
+    //       image: image,
+    //   };
+    // }),
+    // };
+
     getInfo();
   }, []);
+
   // //////////////////////////////////////////77
 
   // const onMapClick = useCallback((e) => {
@@ -253,9 +295,12 @@ export default function Map(props) {
           }}
         >
           <div css={infoWindow}>
-            <label htmlFor>{theAddress}</label>
+            <label>{restaurantName}</label>
             <br />
-            <label htmlFor>{}</label>
+            <label htmlFor>{addressplace}</label>
+            <br />
+            <label htmlFor>{reviewplace}</label>
+            <br />
             <h4 css={h4}>
               Picture ♥ <br />
               <span role="img" l css={foodIcon}>
