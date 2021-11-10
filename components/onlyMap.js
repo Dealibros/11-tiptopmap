@@ -81,13 +81,12 @@ const options = {
   // fullscreenControl: false, // remove the top-right button
 };
 
-const pizza = '<img src="pizza2.jpg">';
 const h4 = css`
   margin: 0;
 `;
 
 // /////////////////////////MAIN FUNCTION MAP//////////////////////
-export default function Map(props) {
+export default function Map(props, create) {
   const { isLoaded, loadError } = useLoadScript({
     id: 'google-map-script',
     googleMapsApiKey: 'AIzaSyCNUiZqrIsqP9MiPrVoqjil8Oz8Nah2CVo',
@@ -104,20 +103,33 @@ export default function Map(props) {
   const [idPlace, setIdPlace] = useState();
 
   // //////////////////Spot for the database adding/////////////////////
-
-  const [restaurantName, setRestaurantName] = useState('');
+  // same Db
+  const [restaurantname, setRestaurantname] = useState('');
   const [addressplace, setAddressplace] = useState('');
-  const [reviewplace, setReviewplace] = useState('');
+  const [descriptionplace, setDescriptionplace] = useState('');
   const [photo, setPhoto] = useState('');
   const [rating, setRating] = useState('');
-  const [price, setPrice] = useState('');
+  const [price, setPrice] = useState('a');
   const [website, setWebsite] = useState('');
   const [openinghours, setOpeninghours] = useState('');
   const [coordinates, setCoordinates] = useState('');
-  console.log('this is the id place in map', idPlace);
-  console.log('coor', reviewplace);
-  useEffect(() => {
-    async function create(
+  console.log('the website', website);
+  console.log('checkprice', price);
+  console.log('checkrating', rating);
+
+  async function create(
+    restaurantName,
+    addressPlace,
+    descriptionpPlace,
+    phoTo,
+    raTing,
+    priCe,
+    websiTe,
+    openingHours,
+    coordinaTes,
+  ) {
+    console.log(
+      'from api',
       restaurantname,
       addressplace,
       descriptionplace,
@@ -127,104 +139,97 @@ export default function Map(props) {
       website,
       openinghours,
       coordinates,
-    ) {
-      const restaurantsResponse = await fetch('..pages/api/restaurants', {
+    );
+    // check await fetch(`${props.baseUrl}/api/cars`,
+    const restaurantsResponse = await fetch(`/api/restaurants`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+
+      body: JSON.stringify({
+        restaurantName,
+        addressPlace,
+        descriptionpPlace,
+        phoTo,
+        raTing,
+        priCe,
+        websiTe,
+        openingHours,
+        coordinaTes,
+      }),
+    });
+
+    const restaurant = restaurantsResponse.json();
+    console.log('check2', restaurant);
+  }
+  // }, []);
+
+  // Fetch to grab the API Google Places with correct id_Place added
+
+  useEffect(() => {
+    const getInfo = async () => {
+      const res = await fetch('/api/mainApi', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          restaurantname,
-          addressplace,
-          descriptionplace,
-          photo,
-          rating,
-          price,
-          website,
-          openinghours,
-          coordinates,
+          idPlace: idPlace,
         }),
       });
-      const restaurant = restaurantsResponse.json();
-      console.log(restaurant);
-    }
-  }, []);
-
-  // useEffect(() => {
-  //   getInfo().then((data) => {
-  //     console.log(data);
-  //     setPlaces(data);
-  //   });
-  // }, []);
-
-  useEffect(() => {
-    console.log('r', restaurantName);
-    const getInfo = async () => {
-      const res = await fetch('/api/mainApi');
-
+      // const res = await fetch('/api/mainApi');
       const resJson = await res.json();
       const result = resJson.result;
 
-      console.log('from the Api, missing right idplace', resJson);
-      console.log('whats this', resJson.status);
-      console.log('whats this 2', result);
+      //  console.log('from the Api, missing right idplace', resJson);
 
-      setRestaurantName(result.name);
+      console.log('whats this 2', result);
+      console.log('whats this 23', result.photos[0].photo_reference);
+      console.log('eoooo', restaurantname);
+      console.log('price?', result.Price);
+
+      setRestaurantname(result.name);
+      console.log('restaurantname', restaurantname);
       setAddressplace(result.formatted_address);
-      setReviewplace(result.reviews[1].text);
+      setDescriptionplace(result.reviews[1].text);
       setPhoto(
-        `https://maps.googleapis.com/maps/api/place/photo?key(IzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM&maxwidth(00&photoreference({resJson.result.photos[0].photo_reference}`,
+        `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${result.photos[0].photo_reference}&key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM`,
       );
+
+      // `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${result.photos[0].photo_reference}&sensor=false&key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM`;
+      // `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${result.photos[0].photo_reference}&key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM`;
+      // `https://maps.googleapis.com/maps/api/place/photo?key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM&maxwidth=400&photoreference=${result.photos[0].photo_reference}`;
+      // setPhoto(thePhoto);
+
+      // `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${result.photos[0].photo_reference}&sensor=false&key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM`;
+      // https://lh5.googleusercontent.com/p/AF1QipNE09IvEDwYMqsX4GyZ6gjfPnVEo3I4zofeb1QU=w1333-h1445-p-k-no`;
+
+      // https://lh5.googleusercontent.com/p/Aap_uEB0LBj2v9_a5KF2J4lkPffqNwaxhU-pmzctVNHa2nATjbwmFeVT8wSLXGXG9w7yOQUhpDRNqWBv-_zf0h7wiPt4Bsk9tfznm74BjzOevQLJIWBKA2Mn_mbLuXz-o66Pw12SAaCiN5AqqwUSxdwzk2BUAgBASDm9q1R5Uy4vskypQ03t
+
+      //maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${result.photos[0].photo_reference}&key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM` alt=''/>
+
+      // image = `https://maps.googleapis.com/maps/api/place/photo?key=${process.env.API_KEY}&maxwidth=400&photoreference=${item.photos[0].photo_reference}`;
+
       setRating(result.rating);
-      setPrice(result.price);
+      // for (let $ = 1; 0 < result.price_level; 0++) {
+      //   // Runs 5 times, with values of step 0 through 4.
+      //   console.log('o');
+      // }
+      setPrice(result.price_level);
       setWebsite(result.website);
       setOpeninghours(result.opening_hours.weekday_text[0]);
-      //need to correct this format
+      // need to correct this format
       setCoordinates(result.geometry.location);
 
-      //
-      //
       return {};
-
-      //
-      // };
-      // return {
-      //   // place_id: item.place_id,
-      // };
     };
-    // const data = {
-    //   status: resJson.status,
-    //   result: resJson.result[1].map((item) => {
-    //     let image = '';
+    if (idPlace) {
+      getInfo();
+    }
+  }, [idPlace]);
 
-    //     if ('photos' in item) {
-    //       image = `https:maps.googleapis.com/maps/api/place/photo?key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM&maxwidth=400&photoreference=${item.photos[0].photo_reference}`;
-    //     }
-    //     console.log(image);
-    //     return {
-    //       formatted_address: item.formatted_address,
-    //       icon: item.icon,
-    //       name: item.name,
-    //       place_id: item.place_id,
-    //       image: image,
-    //   };
-    // }),
-    // };
-
-    getInfo();
-  }, []);
-
-  // //////////////////////////////////////////77
-
-  // const onMapClick = useCallback((e) => {
-  //   setMarkers((current) => [
-  //     ...current,
-  //     {
-  //       lat: parseFloat(e.latLng.lat()),
-  //       lng: parseFloat(e.latLng.lng()),
-  //     },
-  //   ]);
-  // }, []);
+  // //////////////////////////////////////////
 
   const mapRef = useRef();
   const onMapLoad = useCallback((map) => {
@@ -295,11 +300,11 @@ export default function Map(props) {
           }}
         >
           <div css={infoWindow}>
-            <label>{restaurantName}</label>
+            <label>{restaurantname}</label>
             <br />
             <label htmlFor>{addressplace}</label>
             <br />
-            <label htmlFor>{reviewplace}</label>
+            <label htmlFor>{descriptionplace}</label>
             <br />
             <h4 css={h4}>
               Picture ♥ <br />
@@ -315,13 +320,13 @@ export default function Map(props) {
                 height="80"
               >
               </img> */}
-            <label htmlFor>Rating</label>
+            <label htmlFor>{rating}</label>
             <br />
             <button
               css={minibutton}
               onClick={() =>
                 create(
-                  restaurantName,
+                  restaurantname,
                   addressplace,
                   descriptionplace,
                   photo,
@@ -381,45 +386,45 @@ export function Search({
     setValue(address, false);
     clearSuggestions();
     // A try / catch block is basically used to handle errors in JavaScript. You use this when you don't want an error in your script to break your code. ... You put your code in the try block, and immediately if there is an error, JavaScript gives the catch statement control and it just does whatever you say.
-    try {
-      const results = await getGeocode({ address });
-      // setTheAddress(address);
-      console.log(theAddress);
-      console.log(results);
 
-      // I need to take this value to the map page, to be able to call the API there with this value. Afterwards I need to bring all this information back here to be able to display it on the map
-      // Why I can't put the place_Id into state?
-      // Because setState is asynchronous?
-      // setIdPlace = results[0].place_id;
+    const results = await getGeocode({ address });
+    // setTheAddress(address);
+    // console.log(theAddress);
+    // console.log(results);
 
-      let idPlace = results[0].place_id;
-      setIdPlace(idPlace);
-      console.log('this is the IdPLace in search', idPlace);
-      console.log(results); // gives dirrection from place and other properties
-      // getLatlng shows the needed coordinates
+    // I need to take this value to the map page, to be able to call the API there with this value. Afterwards I need to bring all this information back here to be able to display it on the map
+    // Why I can't put the place_Id into state?
+    // Because setState is asynchronous?
+    // setIdPlace = results[0].place_id;
 
-      const { lat, lng } = await getLatLng(results[0]);
-      setMarkers((current) => [
-        ...current,
-        {
-          lat: parseFloat(lat),
-          lng: parseFloat(lng),
-        },
-      ]);
-      // after address position 48.1946826 16.3938677
+    let idPlace = results[0].place_id;
 
-      console.log(panTo({ lat, lng }));
+    setIdPlace(idPlace);
 
-      console.log(results[0]);
+    // console.log('this is the IdPLace in search', idPlace);
+    // console.log(results); // gives dirrection from place and other properties
+    // getLatlng shows the needed coordinates
 
-      // console.log(address);
-      setTheAddress(address);
-      console.log(idPlace);
-      // const handleClick = () => setTheAddress(address);
-      setParsedCookie('idPlaceValue', idPlace);
-    } catch (error) {}
+    const { lat, lng } = await getLatLng(results[0]);
+    setMarkers((current) => [
+      ...current,
+      {
+        lat: parseFloat(lat),
+        lng: parseFloat(lng),
+      },
+    ]);
+    // after address position 48.1946826 16.3938677
 
-    //  getParsedCookie(idPlaceValue);
+    console.log(panTo({ lat, lng }));
+
+    // console.log(results[0]);
+
+    // console.log(address);
+    setTheAddress(address);
+
+    // console.log('newIdPlace', idPlace);
+    // const handleClick = () => setTheAddress(address);
+    setParsedCookie('idPlaceValue', idPlace);
   };
 
   return (
@@ -467,3 +472,61 @@ function Locate({ panTo }) {
     </button>
   );
 }
+
+// to add markers when clicking on the map
+// const onMapClick = useCallback((e) => {
+//   setMarkers((current) => [
+//     ...current,
+//     {
+//       lat: parseFloat(e.latLng.lat()),
+//       lng: parseFloat(e.latLng.lng()),
+//     },
+//   ]);
+// }, []);
+
+// some old coding from getting the api info right
+//
+// };
+// return {
+//   // place_id: item.place_id,
+// };
+
+// const data = {
+//   status: resJson.status,
+//   result: resJson.result[1].map((item) => {
+//     let image = '';
+
+//     if ('photos' in item) {
+//       image = `https:maps.googleapis.com/maps/api/place/photo?key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM&maxwidth=400&photoreference=${item.photos[0].photo_reference}`;
+//     }
+//     console.log(image);
+//     return {
+//       formatted_address: item.formatted_address,
+//       icon: item.icon,
+//       name: item.name,
+//       place_id: item.place_id,
+//       image: image,
+//   };
+// }),
+// };
+
+// useEffect(() => {
+//   getInfo().then((data) => {
+//     console.log(data);
+//     setPlaces(data);
+//   });
+// }, []);
+
+// const getIdPlace = await fetch('/api/mainApi', {
+//   method: 'POST',
+//   headers: {
+//     'Content-Type': 'application/json',
+//   },
+//   body: JSON.stringify({
+//     idPlace: idPlace,
+//   }),
+// });
+
+// console.log('here', await getIdPlace.json());
+
+//  getParsedCookie(idPlaceValue);

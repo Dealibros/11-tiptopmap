@@ -194,7 +194,7 @@ export async function insertUser({
 
   return user;
 }
-console.log(insertUser);
+// console.log(insertUser);
 
 export async function getUserByValidSessionToken(token: string) {
   if (!token) return undefined;
@@ -406,17 +406,18 @@ export async function deleteSessionByToken(token: string) {
 
   return sessions.map((session) => camelcaseKeys(session))[0];
 }
-console.log(insertUser);
+// console.log(insertUser);
 
 // ///////////////////////Restaurant Databases///////////////////////////
 // getCarsData & createAdds (getcardata is with id)
 // To display  the restaurants that are already in the Database
-export async function getRestaurants() {
-  const restaurants = await sql`
+// gCD
+export async function getRestaurantsData() {
+  const restaurantsData = await sql`
   SELECT * FROM restaurants;
   `;
 
-  return restaurants.map((restaurant) => camelcaseKeys(restaurant));
+  return restaurantsData.map((restaurant) => camelcaseKeys(restaurant));
 }
 
 // To add into the Database the new restaurants added.
@@ -442,9 +443,34 @@ export async function createRestaurants({
   openinghours: string;
   coordinates: string;
 }) {
+  console.log(
+    'From DB',
+    restaurantname,
+    addressplace,
+    descriptionplace,
+    photo,
+    rating,
+    price,
+    website,
+    openinghours,
+    coordinates,
+  );
+  console.log(
+    'From DB',
+    restaurantname,
+    addressplace,
+    descriptionplace,
+    photo,
+    rating,
+    price,
+    website,
+    openinghours,
+    coordinates,
+  );
   const [restaurants] = await sql`
     INSERT INTO restaurants
       ( restaurantname, addressplace, descriptionplace, photo, rating, price, website, openinghours, coordinates)
+
     VALUES
       (${restaurantname}, ${addressplace}, ${descriptionplace}, ${photo},${rating}, ${price}, ${website}, ${openinghours}, ${coordinates})
     RETURNING
@@ -458,5 +484,17 @@ export async function createRestaurants({
       openinghours,
       coordinates
   `;
+  console.log(
+    'From DB',
+    restaurantname,
+    addressplace,
+    descriptionplace,
+    photo,
+    rating,
+    price,
+    website,
+    openinghours,
+    coordinates,
+  );
   return camelcaseKeys(restaurants);
 }

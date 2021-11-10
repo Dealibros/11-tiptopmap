@@ -21,7 +21,7 @@ export function setParsedCookie(key, value) {
 }
 
 // ------------------------------------------------------------
-
+// Issue here!
 export function createSerializedRegisterSessionTokenCookie(token) {
   // check if we are in production e.g. Heroku
   const isProduction = process.env.NODE_ENV === 'production';

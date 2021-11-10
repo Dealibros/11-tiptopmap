@@ -186,7 +186,7 @@ const description = css`
 `;
 
 export default function Home(props, { restaurants }) {
-  console.log('eyyy', props.restaurants);
+  // console.log('eyyy', props.restaurants);
   const Map = dynamic(() => import('../components/onlyMap'), {
     ssr: false,
     isloading: 'Loading',
@@ -234,7 +234,7 @@ export default function Home(props, { restaurants }) {
 }
 
 export function InfoCard(props, { restaurants }) {
-  console.log(props.restaurants);
+  // console.log(props.restaurants);
   return (
     <div>
       <div css={searchResult}>
@@ -274,7 +274,7 @@ export async function getServerSideProps(context) {
   const { getValidSessionByToken } = await import('../util/database');
   const sessionToken = context.req.cookies.sessionToken;
   const session = await getValidSessionByToken(sessionToken);
-  console.log(session);
+  // console.log(session);
   if (!session) {
     // Redirect the user when they have a session
     // token by returning an object with the `redirect` prop
@@ -296,8 +296,8 @@ export async function getServerSideProps(context) {
   // });
   // console.log(context.req.headers.cookie);
 
-  const { getRestaurants } = await import('../util/database');
-  const restaurants = await getRestaurants();
+  const { getRestaurantsData } = await import('../util/database');
+  const restaurants = await getRestaurantsData();
   console.log('aha', restaurants);
   return {
     props: {

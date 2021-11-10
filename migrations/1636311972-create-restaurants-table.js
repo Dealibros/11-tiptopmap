@@ -5,11 +5,11 @@ exports.up = async function up(sql) {
       restaurantname varchar(40) UNIQUE NOT NULL,
       addressplace varchar(100) NOT NULL,
       descriptionplace varchar(200),
-      photo varchar(40),
+      photo varchar(500),
 			rating varchar(100) NOT NULL,
-			price varchar(10) NOT NULL,
-			website varchar(30),
-			openinghours varchar(25),
+			price varchar(10),
+			website varchar(60),
+			openinghours varchar(200),
 			coordinates varchar(100)
     )
   `;
