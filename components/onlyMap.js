@@ -212,15 +212,27 @@ export default function Map(props, create) {
       // image = `https://maps.googleapis.com/maps/api/place/photo?key=${process.env.API_KEY}&maxwidth=400&photoreference=${item.photos[0].photo_reference}`;
 
       setRating(result.rating);
-      // for (let $ = 1; 0 < result.price_level; 0++) {
-      //   // Runs 5 times, with values of step 0 through 4.
-      //   console.log('o');
-      // }
-      setPrice(result.price_level);
+
+      if (result.price_level === 1) {
+        setPrice('$');
+      } else if (result.price_level === 2) {
+        setPrice('$$');
+      } else if (result.price_level === 3) {
+        setPrice('$$$');
+      } else {
+        setPrice('$$$$');
+      }
+
       setWebsite(result.website);
+
       setOpeninghours(result.opening_hours.weekday_text[0]);
+      console.log(result.opening_hours.weekday_text);
       // need to correct this format
       setCoordinates(result.geometry.location);
+      // console.log(coordinates); not working, Keep in mind
+      // Keeps this for later position the markers.
+      console.log('coorde', result.geometry.location.lat);
+      console.log('coorde', result.geometry.location.lng);
 
       return {};
     };
@@ -286,13 +298,20 @@ export default function Map(props, create) {
           }}
         />
       ))}
+
+      {/* if(typeof(InfoWindow) != 'undefined') {
+                      InfoWindow.close();
+                  }
+                  infowindow.open(map, marker);
+                  InfoWindow = infowindow;  */}
       {selected ? (
         <InfoWindow
           // css={infowindow}
           position={{ lat: selected.lat, lng: selected.lng }}
           clickable={true}
           // setSelected={!null}
-          open
+          infoWindow={open}
+          disableAutoPan={true}
           // anchor={null}
           // disableAutoPan
           onCloseClick={() => {
