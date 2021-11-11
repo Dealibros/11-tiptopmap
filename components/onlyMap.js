@@ -355,86 +355,12 @@ export default function Map(props, create) {
           }}
         />
       ))}
-      {/* Markers from restaurants saved in the Database */}
-      {props.restaurants.map(
-        (restaurant) => (
-          console.log('insideMarker', props.restaurants),
-          console.log('insideMarker2', restaurant),
-          (console.log('insideMarker3', restaurant.latitude),
-          (
-            <Marker
-              key={`id-list-${restaurant.id}`}
-              position={{
-                lat: Number(restaurant.latitude),
-                lng: Number(restaurant.longitude),
-              }}
-              icon={{
-                // url: '/marker.png',
-                // url:'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-                // url: '/../public/Marker.png', //not working for some reason
-                // to load here a svg instead of the boring google one
-                scaledSize: new window.google.maps.Size(parseFloat(32, 27)), // for size
-                origin: new window.google.maps.Point(parseFloat(0, 0)),
-                anchor: new window.google.maps.Point(parseFloat(15, 15)), // not working?
-              }}
-              onClick={() => {
-                {
-                  selected ? (
-                    <InfoWindow
-                      // css={infowindow}
-                      position={{
-                        lat: Number(selected.lat),
-                        lng: Number(selected.lng),
-                      }}
-                      clickable={true}
-                      // setSelected={!null}
-                      infoWindow={open}
-                      // anchor={null}
-                      // disableAutoPan
-                      onCloseClick={() => {
-                        setSelected(null);
-                      }}
-                    >
-                      <div css={infoWindow}>
-                        <label css={titleSearch}>{restaurantname}</label>
-                        <br />
-                        <label css={addressSearch} htmlFor>
-                          {addressplace}
-                        </label>
-                        <br />
-                        <label css={descriptionSearch} htmlFor>
-                          {descriptionplace}
-                        </label>
-                        <br />
-                        <h4 css={h4}>
-                          Picture ♥ <br />
-                          <span role="img" l css={foodIcon}>
-                            🌮
-                          </span>
-                        </h4>
-                        <label css={ratingSearch} htmlFor>
-                          ⭐{rating}
-                        </label>
-                        <br />
-                      </div>
-                    </InfoWindow>
-                  ) : null;
-                }
-              }}
-            />
-          ))
-        ),
-      )}
-      ;
-      {/* if(typeof(InfoWindow) != 'undefined') {
-                      InfoWindow.close();
-                  }
-                  infowindow.open(map, marker);
-                  InfoWindow = infowindow;  */}
       {selected ? (
         <InfoWindow
           // css={infowindow}
           position={{ lat: selected.lat, lng: selected.lng }}
+          // pixelOffset={new window.google.maps.Size(parseFloat(215, 265))}
+          //not working yet, to position the infowindow.
           clickable={true}
           // setSelected={!null}
           infoWindow={open}
@@ -496,6 +422,84 @@ export default function Map(props, create) {
           </div>
         </InfoWindow>
       ) : null}
+      {/* Markers from restaurants saved in the Database */}
+      {props.restaurants.map(
+        (restaurant) => (
+          console.log('insideMarker', props.restaurants),
+          console.log('insideMarker2', restaurant),
+          (console.log('insideMarker3', restaurant.latitude),
+          (
+            <Marker
+              key={`id-list-${restaurant.id}`}
+              position={{
+                lat: Number(restaurant.latitude),
+                lng: Number(restaurant.longitude),
+              }}
+              icon={{
+                // url: '/marker.png',
+                // url:'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+                // url: '/../public/Marker.png', //not working for some reason
+                // to load here a svg instead of the boring google one
+                scaledSize: new window.google.maps.Size(parseFloat(32, 27)), // for size
+                origin: new window.google.maps.Point(parseFloat(0, 0)),
+                anchor: new window.google.maps.Point(parseFloat(15, 15)), // not working?
+              }}
+              onClick={() => {
+                {
+                  selected ? (
+                    <InfoWindow
+                      onCloseClick={() => setInfoOpen(true)}
+                      //look into this property
+                      // css={infowindow}
+                      position={{
+                        lat: Number(selected.lat),
+                        lng: Number(selected.lng),
+                      }}
+                      clickable={true}
+                      // setSelected={!null}
+                      infoWindow={open}
+                      // anchor={null}
+                      // disableAutoPan
+                      onCloseClick={() => {
+                        setSelected(null);
+                      }}
+                    >
+                      <div css={infoWindow}>
+                        <label css={titleSearch}>{restaurantname}</label>
+                        <br />
+                        <label css={addressSearch} htmlFor>
+                          {addressplace}
+                        </label>
+                        <br />
+                        <label css={descriptionSearch} htmlFor>
+                          {descriptionplace}
+                        </label>
+                        <br />
+                        <h4 css={h4}>
+                          Picture ♥ <br />
+                          <span role="img" l css={foodIcon}>
+                            🌮
+                          </span>
+                        </h4>
+                        <label css={ratingSearch} htmlFor>
+                          ⭐{rating}
+                        </label>
+                        <br />
+                      </div>
+                    </InfoWindow>
+                  ) : null;
+                }
+              }}
+            />
+          ))
+        ),
+      )}
+      ;
+      {/* if(typeof(InfoWindow) != 'undefined') {
+                      InfoWindow.close();
+                  }
+                  infowindow.open(map, marker);
+                  InfoWindow = infowindow;  */}
       {/* <Marker
           // position={{ panTo }}
           icon={{

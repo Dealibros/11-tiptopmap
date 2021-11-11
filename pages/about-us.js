@@ -95,9 +95,8 @@ export default function Contact(props) {
                     />
                   </div>
                 </div>
-
                 <div css={row}>
-                  <label htmlFor="subject">Subject</label>
+                  <label htmlFor="subject">Subject3</label>
                   <br />
                   <input
                     css={textarea}

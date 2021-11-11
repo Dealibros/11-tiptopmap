@@ -26,14 +26,14 @@ const secondMain = css`
 
 const leftMain = css`
   font-family: 'New Tegomin';
-  width: 35vw;
+  width: 40vw;
   padding: 0 0 0 20px;
   margin: 0 0 0 30px;
 `;
 
 const rightMain = css`
   object-fit: contain;
-  width: 60vw;
+  width: 56.9vw;
   text-align: right;
   padding: 0.8rem;
 `;
@@ -46,7 +46,7 @@ const mapDiv = css`
 const searchResult = css`
   display: flex;
   position: relative;
-  margin: 10px 0 0 0;
+  margin: 6px 0 0 0;
   padding: 10px 0 0 0;
   border-bottom: 1px, solid lightgray;
   opacity: 1;
@@ -64,8 +64,10 @@ const searchResult = css`
 
 const divforImg = css`
   position: relative;
-  height: 150px;
+  height: 165px;
   width: 200px;
+  margin-top: auto;
+  margin-bottom: auto;
   /* flex-shrink: 0; */
 `;
 
@@ -115,8 +117,15 @@ const titleCard = css`
   /* margin: 1rem 1.2rem 1rem 1.2rem; */
 `;
 
+// to change the staricon and price to the bottom take out the flex-column
+const searchResultInfo = css`
+  width: 23vw;
+  /* display: flex;
+  direction: column;
+  justify-content: space-between; */
+`;
+
 const searchResultInfoTop = css`
-  width: 17vw;
   p {
     margin: 0 0 0 0.9rem;
     padding-bottom: 0.1rem;
@@ -165,13 +174,6 @@ const space = css`
   padding: 0;
 `;
 
-// to change the staricon and price to the bottom take out the flex-column
-const searchResultInfo = css`
-  /* display: flex;
-  direction: column;
-  justify-content: space-between; */
-`;
-
 const searchResultStars = css`
   /* display: flex;
   align-items: center; */
@@ -194,6 +196,10 @@ const rating = css`
 const price = css`
   font-size: 0.7rem !important;
   font-weight: 600;
+`;
+
+const lineInfoCard = css`
+  margin-bottom: 0;
 `;
 export default function Home(props, { restaurants }) {
   const Map = dynamic(() => import('../components/onlyMap'), {
@@ -254,8 +260,8 @@ export function InfoCard(props, { restaurants }) {
         <div css={divforImg}>
           <Image
             className="images"
-            src={props.photo ? props.photo : '/../public/pizza2.jpg'}
-            alt="imageText"
+            src={props.restaurants.photo}
+            alt="restaurant-place"
             layout="fill"
             objectFit="cover"
           />
@@ -291,7 +297,7 @@ export function InfoCard(props, { restaurants }) {
           </div>
         </div>
       </div>
-      <hr />
+      <hr css={lineInfoCard} />
     </div>
   );
 }

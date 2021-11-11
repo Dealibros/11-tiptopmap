@@ -59,6 +59,10 @@ export default function Home(props) {
 
       <Layout username={props.username}>
         <main css={main}>
+          <image
+            src="https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"
+            alt="someth"
+          />
           <p css={title}>TopTip Map</p>
           <Link href="/register">
             <a>
