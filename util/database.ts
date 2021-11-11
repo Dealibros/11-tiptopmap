@@ -431,7 +431,8 @@ export async function createRestaurants({
   price,
   website,
   openinghours,
-  coordinates,
+  latitude,
+  longitude,
 }: {
   restaurantname: string;
   addressplace: string;
@@ -441,7 +442,8 @@ export async function createRestaurants({
   price: string;
   website: string;
   openinghours: string;
-  coordinates: string;
+  latitude: string;
+  longitude: string;
 }) {
   console.log(
     'From DB',
@@ -453,7 +455,8 @@ export async function createRestaurants({
     price,
     website,
     openinghours,
-    coordinates,
+    latitude,
+    longitude,
   );
   console.log(
     'From DB',
@@ -465,14 +468,15 @@ export async function createRestaurants({
     price,
     website,
     openinghours,
-    coordinates,
+    latitude,
+    longitude,
   );
   const [restaurants] = await sql`
     INSERT INTO restaurants
-      ( restaurantname, addressplace, descriptionplace, photo, rating, price, website, openinghours, coordinates)
+      ( restaurantname, addressplace, descriptionplace, photo, rating, price, website, openinghours, latitude, longitude)
 
     VALUES
-      (${restaurantname}, ${addressplace}, ${descriptionplace}, ${photo},${rating}, ${price}, ${website}, ${openinghours}, ${coordinates})
+      (${restaurantname}, ${addressplace}, ${descriptionplace}, ${photo},${rating}, ${price}, ${website}, ${openinghours}, ${latitude}, ${longitude})
     RETURNING
       restaurantname,
       addressplace,
@@ -482,7 +486,8 @@ export async function createRestaurants({
       price,
       website,
       openinghours,
-      coordinates
+      latitude,
+      longitude
   `;
   console.log(
     'From DB',
@@ -494,7 +499,8 @@ export async function createRestaurants({
     price,
     website,
     openinghours,
-    coordinates,
+    latitude,
+    longitude,
   );
   return camelcaseKeys(restaurants);
 }

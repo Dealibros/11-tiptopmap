@@ -10,7 +10,8 @@ export default async function handler(req, res) {
   } else if (req.method === 'POST') {
     const body = req.body;
     console.log('bodyistoo', body);
-    console.log('body-review', body.price);
+    console.log('in api long', body.longitude);
+    console.log('in api lat', body.latitude);
 
     // database : onlyMaps
     // chek with the database or onlymap
@@ -23,8 +24,12 @@ export default async function handler(req, res) {
       price: body.priCe,
       website: body.websiTe,
       openinghours: body.openingHours,
-      coordinates: body.coordinaTes,
+      latitude: body.latituDe,
+      longitude: body.longituDe,
     });
+
+    console.log('in api long2', body.longitude);
+    console.log('in api lat2', body.latitude);
 
     return res.status(200).json(createRestaurantsData);
   }

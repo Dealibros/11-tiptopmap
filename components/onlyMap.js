@@ -45,20 +45,64 @@ const miniImg = css`
 
 const search = css`
   position: absolute;
-  padding-top: 1rem;
-  padding-left: 15rem;
+  padding-top: 1.3rem;
+  padding-left: 14rem;
   transform: translateX(-50%);
   width: 100%;
   max-width: 400px;
   z-index: 10;
+`;
+const searchInput = css`
+  font-family: 'New Tegomin';
+  font-weight: 600;
+  width: 12rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.4rem;
+  border-color: lightgray;
+  :focus {
+    outline: none;
+  }
+`;
+
+const inputPopOver = css`
+  font-size: 0.8rem;
+  font-family: 'New Tegomin';
+  color: #848a6b;
+  border-radius: 0.4rem;
+`;
+
+const infoWindow = css`
+  text-align: center;
+  width: 260px;
+`;
+
+const titleSearch = css`
+  font-family: 'New Tegomin';
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+`;
+
+const addressSearch = css`
+  /* font-style: oblique; */
+  font-size: 0.8rem;
+  margin-bottom: 0.1rem;
+`;
+const ratingSearch = css`
+  font-weight: 500;
+`;
+
+const descriptionSearch = css`
+  font-size: 0.7;
+  font-weight: 400;
 `;
 
 const foodIcon = css`
   font-size: 2rem;
 `;
 
-const infoWindow = css`
-  text-align: center;
+const h4 = css`
+  margin: 0;
 `;
 
 const libraries = ['places'];
@@ -81,18 +125,15 @@ const options = {
   // fullscreenControl: false, // remove the top-right button
 };
 
-const h4 = css`
-  margin: 0;
-`;
-
 // /////////////////////////MAIN FUNCTION MAP//////////////////////
+
 export default function Map(props, create) {
   const { isLoaded, loadError } = useLoadScript({
     id: 'google-map-script',
     googleMapsApiKey: 'AIzaSyCNUiZqrIsqP9MiPrVoqjil8Oz8Nah2CVo',
     libraries,
   });
-  //
+
   // To set up the much needed Markers
   const [markers, setMarkers] = useState([]);
   const [selected, setSelected] = useState(null);
@@ -112,10 +153,9 @@ export default function Map(props, create) {
   const [price, setPrice] = useState('a');
   const [website, setWebsite] = useState('');
   const [openinghours, setOpeninghours] = useState('');
-  const [coordinates, setCoordinates] = useState('');
-  console.log('the website', website);
-  console.log('checkprice', price);
-  console.log('checkrating', rating);
+  // const [coordinates, setCoordinates] = useState('');
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setLongitude] = useState('');
 
   async function create(
     restaurantName,
@@ -126,20 +166,9 @@ export default function Map(props, create) {
     priCe,
     websiTe,
     openingHours,
-    coordinaTes,
+    latituDe,
+    longituDe,
   ) {
-    console.log(
-      'from api',
-      restaurantname,
-      addressplace,
-      descriptionplace,
-      photo,
-      rating,
-      price,
-      website,
-      openinghours,
-      coordinates,
-    );
     // check await fetch(`${props.baseUrl}/api/cars`,
     const restaurantsResponse = await fetch(`/api/restaurants`, {
       method: 'POST',
@@ -156,7 +185,8 @@ export default function Map(props, create) {
         priCe,
         websiTe,
         openingHours,
-        coordinaTes,
+        latituDe,
+        longituDe,
       }),
     });
 
@@ -166,7 +196,6 @@ export default function Map(props, create) {
   // }, []);
 
   // Fetch to grab the API Google Places with correct id_Place added
-
   useEffect(() => {
     const getInfo = async () => {
       const res = await fetch('/api/mainApi', {
@@ -194,7 +223,7 @@ export default function Map(props, create) {
       setAddressplace(result.formatted_address);
       setDescriptionplace(result.reviews[1].text);
       setPhoto(
-        `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${result.photos[0].photo_reference}&key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM`,
+        `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${result.photos[0].photo_reference}&key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM&`,
       );
 
       // `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${result.photos[0].photo_reference}&sensor=false&key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM`;
@@ -224,15 +253,18 @@ export default function Map(props, create) {
       }
 
       setWebsite(result.website);
-
       setOpeninghours(result.opening_hours.weekday_text[0]);
       console.log(result.opening_hours.weekday_text);
       // need to correct this format
-      setCoordinates(result.geometry.location);
       // console.log(coordinates); not working, Keep in mind
       // Keeps this for later position the markers.
       console.log('coorde', result.geometry.location.lat);
       console.log('coorde', result.geometry.location.lng);
+      setLatitude(result.geometry.location.lat);
+      setLongitude(result.geometry.location.lng);
+
+      console.log('coordelat', latitude);
+      console.log('coordelong', longitude);
 
       return {};
     };
@@ -240,6 +272,28 @@ export default function Map(props, create) {
       getInfo();
     }
   }, [idPlace]);
+
+  console.log('a', props.restaurants);
+  // Again the UseEffect Issue
+
+  // if (idPlace) {
+  //   useEffect(() => {
+  //     props.restaurants?.map(
+  //       (restaurant, id) => console.log('que hay aca', restaurant),
+  //       console.log('b', props.restaurants),
+  //       console.log('queEs', props.restaurants),
+  //       console.log('queEs2', props.restaurant.latitude),
+  //       console.log('queEs3', props.restaurant.longitude),
+  //       setMarkers((current) => [
+  //         ...current,
+  //         {
+  //           // lat: props.restaurant.latitude,
+  //           // lng: props.restaurant.longitude,
+  //         },
+  //       ]),
+  //     );
+  //   }, [props.restaurants, idPlace]);
+  // }
 
   // //////////////////////////////////////////
 
@@ -280,8 +334,8 @@ export default function Map(props, create) {
         idPlace={idPlace}
         setIdPlace={setIdPlace}
       />
-
       <Locate panTo={panTo} />
+      {/* Markers for restaurants found through search */}
       {markers.map((marker) => (
         <Marker
           key={`${marker.lat}-${marker.lng}`}
@@ -290,15 +344,88 @@ export default function Map(props, create) {
             setSelected(marker);
           }}
           icon={{
-            // url: 'public/icons.png',
-            // to load here a svg instead of the boring google one
+            // to load here a svg instead of the boring google one.
+            // Not working, check!!!
+            // url:'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+            // url: '/../public/Marker.png', //not working for some reason
+
             scaledSize: new window.google.maps.Size(parseFloat(30, 30)), // for size
             origin: new window.google.maps.Point(parseFloat(20, 20)),
             anchor: new window.google.maps.Point(parseFloat(10, 15)), // not working?
           }}
         />
       ))}
-
+      {/* Markers from restaurants saved in the Database */}
+      {props.restaurants.map(
+        (restaurant) => (
+          console.log('insideMarker', props.restaurants),
+          console.log('insideMarker2', restaurant),
+          (console.log('insideMarker3', restaurant.latitude),
+          (
+            <Marker
+              key={`id-list-${restaurant.id}`}
+              position={{
+                lat: Number(restaurant.latitude),
+                lng: Number(restaurant.longitude),
+              }}
+              icon={{
+                // url: '/marker.png',
+                // url:'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+                // url: '/../public/Marker.png', //not working for some reason
+                // to load here a svg instead of the boring google one
+                scaledSize: new window.google.maps.Size(parseFloat(32, 27)), // for size
+                origin: new window.google.maps.Point(parseFloat(0, 0)),
+                anchor: new window.google.maps.Point(parseFloat(15, 15)), // not working?
+              }}
+              onClick={() => {
+                {
+                  selected ? (
+                    <InfoWindow
+                      // css={infowindow}
+                      position={{
+                        lat: Number(selected.lat),
+                        lng: Number(selected.lng),
+                      }}
+                      clickable={true}
+                      // setSelected={!null}
+                      infoWindow={open}
+                      // anchor={null}
+                      // disableAutoPan
+                      onCloseClick={() => {
+                        setSelected(null);
+                      }}
+                    >
+                      <div css={infoWindow}>
+                        <label css={titleSearch}>{restaurantname}</label>
+                        <br />
+                        <label css={addressSearch} htmlFor>
+                          {addressplace}
+                        </label>
+                        <br />
+                        <label css={descriptionSearch} htmlFor>
+                          {descriptionplace}
+                        </label>
+                        <br />
+                        <h4 css={h4}>
+                          Picture ♥ <br />
+                          <span role="img" l css={foodIcon}>
+                            🌮
+                          </span>
+                        </h4>
+                        <label css={ratingSearch} htmlFor>
+                          ⭐{rating}
+                        </label>
+                        <br />
+                      </div>
+                    </InfoWindow>
+                  ) : null;
+                }
+              }}
+            />
+          ))
+        ),
+      )}
+      ;
       {/* if(typeof(InfoWindow) != 'undefined') {
                       InfoWindow.close();
                   }
@@ -319,11 +446,15 @@ export default function Map(props, create) {
           }}
         >
           <div css={infoWindow}>
-            <label>{restaurantname}</label>
+            <label css={titleSearch}>{restaurantname}</label>
             <br />
-            <label htmlFor>{addressplace}</label>
+            <label css={addressSearch} htmlFor>
+              {addressplace}
+            </label>
             <br />
-            <label htmlFor>{descriptionplace}</label>
+            <label css={descriptionSearch} htmlFor>
+              {descriptionplace}
+            </label>
             <br />
             <h4 css={h4}>
               Picture ♥ <br />
@@ -339,7 +470,9 @@ export default function Map(props, create) {
                 height="80"
               >
               </img> */}
-            <label htmlFor>{rating}</label>
+            <label css={ratingSearch} htmlFor>
+              ⭐{rating}
+            </label>
             <br />
             <button
               css={minibutton}
@@ -353,7 +486,8 @@ export default function Map(props, create) {
                   price,
                   website,
                   openinghours,
-                  coordinates,
+                  latitude,
+                  longitude,
                 )
               }
             >
@@ -450,19 +584,19 @@ export function Search({
     <div css={search}>
       <Combobox onSelect={handleSelect}>
         <ComboboxInput
+          css={searchInput}
           value={value}
           onChange={handleInput}
           disabled={!ready}
-          placeholder="Enter an address"
+          placeholder="Enter your place"
         />
-        <ComboboxPopover>
+        <ComboboxPopover css={inputPopOver}>
           <ComboboxList>
             {status === 'OK' &&
               data.map(({ id, description }) => (
                 <ComboboxOption key={{ id }} value={description} />
               ))}
           </ComboboxList>
-          <Marker>Here!</Marker>
         </ComboboxPopover>
       </Combobox>
     </div>

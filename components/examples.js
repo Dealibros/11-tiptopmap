@@ -1,3 +1,99 @@
+<Locate panTo={panTo} />;
+{
+  props.restaurants.map(
+    (restaurant) => (
+      console.log('insideMarker', props.restaurants),
+      console.log('insideMarker2', restaurant),
+      (console.log('insideMarker3', restaurant.latitude),
+      (
+        <Marker
+          key={`${restaurant.id}`}
+          position={{
+            lat: Number(restaurant.latitude),
+            lng: Number(restaurant.longitude),
+          }}
+          icon={{
+            url: '/../Marker.png',
+            // url:'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+            // url: '/../public/Marker.png', //not working for some reason
+            // to load here a svg instead of the boring google one
+            scaledSize: new window.google.maps.Size(parseFloat(32, 27)), // for size
+            origin: new window.google.maps.Point(parseFloat(20, 20)),
+            anchor: new window.google.maps.Point(parseFloat(15, 15)), // not working?
+          }}
+          onClick={() => {
+            setSelected(marker);
+          }}
+        />
+      ))
+    ),
+  );
+}
+
+{
+  props.restaurants.map(
+    (restaurant) => (
+      console.log('insideMarker', props.restaurants),
+      console.log('insideMarker2', restaurant),
+      (console.log('insideMarker3', restaurant.latitude),
+      (
+        <Marker
+          key={`${restaurant.id}`}
+          position={{
+            lat: Number(restaurant.latitude),
+            lng: Number(restaurant.longitude),
+          }}
+          icon={{
+            // url: '/../Marker.png',
+            // url:'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+            // url: '/../public/Marker.png', //not working for some reason
+            // to load here a svg instead of the boring google one
+            scaledSize: new window.google.maps.Size(parseFloat(32, 27)), // for size
+            origin: new window.google.maps.Point(parseFloat(20, 20)),
+            anchor: new window.google.maps.Point(parseFloat(15, 15)), // not working?
+          }}
+          onClick={() => {
+            setSelected(marker);
+          }}
+        />
+      ))
+    ),
+  );
+}
+
+<Image key="someUrl" src={url} alt="images text" layout="fixed" />;
+
+{
+  <img
+    className="images"
+    src={`/images/${student.src ? student.src : 'noimage.png'}`}
+    alt={student.firstname}
+  />;
+}
+{
+  /* {src && (
+            <Image
+              className={url}
+              width={50}
+              height={50}
+              src={src}
+              alt="Avatar"
+            />
+          )} */
+}
+{
+  /* <Image src={url} alt="images text" layout="fixed" /> */
+}
+{
+  /* <Image
+            src={post.images[0].url}
+            alt={post.images[0].alternativeText}
+            width={376}
+            height={190}
+            layout="fixed"
+          /> */
+}
+
 // Database for Restaurants
 // Restaurant Id
 // Restaurant Name

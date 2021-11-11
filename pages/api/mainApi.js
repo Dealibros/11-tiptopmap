@@ -1,17 +1,3 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-// import React, {
-//   BrowserRouter as Router,
-//   Link,
-//   Route,
-//   Switch,
-//   useCallback,
-//   useEffect,
-//   useRef,
-//   useState,
-// } from 'react';
-import { search } from '../../components/onlyMap';
-import { getParsedCookie, setParsedCookie } from '../../util/cookies';
-
 export default async function GetInfo(req, res) {
   try {
     const idPlace = req.body.idPlace;
@@ -20,8 +6,6 @@ export default async function GetInfo(req, res) {
 
     const response = await fetch(url);
     const resJson = await response.json();
-
-    // console.log('hola2', req.body.idPlace);
 
     res.send(resJson);
     return {
@@ -37,29 +21,3 @@ export default async function GetInfo(req, res) {
     res.send(error);
   }
 }
-// if ('photos' in item) {
-//   image = `https://maps.googleapis.com/maps/api/place/photo?key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM&maxwidth=400&photoreference=${item.photos[0].photo_reference}`;
-// }
-
-// console.log('result', result);
-// const data = {
-//   status: resJson.status,
-// result: resJson.result.map((item) => {
-//   // let image = '';
-
-//   // if ('photos' in item) {
-//   //   image = item.photos[0];
-//   //   // image = `https:maps.googleapis.com/maps/api/place/photo?key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM&maxwidth=400&photoreference=${item.photos[0].photo_reference}`;
-//   // }
-//   console.log(item);
-//   return {
-// item,
-// formatted_address: item.formatted_address,
-// icon: item.icon,
-// name: item.name,
-// place_id: item.place_id,
-// image: image,
-//     };
-//   }),
-// };
-// res.send(data);

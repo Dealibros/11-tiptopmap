@@ -130,7 +130,8 @@ const searchResultInfoTop = css`
     margin: 0 0 0 0.9rem;
     font-weight: 300;
   }
-  h5 {
+  h5,
+  h6 {
     font-size: 0.7rem;
     margin: 0 0 0 0.9rem;
     padding: 0;
@@ -185,12 +186,21 @@ const description = css`
   color: gray;
 `;
 
+const rating = css`
+  font-size: 1.3rem;
+  font-weight: 600;
+`;
+
+const price = css`
+  font-size: 0.7rem !important;
+  font-weight: 600;
+`;
 export default function Home(props, { restaurants }) {
-  // console.log('eyyy', props.restaurants);
   const Map = dynamic(() => import('../components/onlyMap'), {
     ssr: false,
     isloading: 'Loading',
   });
+  // console.log('firstmaprestaurants', props.restaurants);
   return (
     <div>
       <Head>
@@ -224,7 +234,11 @@ export default function Home(props, { restaurants }) {
             </div>
           </section>
           <section css={rightMain}>
-            <Map css={mapDiv} />
+            <Map
+              coordinates={props.coordinates}
+              restaurants={props.restaurants}
+              css={mapDiv}
+            />
           </section>
         </main>
       </Layout>
@@ -234,12 +248,19 @@ export default function Home(props, { restaurants }) {
 }
 
 export function InfoCard(props, { restaurants }) {
-  // console.log(props.restaurants);
   return (
     <div>
       <div css={searchResult}>
         <div css={divforImg}>
-          <Image src="/../public/pizza2.jpg" layout="fill" objectFit="cover" />
+          <Image
+            className="images"
+            src={props.photo ? props.photo : '/../public/pizza2.jpg'}
+            alt="imageText"
+            layout="fill"
+            objectFit="cover"
+          />
+          ;
+          {/* <Image src="/../public/pizza2.jpg" layout="fill" objectFit="cover" /> */}
         </div>
         {/* <HeartIcon /> */}
 
@@ -248,6 +269,8 @@ export function InfoCard(props, { restaurants }) {
             <h3>{props.restaurants.restaurantname}</h3>
             <p>{props.restaurants.addressplace}</p>
             <h5>{props.restaurants.website}</h5>
+            <h6>{props.latitude}</h6>
+            <h6>{props.longitude}</h6>
             <hr css={space} />
             <p css={description}>{props.restaurants.descriptionplace}</p>
           </div>
@@ -255,12 +278,15 @@ export function InfoCard(props, { restaurants }) {
           <div css={searchResultInfoBottom}>
             <h3 css={searchResultStars}>
               <span>⭐</span>
-              <p>
+              <p css={rating}>
                 <strong>{props.restaurants.rating}</strong>
               </p>
             </h3>
             <h3 css={searchResultPrice}>
-              <p>{props.restaurants.price}</p>
+              <p css={price}>
+                <br />
+                {props.restaurants.price}
+              </p>
             </h3>
           </div>
         </div>
@@ -279,6 +305,7 @@ export async function getServerSideProps(context) {
     // Redirect the user when they have a session
     // token by returning an object with the `redirect` prop
     // https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
+
     return {
       redirect: {
         destination: '/login?returnTo=/map',
