@@ -421,19 +421,19 @@ export async function getRestaurantsData() {
 }
 
 export async function getRestaurant(id: number) {
-  const restaurant = await sql`
-    SELECT
-    *
-    FROM
-    restaurants
-    WHERE
-    id = ${id};
-    `;
+  const restaurants = await sql`
 
-  //   console.log('eooDB', restaurants);
-  //   console.log('eooDB', restaurants);
-  return restaurant.map((onerestaurant) => camelcaseKeys(onerestaurant));
-  // return camelcaseKeys(restaurant); // this is not working
+  SELECT
+  *
+  FROM
+  restaurants
+  WHERE
+  id = ${id};
+  `;
+
+  console.log('eooDB', restaurants);
+  // return restaurants.map((restaurant) => camelcaseKeys(restaurant));
+  return camelcaseKeys(restaurants); // this is not working
 }
 
 // To add into the Database the new restaurants added.
@@ -461,6 +461,32 @@ export async function createRestaurants({
   latitude: string;
   longitude: string;
 }) {
+  console.log(
+    'From DB',
+    restaurantname,
+    addressplace,
+    descriptionplace,
+    photo,
+    rating,
+    price,
+    website,
+    openinghours,
+    latitude,
+    longitude,
+  );
+  console.log(
+    'From DB',
+    restaurantname,
+    addressplace,
+    descriptionplace,
+    photo,
+    rating,
+    price,
+    website,
+    openinghours,
+    latitude,
+    longitude,
+  );
   const [restaurants] = await sql`
     INSERT INTO restaurants
       ( restaurantname, addressplace, descriptionplace, photo, rating, price, website, openinghours, latitude, longitude)

@@ -4,10 +4,12 @@ import { GetServerSidePropsContext } from 'next';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import Layout from '../components/Layout';
-import Map from '../components/onlyMap';
-import onlyMap from '../components/onlyMap';
+import Layout from '../../components/Layout';
+import Map from '../../components/onlyMap';
+import onlyMap from '../../components/onlyMap';
 
 const title = css`
   font-family: 'New Tegomin';
@@ -201,12 +203,40 @@ const price = css`
 const lineInfoCard = css`
   margin-bottom: 0;
 `;
+
+const a = css`
+  :link {
+    color: green;
+  }
+`;
+
 export default function Home(props, { restaurants }) {
-  const Map = dynamic(() => import('../components/onlyMap'), {
+  const [updateList, setUpdateList] = useState(props.restaurants);
+  // setupdateList(props.restaurants); => Error: Too many re-renders. React limits the number of renders to prevent an infinite loop. ?
+
+  // console.log('newstate', updateList);
+
+  const Map = dynamic(() => import('../../components/onlyMap'), {
     ssr: false,
     isloading: 'Loading',
   });
   // console.log('firstmaprestaurants', props.restaurants);
+  function fetchList() {
+    const refreshList = async () => {
+      const response = await fetch('/api/updatelist');
+      const newList = await response.json();
+
+      console.log('are you working updatedList?', newList);
+      setUpdateList(newList);
+
+      if ('errors' in newList) {
+        console.log(newList.errors);
+        return newList;
+      }
+    };
+    refreshList();
+  }
+
   return (
     <div>
       <Head>
@@ -225,22 +255,25 @@ export default function Home(props, { restaurants }) {
               <button css={rateButton}>Price</button>
             </div>
             <div css={infoCard}>
-              {props.restaurants?.map((restaurant, id) => (
-                <InfoCard key={restaurant.id} restaurants={restaurant} />
-              ))}
-              {/* // css={leftDiv}
-                // key={img}
-                // img={img}
-                // location={location}
-                // title={title}
-                // description={description}
-                // star={star}
-                // priceRange={priceRange}
-               */}
+              {updateList.map((restaurant) => {
+                return (
+                  <div key={restaurant.id}>
+                    <Link href={`/map/${restaurant.id}`}>
+                      <a css={a}>
+                        <InfoCard
+                          key={restaurant.id}
+                          restaurants={restaurant}
+                        />
+                      </a>
+                    </Link>
+                  </div>
+                );
+              })}
             </div>
           </section>
           <section css={rightMain}>
             <Map
+              fetchList={fetchList}
               coordinates={props.coordinates}
               restaurants={props.restaurants}
               css={mapDiv}
@@ -254,6 +287,11 @@ export default function Home(props, { restaurants }) {
 }
 
 export function InfoCard(props, { restaurants }) {
+  // const router = useRouter();
+
+  // destructuring from URL and  combine start and end Date
+  // for displaying dynamic  info from search bar and  format the data
+  // const { restaurant } = router.query;
   return (
     <div>
       <div css={searchResult}>
@@ -266,7 +304,6 @@ export function InfoCard(props, { restaurants }) {
             objectFit="cover"
           />
           ;
-          {/* <Image src="/../public/pizza2.jpg" layout="fill" objectFit="cover" /> */}
         </div>
         {/* <HeartIcon /> */}
 
@@ -275,8 +312,6 @@ export function InfoCard(props, { restaurants }) {
             <h3>{props.restaurants.restaurantname}</h3>
             <p>{props.restaurants.addressplace}</p>
             <h5>{props.restaurants.website}</h5>
-            <h6>{props.latitude}</h6>
-            <h6>{props.longitude}</h6>
             <hr css={space} />
             <p css={description}>{props.restaurants.descriptionplace}</p>
           </div>
@@ -303,7 +338,7 @@ export function InfoCard(props, { restaurants }) {
 }
 
 export async function getServerSideProps(context) {
-  const { getValidSessionByToken } = await import('../util/database');
+  const { getValidSessionByToken } = await import('../../util/database');
   const sessionToken = context.req.cookies.sessionToken;
   const session = await getValidSessionByToken(sessionToken);
   // console.log(session);
@@ -329,44 +364,12 @@ export async function getServerSideProps(context) {
   // });
   // console.log(context.req.headers.cookie);
 
-  const { getRestaurantsData } = await import('../util/database');
+  const { getRestaurantsData } = await import('../../util/database');
   const restaurants = await getRestaurantsData();
-  console.log('aha', restaurants);
+  // console.log('aha', restaurants);
   return {
     props: {
       restaurants,
     },
   };
 }
-
-//  return {
-//    props: {},
-//  };
-// const valueIdPlace = extra;
-// const url =
-//   'https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJc-yoiAcHbUcR3YoJUXXn4B4&fields=name%2Crating%2Cformatted_address%2Ctypes%2Cphoto&key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM&';
-
-// const res = await fetch(url);
-// const resJson = await res.json();
-// const data = {
-//   status: resJson.status,
-//   result: resJson.result,
-
-// if ('photos' in item)
-//   image = `https://maps.googleapis.com/maps/api/place/photo?key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM&maxwidth=400&photoreference=${item.photos[0].photo_reference}`
-// }
-
-// return {
-//   formatted_address: item.formatted_address,
-//   name: item.name,
-//   place_id: item.place_id,
-//   types: item.types,
-//   image: image,
-
-//     return {
-//     props: {
-//       data,
-//     },
-//   };
-// }
-//   };

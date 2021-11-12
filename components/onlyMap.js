@@ -137,10 +137,9 @@ export default function Map(props, create) {
   // To set up the much needed Markers
   const [markers, setMarkers] = useState([]);
   const [selected, setSelected] = useState(null);
-  const [points, setPoints] = useState();
   const [theAddress, setTheAddress] = useState(5);
   const [info, setInfo] = useState();
-  const [places, setPlaces] = useState();
+  const [selectedPlaces, setSelectedPlaces] = useState(null);
   const [idPlace, setIdPlace] = useState();
 
   // //////////////////Spot for the database adding/////////////////////
@@ -153,7 +152,6 @@ export default function Map(props, create) {
   const [price, setPrice] = useState('a');
   const [website, setWebsite] = useState('');
   const [openinghours, setOpeninghours] = useState('');
-  // const [coordinates, setCoordinates] = useState('');
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
 
@@ -226,20 +224,6 @@ export default function Map(props, create) {
         `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${result.photos[0].photo_reference}&key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM&`,
       );
 
-      // `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${result.photos[0].photo_reference}&sensor=false&key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM`;
-      // `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${result.photos[0].photo_reference}&key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM`;
-      // `https://maps.googleapis.com/maps/api/place/photo?key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM&maxwidth=400&photoreference=${result.photos[0].photo_reference}`;
-      // setPhoto(thePhoto);
-
-      // `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${result.photos[0].photo_reference}&sensor=false&key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM`;
-      // https://lh5.googleusercontent.com/p/AF1QipNE09IvEDwYMqsX4GyZ6gjfPnVEo3I4zofeb1QU=w1333-h1445-p-k-no`;
-
-      // https://lh5.googleusercontent.com/p/Aap_uEB0LBj2v9_a5KF2J4lkPffqNwaxhU-pmzctVNHa2nATjbwmFeVT8wSLXGXG9w7yOQUhpDRNqWBv-_zf0h7wiPt4Bsk9tfznm74BjzOevQLJIWBKA2Mn_mbLuXz-o66Pw12SAaCiN5AqqwUSxdwzk2BUAgBASDm9q1R5Uy4vskypQ03t
-
-      //maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${result.photos[0].photo_reference}&key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM` alt=''/>
-
-      // image = `https://maps.googleapis.com/maps/api/place/photo?key=${process.env.API_KEY}&maxwidth=400&photoreference=${item.photos[0].photo_reference}`;
-
       setRating(result.rating);
 
       if (result.price_level === 1) {
@@ -255,11 +239,6 @@ export default function Map(props, create) {
       setWebsite(result.website);
       setOpeninghours(result.opening_hours.weekday_text[0]);
       console.log(result.opening_hours.weekday_text);
-      // need to correct this format
-      // console.log(coordinates); not working, Keep in mind
-      // Keeps this for later position the markers.
-      console.log('coorde', result.geometry.location.lat);
-      console.log('coorde', result.geometry.location.lng);
       setLatitude(result.geometry.location.lat);
       setLongitude(result.geometry.location.lng);
 
@@ -274,26 +253,6 @@ export default function Map(props, create) {
   }, [idPlace]);
 
   console.log('a', props.restaurants);
-  // Again the UseEffect Issue
-
-  // if (idPlace) {
-  //   useEffect(() => {
-  //     props.restaurants?.map(
-  //       (restaurant, id) => console.log('que hay aca', restaurant),
-  //       console.log('b', props.restaurants),
-  //       console.log('queEs', props.restaurants),
-  //       console.log('queEs2', props.restaurant.latitude),
-  //       console.log('queEs3', props.restaurant.longitude),
-  //       setMarkers((current) => [
-  //         ...current,
-  //         {
-  //           // lat: props.restaurant.latitude,
-  //           // lng: props.restaurant.longitude,
-  //         },
-  //       ]),
-  //     );
-  //   }, [props.restaurants, idPlace]);
-  // }
 
   // //////////////////////////////////////////
 
@@ -314,6 +273,10 @@ export default function Map(props, create) {
   const image =
     'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
 
+  // trying to refresh the component
+  // const refreshPage = () => {
+  //   location.reload(false);
+  // };
   // /////////////////////////GOOGLE MAP///////////////////////////
 
   return (
@@ -402,19 +365,24 @@ export default function Map(props, create) {
             <br />
             <button
               css={minibutton}
-              onClick={() =>
-                create(
-                  restaurantname,
-                  addressplace,
-                  descriptionplace,
-                  photo,
-                  rating,
-                  price,
-                  website,
-                  openinghours,
-                  latitude,
-                  longitude,
-                )
+              onClick={
+                async () => {
+                  await create(
+                    restaurantname,
+                    addressplace,
+                    descriptionplace,
+                    photo,
+                    rating,
+                    price,
+                    website,
+                    openinghours,
+                    latitude,
+                    longitude,
+                  );
+                  props.fetchList();
+                }
+                // refreshPage(props.restaurants))
+                //  window.location.reload(false)
               }
             >
               +
@@ -422,12 +390,14 @@ export default function Map(props, create) {
           </div>
         </InfoWindow>
       ) : null}
+      //
+      //////////////////////////////////////////////////////////////////////////
+      //
       {/* Markers from restaurants saved in the Database */}
       {props.restaurants.map(
         (restaurant) => (
-          console.log('insideMarker', props.restaurants),
-          console.log('insideMarker2', restaurant),
-          (console.log('insideMarker3', restaurant.latitude),
+          console.log('restaurants', props.restaurants), // showing
+          console.log('restaurant1', restaurant), // showing
           (
             <Marker
               key={`id-list-${restaurant.id}`}
@@ -435,66 +405,58 @@ export default function Map(props, create) {
                 lat: Number(restaurant.latitude),
                 lng: Number(restaurant.longitude),
               }}
-              icon={{
-                // url: '/marker.png',
-                // url:'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-                // url: '/../public/Marker.png', //not working for some reason
-                // to load here a svg instead of the boring google one
-                scaledSize: new window.google.maps.Size(parseFloat(32, 27)), // for size
-                origin: new window.google.maps.Point(parseFloat(0, 0)),
-                anchor: new window.google.maps.Point(parseFloat(15, 15)), // not working?
-              }}
               onClick={() => {
-                {
-                  selected ? (
-                    <InfoWindow
-                      onCloseClick={() => setInfoOpen(true)}
-                      //look into this property
-                      // css={infowindow}
-                      position={{
-                        lat: Number(selected.lat),
-                        lng: Number(selected.lng),
-                      }}
-                      clickable={true}
-                      // setSelected={!null}
-                      infoWindow={open}
-                      // anchor={null}
-                      // disableAutoPan
-                      onCloseClick={() => {
-                        setSelected(null);
-                      }}
-                    >
-                      <div css={infoWindow}>
-                        <label css={titleSearch}>{restaurantname}</label>
-                        <br />
-                        <label css={addressSearch} htmlFor>
-                          {addressplace}
-                        </label>
-                        <br />
-                        <label css={descriptionSearch} htmlFor>
-                          {descriptionplace}
-                        </label>
-                        <br />
-                        <h4 css={h4}>
-                          Picture ♥ <br />
-                          <span role="img" l css={foodIcon}>
-                            🌮
-                          </span>
-                        </h4>
-                        <label css={ratingSearch} htmlFor>
-                          ⭐{rating}
-                        </label>
-                        <br />
-                      </div>
-                    </InfoWindow>
-                  ) : null;
-                }
+                setSelectedPlaces(restaurant);
+                console.log('selectedPlaces', selectedPlaces);
+                // {
+                //   selected ? (
+                //     <InfoWindow
+                //       onCloseClick={() => setInfoOpen(true)}
+                //       //look into this property
+                //       // css={infowindow}
+                //       position={{
+                //         lat: Number(selected.lat),
+                //         lng: Number(selected.lng),
+                //       }}
+                //       clickable={true}
+                //       // setSelected={!null}
+                //       infoWindow={open}
+                //       // anchor={null}
+                //       // disableAutoPan
+                //       onCloseClick={() => {
+                //         setSelected(null);
+                //       }}
+                //     >
+                //       <div css={infoWindow}>
+                //         <label css={titleSearch}>{restaurantname}</label>
+                //         <br />
+                //         <label css={addressSearch} htmlFor>
+                //           {addressplace}
+                //         </label>
+                //         <br />
+                //         <label css={descriptionSearch} htmlFor>
+                //           {descriptionplace}
+                //         </label>
+                //         <br />
+                //         <h4 css={h4}>
+                //           Picture ♥ <br />
+                //           <span role="img" l css={foodIcon}>
+                //             🌮
+                //           </span>
+                //         </h4>
+                //         <label css={ratingSearch} htmlFor>
+                //           ⭐{rating}
+                //         </label>
+                //         <br />
+                //       </div>
+                //     </InfoWindow>
+                //   ) : null;
+                // }
               }}
             />
-          ))
+          )
         ),
       )}
-      ;
       {/* if(typeof(InfoWindow) != 'undefined') {
                       InfoWindow.close();
                   }
@@ -507,6 +469,21 @@ export default function Map(props, create) {
             // anchor: new google.maps.Point(5, 58),
           }}
         /> */}
+      {console.log('sP', selectedPlaces)}
+      {/* {selectedPlaces && (
+        <InfoWindow
+          position={{
+            lat: selectedPlaces.latitude,
+            lng: selectedPlaces.longitude,
+          }}
+          onCloseClick={() => {
+            setSelectedPlaces(null);
+          }}
+        >
+          <div>hello</div>
+        </InfoWindow>
+      )
+      } */}
     </GoogleMap>
   );
 }
