@@ -9,17 +9,8 @@ export default async function handler(req, res) {
     return res.status(200).json(restaurantsdata);
   } else if (req.method === 'POST') {
     const body = req.body;
-    console.log('bodyistoo', body);
-    console.log('openinghours', body.openingHours);
+    console.log('bodyfromcreaterestaurantData', body);
 
-    // if (body.openingHours === undefined) {
-    //   body.openingHours === open
-    // } else {
-    //   body.openingHours === body.openingHours
-    // }
-
-    // database : onlyMaps
-    // chek with the database or onlymap
     const createRestaurantsData = await createRestaurants({
       restaurantname: body.restaurantName,
       addressplace: body.addressPlace,
@@ -28,7 +19,6 @@ export default async function handler(req, res) {
       rating: body.raTing,
       price: body.priCe,
       website: body.websiTe,
-      openinghours: body.openingHours,
       latitude: body.latituDe,
       longitude: body.longituDe,
     });

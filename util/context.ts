@@ -4,9 +4,7 @@ export function convertQueryValue(queryValue: string | string[] | undefined) {
   return parseInt(queryValue);
 }
 
-export function convertQueryValueString(
-  queryValue: string | string[] | undefined,
-) {
+export function convertQueryValueString(queryValue: string | string[]) {
   if (Array.isArray(queryValue)) return queryValue[0];
   if (typeof queryValue === 'undefined') return queryValue;
   return queryValue;

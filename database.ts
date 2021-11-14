@@ -3,10 +3,6 @@ import dotenvSafe from 'dotenv-safe';
 import postgres from 'postgres';
 import { Errors, Session, User, UserWithPasswordHash } from './types';
 
-// needs to check what is not needed here
-// good
-// finished
-
 // Read in the environment variables
 // in the .env file, making it possible
 // to connect to PostgreSQL
@@ -94,6 +90,7 @@ export async function getUser2(id: number) {
 
   return camelcaseKeys(user);
 }
+
 export async function getUserWithPasswordHashByUsername(username: string) {
   const [user] = await sql<[UserWithPasswordHash | undefined]>`
     SELECT
@@ -142,28 +139,8 @@ export async function getUserBySessionToken(sessionToken: string | undefined) {
   return user && camelcaseKeys(user);
 }
 
-// not sure about this one. its there
-// export async function createUser({
-//   name,
-//   favoriteColor,
-// }: {
-//   name: string;
-//   favoriteColor: string;
-// }) {
-//   const users = await sql`
-//     INSERT INTO users
-//       (name, favorite_color)
-//     VALUES
-//       (${name}, ${favoriteColor})
-//     RETURNING
-//       id,
-//       name,
-//       favorite_color;
-//   `;
-//   return camelcaseKeys(users[0]);
-// }
-
 // First Table to get new users in registration
+
 export async function insertUser({
   username,
   passwordHash,
@@ -189,12 +166,9 @@ export async function insertUser({
       firstname,
       lastname,
       email;
-
   `;
-
   return user;
 }
-// console.log(insertUser);
 
 export async function getUserByValidSessionToken(token: string) {
   if (!token) return undefined;
@@ -243,7 +217,41 @@ export async function insertSession(token: string, userId: number) {
 //   `;
 //   return camelcaseKeys(users[0]);
 // }
-// for the profile Keep it
+
+// ///////////////////////////////////////////////////////7
+// For the profile - Crud Functions
+
+export async function updateUser({
+  firstname,
+  lastname,
+  username,
+  email,
+}: {
+  firstname: string;
+  lastname: string;
+  username: string;
+  email: string;
+}) {
+  const users = await sql`
+    UPDATE
+      users
+    SET
+    firstname = ${firstname},
+    lastname = ${lastname},
+    username = ${username},
+    email = ${email}
+    WHERE
+      username = ${username}
+    RETURNING
+      id,
+      firstname,
+      lastname,
+      username,
+      email
+  `;
+  return camelcaseKeys(users[0]);
+}
+
 export async function deleteUserByUserName(username: string) {
   const users = await sql`
     DELETE FROM
@@ -255,6 +263,8 @@ export async function deleteUserByUserName(username: string) {
   `;
   return camelcaseKeys(users[0]);
 }
+
+// ///////////////////////////////////////////////////////////////////////77
 
 export async function getUserByUsernameAndToken(
   username?: string,
@@ -446,7 +456,6 @@ export async function createRestaurants({
   rating,
   price,
   website,
-  openinghours,
   latitude,
   longitude,
 }: {
@@ -457,42 +466,15 @@ export async function createRestaurants({
   rating: string;
   price: string;
   website: string;
-  openinghours: string;
   latitude: string;
   longitude: string;
 }) {
-  console.log(
-    'From DB',
-    restaurantname,
-    addressplace,
-    descriptionplace,
-    photo,
-    rating,
-    price,
-    website,
-    openinghours,
-    latitude,
-    longitude,
-  );
-  console.log(
-    'From DB',
-    restaurantname,
-    addressplace,
-    descriptionplace,
-    photo,
-    rating,
-    price,
-    website,
-    openinghours,
-    latitude,
-    longitude,
-  );
   const [restaurants] = await sql`
     INSERT INTO restaurants
-      ( restaurantname, addressplace, descriptionplace, photo, rating, price, website, openinghours, latitude, longitude)
+      ( restaurantname, addressplace, descriptionplace, photo, rating, price, website, latitude, longitude)
 
     VALUES
-      (${restaurantname}, ${addressplace}, ${descriptionplace}, ${photo},${rating}, ${price}, ${website}, ${openinghours}, ${latitude}, ${longitude})
+      (${restaurantname}, ${addressplace}, ${descriptionplace}, ${photo},${rating}, ${price}, ${website}, ${latitude}, ${longitude})
     RETURNING
       restaurantname,
       addressplace,
@@ -501,7 +483,6 @@ export async function createRestaurants({
       rating,
       price,
       website,
-      openinghours,
       latitude,
       longitude
   `;
@@ -514,7 +495,6 @@ export async function createRestaurants({
     rating,
     price,
     website,
-    openinghours,
     latitude,
     longitude,
   );

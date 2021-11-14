@@ -2,7 +2,9 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { convertQueryValueString } from '../../../util/context';
 import {
   deleteUserByUserName,
+  getUser,
   getUserByUsernameAndToken,
+  updateUser,
 } from '../../../util/database';
 import { Errors, User } from '../../../util/types';
 
@@ -15,6 +17,7 @@ export default async function singleUserHandler(
   res: NextApiResponse<SingleUserResponseType>,
 ) {
   // Retrieve username from the query string (the square bracket notation in the filename)
+  console.log('query', req.query);
   const username = convertQueryValueString(req.query.username);
   console.log('something here', username);
   // Retrieve the session token from the cookie that has been forwarded from the frontend (in getServerSideProps in the page component file)
@@ -25,8 +28,25 @@ export default async function singleUserHandler(
 
   console.log('inside', result);
 
+  if (req.method === 'GET') {
+    const user = await getUser(username);
+    console.log('user', user);
+
+    return res.status(200).json({ user: user });
+    // } else if (req.method === 'PUT') {
+    //   const user = await updateUser(
+    //     username,
+    //     req.body.id,
+    //     req.body.firstname,
+    //     req.body.lastname,
+
+    //     // req.body.email,
+    //   );
+    // return res.status(200).json({ user: user });
+  }
+
   // Delete user
-  if (req.method === 'DELETE') {
+  else if (req.method === 'DELETE') {
     if (username) {
       await deleteUserByUserName(username);
     }
@@ -35,7 +55,7 @@ export default async function singleUserHandler(
   // If we have received an array of errors, set the
   // response accordingly
   if (Array.isArray(result)) {
-    return res.status(403).json;
+    return res.status(405).json;
   }
 
   // If we've successfully retrieved a user, return that

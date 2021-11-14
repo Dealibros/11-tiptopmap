@@ -243,6 +243,7 @@ export default function Home(props, { restaurants }) {
           <section css={rightMain}>
             <Map
               fetchList={fetchList}
+              updateList={updateList}
               coordinates={props.coordinates}
               restaurants={props.restaurants}
               css={mapDiv}
@@ -279,7 +280,6 @@ export function InfoCard(props, { restaurants }) {
             <h3>{props.restaurants.restaurantname}</h3>
             <p>{props.restaurants.addressplace}</p>
             <h5>{props.restaurants.website}</h5>
-            <h5>{props.restaurants.openinghours}</h5>
 
             <hr css={space} />
             <p css={description}>{props.restaurants.descriptionplace}</p>

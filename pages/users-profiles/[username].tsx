@@ -1,22 +1,18 @@
 import { css } from '@emotion/react';
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 import Layout from '../../components/Layout';
 import { Errors, User } from '../../util/types';
 
-// import { SingleUserResponseType } from '../api/users-by-username/[username]';
-
 const contentContainer = css`
   background-image: url('./public/images/backgroundProfile/2.jpg');
-  margin-right: auto 0;
-  margin-left: auto 0;
   text-align: center;
   display: flex;
   flex-direction: row;
-  height: 87vh;
+  height: 85vh;
   justify-content: center;
   background-color: #e4e9f7;
   font-family: 'Caveat', cursive;
@@ -31,7 +27,6 @@ const contentContainer = css`
 const container = css`
   margin-right: auto 0 !important;
   margin-left: auto 0 !important;
-  text-align: center !important;
 
   h1 {
     font-family: 'New Tegomin';
@@ -52,67 +47,53 @@ const container = css`
     margin-top: 32px;
     width: 220px;
   }
+`;
 
-  .userInformation {
+const userInformation = css`
+  margin-top: -6rem;
+  margin-bottom: 2rem;
+  font-family: 'New Tegomin';
+  line-height: 50px;
+  font-size: 1.6rem;
+  font-weight: 700;
+  justify-content: center;
+  text-align: center;
+  p {
+    margin: 3.5px 0;
+    text-align: center;
+  }
+  input {
+    outline: none !important;
+    border-radius: 0.3rem;
     font-family: 'New Tegomin';
-    line-height: 47px;
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    p {
-      margin: 3.5px 0;
-    }
+    color: #beb0b0;
+    font-size: 1.7rem;
+    background-color: transparent;
+    border: none;
+    width: 12rem;
   }
 `;
 
+const theDiv = css`
+  text-align: center;
+`;
 export const pageContainer = css`
   font-family: 'New Tegomin';
+  /* display: block;*/
+  text-align: center;
   background-color: #fcfcfc;
-  padding: 15px 0 14px 0;
+  /* padding: 12px 0 14px 0; */
   border-radius: 2rem;
   width: 38vw;
+  max-height: 35rem;
   box-shadow: 3px 3px 2px var(--paper-shadow);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0;
-
+  margin-left: auto 0 !important;
+  margin-left: auto 0 !important;
+  justify-content: center;
+  text-align: center;
   @media (max-width: 768px) {
     padding: 96px 24px;
-  }
-`;
-
-export const wrapper = css`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-top: 6px;
-  @media (max-width: 450px) {
-    flex-direction: column-reverse;
-    padding-top: 12px;
-  }
-`;
-
-export const registrationForm = css`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 50%;
-  padding-bottom: 128px;
-  label {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    color: gray;
-    font-weight: 500;
-    input {
-      margin: 5px 0 20px 0;
-      width: 256px;
-      padding: 12px 8px;
-      transition: 0.3s ease-in-out;
-      :focus {
-        box-shadow: 0 0 10px grey;
-        outline: none !important;
-      }
-    }
   }
 `;
 
@@ -120,8 +101,8 @@ const button = css`
   background-color: #e4dcd1;
   width: 9.4rem;
   font-family: 'New Tegomin';
-  padding: 0.6rem 0 0.6rem 0;
-  margin: 1.8rem 1rem 1.5rem 1rem;
+  padding: 0.5rem 0 0.5rem 0;
+  margin: 2.2rem 1rem 2.8rem 1rem !important;
   font-size: 1rem;
   justify-content: center;
   align-items: center;
@@ -129,20 +110,23 @@ const button = css`
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 `;
 
-// ///////////////////////////////////////////////////////77
+const emailstyle = css`
+  margin-left: -2.7rem !important;
+`;
+// ///////////////////////////////////////////////////////
 
-// --paper-shadow: #c9bf8d;
 const paper = css`
+  --paper-shadow: #c9bf8d;
   text-align: center;
   --paper-dark: #e5c93d;
   --paper-color: #ffed87;
   position: relative;
-  top: 7rem;
+  top: 4rem;
   left: 5rem;
   display: flex;
   justify-content: center;
-  max-width: 145px;
-  min-height: 155px;
+  max-width: 140px;
+  min-height: 142px;
   background: linear-gradient(
     135deg,
     var(--paper-dark),
@@ -167,8 +151,8 @@ const paper2 = css`
   --paper-dark: #e5c93d;
   --paper-color: #e3ccee;
   position: relative;
-  bottom: 2rem;
-  left: 28rem;
+  bottom: -3rem;
+  left: 29rem;
   display: flex;
   justify-content: center;
   max-width: 135px;
@@ -293,18 +277,18 @@ const bottomCircle = css`
 const beCool = css`
   text-align: center;
   font-size: 0.3rem;
-  width: 80px;
-  height: 90px;
-  padding-bottom: 10px;
-  padding-top: 15px;
+  width: 75px;
+  height: 85px;
+  padding-bottom: 7px;
+  padding-top: 9px;
   border: 1px solid #ddd;
   background-size: cover;
   background-clip: content-box;
   background-color: #f66f6f;
   box-sizing: border-box;
   position: absolute;
-  right: 65rem;
-  bottom: -16rem;
+  right: 66rem;
+  bottom: -23rem;
   margin: auto;
   top: 1px;
   font: 50 0.9em/30px 'Oswald', sans-serif;
@@ -349,9 +333,23 @@ type Props = {
 };
 
 export type SingleUserResponseType = { user: User } | { errors: Errors[] };
-
 export default function SingleUserProfile(props: Props) {
   const router = useRouter();
+
+  const [edit, setEdit] = useState(true);
+  const [firstname, setFirstname] = useState(props.user.firstname);
+  const [lastname, setLastname] = useState(props.user.lastname);
+  const [username, setUsername] = useState(props.user.username);
+  const [email, setEmail] = useState(props.user.email);
+
+  const handleFirstnameChange = (event: React.FormEvent<HTMLInputElement>) =>
+    setFirstname(event.currentTarget.value);
+  const handleLastnameChange = (event: React.FormEvent<HTMLInputElement>) =>
+    setLastname(event.currentTarget.value);
+  const handleUsernameChange = (event: React.FormEvent<HTMLInputElement>) =>
+    setUsername(event.currentTarget.value);
+  const handleEmailChange = (event: React.FormEvent<HTMLInputElement>) =>
+    setEmail(event.currentTarget.value);
 
   // Show message if user not allowed
   const errors = props.errors;
@@ -363,7 +361,7 @@ export default function SingleUserProfile(props: Props) {
           <title>Error</title>
         </Head>
         <div css={pageContainer}>
-          <h1>Error: {errors}</h1>
+          <h1>Error: {errors[0]}</h1>
         </div>
       </Layout>
     );
@@ -417,30 +415,95 @@ export default function SingleUserProfile(props: Props) {
             </div>
 
             <div css={beCool}>Be cool.</div>
-            <div className="userInformation">
-              <p>Username: {props.user.username}</p>
-              <p>
-                Name: {props.user.firstname} {props.user.lastname}
-              </p>
-              <p>Email: {props.user.email}</p>
+            <div css={userInformation}>
+              <div css={theDiv}>
+                <p>
+                  Username:
+                  <span>
+                    <input
+                      onChange={handleUsernameChange}
+                      value={username}
+                      disabled={edit ? 'disabled' : ''}
+                    />
+                  </span>
+                </p>
+              </div>
+              <div css={theDiv}>
+                <p>
+                  Firstname:
+                  <span>
+                    <input
+                      onChange={handleFirstnameChange}
+                      value={firstname}
+                      disabled={edit ? 'disabled' : ''}
+                    />
+                  </span>
+                </p>
+              </div>
+              <div css={theDiv}>
+                <p>
+                  Lastname:
+                  <span>
+                    <input
+                      onChange={handleLastnameChange}
+                      value={lastname}
+                      disabled={edit ? 'disabled' : ''}
+                    />
+                  </span>
+                </p>
+              </div>
+              <div css={theDiv}>
+                <p css={emailstyle}>
+                  Email:
+                  <span>
+                    <input
+                      onChange={handleEmailChange}
+                      value={email}
+                      disabled={edit ? 'disabled' : ''}
+                    />
+                  </span>
+                </p>
+              </div>
             </div>
 
-            <button css={button}>
-              Edit account
-              {/* Edit Account */}
+            <button
+              css={button}
+              onClick={async () => {
+                if (edit) {
+                  // This is to allow changes
+                  setEdit(false);
+                } else {
+                  // This is to disable input and save changes
+                  setEdit(true);
+                  const response = await fetch(`/api/users/${props.username}`, {
+                    method: 'PUT',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      firstname: firstname,
+                      lastname: lastname,
+                      email: email,
+                      // csrfToken: props.csrfToken,
+                    }),
+                  });
+                  await response.json();
+                }
+              }}
+            >
+              {edit ? 'Edit Details' : 'Save Changes'}
             </button>
+
             <button
               css={button}
               onClick={async (event) => {
                 event.preventDefault();
-                if (
-                  !window.confirm(`Do you really want to delete your account?`)
-                ) {
+                if (!window.confirm(`Do you want to delete your account?`)) {
                   return;
                 }
 
                 const response = await fetch(
-                  `/api/users-by-username/${props.user.username}`,
+                  `/api/users/${props.user.username}`,
                   {
                     method: 'DELETE',
                     headers: {
@@ -472,8 +535,16 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   const user = await getUser(context.query.username);
 
-  console.log('notworking?', context.query.username);
+  console.log('notworking?', context.query.username); // is working, shows the username of the user
 
+  // const usersResponse = await fetch('http://localhost:3000/api/users');
+  // const users = await usersResponse.json();
+
+  // console.log('from gssp, users');
+
+  // return {
+  //   users,
+  // };
   // const response =
   // Since we're fetching on the server side,
   // the browser is not a part of this fetch
@@ -510,6 +581,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   return {
     props: {
       user,
+      // users,
       // json is an object with a user property OR an error property
       // if it has an error property, it's still rendering
       // ...json,

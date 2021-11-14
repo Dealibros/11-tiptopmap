@@ -9,7 +9,6 @@ exports.up = async function up(sql) {
 			rating varchar(100),
 			price varchar(10),
 			website varchar(150),
-			openinghours varchar(200),
 			latitude varchar(100),
       longitude varchar(100)
     )

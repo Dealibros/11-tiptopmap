@@ -284,7 +284,6 @@ export default function Card(props) {
                       <a>{props.restaurant[0].website}</a>
                     </Link>
                   </h5>
-                  {/* <h3>{props.restaurant[0].openinghours}</h3> */}
                   <hr css={space} />
                   <p css={description}>
                     {props.restaurant[0].descriptionplace}

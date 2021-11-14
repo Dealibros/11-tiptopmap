@@ -2,10 +2,7 @@ import { css } from '@emotion/react';
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/dist/client/router';
 import { useState } from 'react';
-// import Header from '../components/header';
 import Layout from '../components/Layout';
-// import { generateCsrfSecretByToken } from '../util/csrf';
-// import { getValidSessionByToken } from '../util/database';
 import { Errors } from '../util/types';
 import { RegisterResponse } from './api/register';
 

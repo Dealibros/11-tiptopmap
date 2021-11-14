@@ -218,32 +218,40 @@ export async function insertSession(token: string, userId: number) {
   return sessions.map((session) => camelcaseKeys(session))[0];
 }
 
-// export async function updateUserById(
-//   id: number,
-//   {
-//     name,
-//     favoriteColor,
-//   }: {
-//     name: string;
-//     favoriteColor: string;
-//   },
-// ) {
-//   const users = await sql`
-//     UPDATE
-//       users
-//     SET
-//       name = ${name},
-//       favorite_color = ${favoriteColor}
-//     WHERE
-//       id = ${id}
-//     RETURNING
-//       id,
-//       name,
-//       favorite_color;
-//   `;
-//   return camelcaseKeys(users[0]);
-// }
-// for the profile Keep it
+// -- // for the profile - Crud Functions
+
+export async function updateUser({
+  firstname,
+  lastname,
+  username,
+  email,
+}: {
+  firstname: string;
+  lastname: string;
+  username: string;
+  email: string;
+}) {
+  const users = await sql`
+  UPDATE
+    users
+  SET
+    firstname = ${firstname},
+    lastname = ${lastname},
+    username = ${username},
+    email = ${email}
+  WHERE
+    username = ${username}
+  RETURNING
+    id,
+    firstname,
+    lastname,
+    username,
+    email
+`;
+
+  return camelcaseKeys(users[0]);
+}
+
 export async function deleteUserByUserName(username: string) {
   const users = await sql`
     DELETE FROM
@@ -284,8 +292,8 @@ export async function getUserByUsernameAndToken(
   const users = await sql<[User | undefined]>`
     SELECT
       id,
-      first_name,
-      last_name,
+      firstname,
+      lastname,
       username,
       email
     FROM
@@ -446,7 +454,6 @@ export async function createRestaurants({
   rating,
   price,
   website,
-  openinghours,
   latitude,
   longitude,
 }: {
@@ -457,17 +464,15 @@ export async function createRestaurants({
   rating: string;
   price: string;
   website: string;
-  openinghours: string;
   latitude: string;
   longitude: string;
 }) {
-  // if (!openinghours) return undefined;
   const [restaurants] = await sql`
     INSERT INTO restaurants
-      ( restaurantname, addressplace, descriptionplace, photo, rating, price, website, openinghours, latitude, longitude)
+      ( restaurantname, addressplace, descriptionplace, photo, rating, price, website, latitude, longitude)
 
     VALUES
-      (${restaurantname}, ${addressplace}, ${descriptionplace}, ${photo},${rating}, ${price}, ${website}, ${openinghours}, ${latitude}, ${longitude})
+      (${restaurantname}, ${addressplace}, ${descriptionplace}, ${photo},${rating}, ${price}, ${website}, ${latitude}, ${longitude})
     RETURNING
       restaurantname,
       addressplace,
@@ -476,7 +481,6 @@ export async function createRestaurants({
       rating,
       price,
       website,
-      openinghours,
       latitude,
       longitude
   `;

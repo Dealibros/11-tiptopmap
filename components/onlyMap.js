@@ -17,6 +17,7 @@ import {
 } from '@react-google-maps/api';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import Image from 'next/image';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { RiContactsBookLine } from 'react-icons/ri';
 import usePlacesAutocomplete, {
@@ -26,7 +27,6 @@ import usePlacesAutocomplete, {
 } from 'use-places-autocomplete';
 import { getParsedCookie, setParsedCookie } from '../util/cookies';
 import mapStyles from './mapStyles';
-import SearchForm from './searchForm';
 
 // /////////////////////////DECLARATIONS///////////////////////////
 const minibutton = css`
@@ -72,8 +72,12 @@ const inputPopOver = css`
 `;
 
 const infoWindow = css`
-  text-align: center;
-  width: 260px;
+  :not(span) {
+    text-align: center;
+
+    margin-right: auto 0;
+    margin-left: auto 0;
+  }
 `;
 
 const titleSearch = css`
@@ -86,15 +90,16 @@ const titleSearch = css`
 const addressSearch = css`
   /* font-style: oblique; */
   font-size: 0.8rem;
-  margin-bottom: 0.1rem;
 `;
 const ratingSearch = css`
   font-weight: 500;
 `;
 
 const descriptionSearch = css`
-  font-size: 0.7;
+  font-size: 0.6;
   font-weight: 400;
+  width: 5rem;
+  text-align: right;
 `;
 
 const foodIcon = css`
@@ -103,6 +108,18 @@ const foodIcon = css`
 
 const h4 = css`
   margin: 0;
+`;
+
+const img = css`
+  border-radius: 10rem;
+  margin-right: 0.2rem;
+`;
+const displayWindow = css`
+  margin-bottom: 0.2rem;
+  margin-top: 0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const libraries = ['places'];
@@ -124,7 +141,8 @@ const options = {
   // zoomControl: false, // remove the bottom-right buttons look how to make them smaller
   // fullscreenControl: false, // remove the top-right button
 };
-
+const image =
+  'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
 // /////////////////////////MAIN FUNCTION MAP//////////////////////
 
 export default function Map(props, create) {
@@ -141,6 +159,9 @@ export default function Map(props, create) {
   const [info, setInfo] = useState();
   const [selectedPlaces, setSelectedPlaces] = useState(null);
   const [idPlace, setIdPlace] = useState();
+  const [refreshRestarurantsMarker, setRrefreshRestarurantsMarker] = useState(
+    props.restaurants,
+  );
 
   // //////////////////Spot for the database adding/////////////////////
   // same Db
@@ -151,7 +172,6 @@ export default function Map(props, create) {
   const [rating, setRating] = useState('');
   const [price, setPrice] = useState('a');
   const [website, setWebsite] = useState('');
-  const [openinghours, setOpeninghours] = useState('');
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
 
@@ -163,7 +183,6 @@ export default function Map(props, create) {
     raTing,
     priCe,
     websiTe,
-    openingHours,
     latituDe,
     longituDe,
   ) {
@@ -182,7 +201,6 @@ export default function Map(props, create) {
         raTing,
         priCe,
         websiTe,
-        openingHours,
         latituDe,
         longituDe,
       }),
@@ -209,21 +227,15 @@ export default function Map(props, create) {
       const resJson = await res.json();
       const result = resJson.result;
 
-      //  console.log('from the Api, missing right idplace', resJson);
-
-      console.log('whats this 2', result);
-      console.log('whats this 23', result.photos[0].photo_reference);
-
       setRestaurantname(result.name);
       console.log('restaurantname', restaurantname);
       setAddressplace(result.formatted_address);
 
-      if (result.reviews[1].text.length > 100) {
+      if (result.reviews[1].text.length > 70) {
         setDescriptionplace(result.reviews[2].text);
-      }
-      if (result.reviews[2].text.length > 100) {
+      } else if (result.reviews[2].text.length > 70) {
         setDescriptionplace(result.reviews[3].text);
-      } else setDescriptionplace(result.reviews[1].text);
+      } else if (setDescriptionplace('no reviews yet'));
 
       setPhoto(
         `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${result.photos[0].photo_reference}&key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM&`,
@@ -241,15 +253,11 @@ export default function Map(props, create) {
         setPrice('$$$$');
       }
 
-      setWebsite(result.website);
-
-      //need to find a way to pass the undefined if there is no oppening hours - need to find a way to show full week
-
-      // if (result.opening_hours === undefined) {
-      //   setOpeninghours('open');
-      // } else {
-      setOpeninghours(result.opening_hours.weekday_text[0]);
-      // }
+      if (result.website === undefined) {
+        setWebsite('No website available');
+      } else {
+        setWebsite(result.website);
+      }
 
       setLatitude(result.geometry.location.lat);
       setLongitude(result.geometry.location.lng);
@@ -285,10 +293,10 @@ export default function Map(props, create) {
   const image =
     'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
 
-  // trying to refresh the component
-  // const refreshPage = () => {
-  //   location.reload(false);
-  // };
+  console.log('refresh', refreshRestarurantsMarker);
+  // const newrefresh = [...refreshRestarurantsMarker, props.restaurant];
+  // setRefreshRestarurantsMarker(newrefresh);
+
   // /////////////////////////GOOGLE MAP///////////////////////////
 
   return (
@@ -319,14 +327,13 @@ export default function Map(props, create) {
             setSelected(marker);
           }}
           icon={{
-            // to load here a svg instead of the boring google one.
-            // Not working, check!!!
-            // url:'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-            // url: '/../public/Marker.png', //not working for some reason
-
-            scaledSize: new window.google.maps.Size(parseFloat(30, 30)), // for size
-            origin: new window.google.maps.Point(parseFloat(20, 20)),
-            anchor: new window.google.maps.Point(parseFloat(10, 15)), // not working?
+            url: '/marker.png',
+            // url: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+            // image,
+            // url: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+            // scaledSize: new window.google.maps.Size(parseFloat(30, 30)), // for size
+            // origin: new window.google.maps.Point(parseFloat(20, 20)),
+            // anchor: new window.google.maps.Point(parseFloat(10, 15)), // not working?
           }}
         />
       ))}
@@ -353,49 +360,42 @@ export default function Map(props, create) {
               {addressplace}
             </label>
             <br />
-            <label css={descriptionSearch} htmlFor>
-              {descriptionplace}
-            </label>
-            <br />
-            <h4 css={h4}>
-              Picture ♥ <br />
-              <span role="img" l css={foodIcon}>
-                🌮
-              </span>
-            </h4>
-            {/* <img
-                // css={miniImg}
-                alt="pizza"
-                // src="pizzaicon.jpg"
-                width="80"
-                height="80"
-              >
-              </img> */}
+
+            <div css={displayWindow}>
+              <br />
+              <Image
+                css={img}
+                className="images"
+                src={photo}
+                alt="restaurant-place"
+                height="90px"
+                width="90%"
+              />
+              <br />
+              <label css={descriptionSearch} htmlFor>
+                {descriptionplace}
+              </label>
+            </div>
             <label css={ratingSearch} htmlFor>
               ⭐{rating}
             </label>
             <br />
             <button
               css={minibutton}
-              onClick={
-                async () => {
-                  await create(
-                    restaurantname,
-                    addressplace,
-                    descriptionplace,
-                    photo,
-                    rating,
-                    price,
-                    website,
-                    openinghours,
-                    latitude,
-                    longitude,
-                  );
-                  props.fetchList();
-                }
-                // refreshPage(props.restaurants))
-                //  window.location.reload(false)
-              }
+              onClick={async () => {
+                await create(
+                  restaurantname,
+                  addressplace,
+                  descriptionplace,
+                  photo,
+                  rating,
+                  price,
+                  website,
+                  latitude,
+                  longitude,
+                );
+                props.fetchList();
+              }}
             >
               +
             </button>
@@ -406,69 +406,66 @@ export default function Map(props, create) {
       //////////////////////////////////////////////////////////////////////////
       //
       {/* Markers from restaurants saved in the Database */}
-      {props.restaurants.map(
-        (restaurant) => (
-          console.log('restaurants', props.restaurants), // showing
-          console.log('restaurant1', restaurant), // showing
-          (
-            <Marker
-              key={`id-list-${restaurant.id}`}
-              position={{
-                lat: Number(restaurant.latitude),
-                lng: Number(restaurant.longitude),
-              }}
-              onClick={() => {
-                setSelectedPlaces(restaurant);
-                console.log('selectedPlaces', selectedPlaces);
-                // {
-                //   selected ? (
-                //     <InfoWindow
-                //       onCloseClick={() => setInfoOpen(true)}
-                //       //look into this property
-                //       // css={infowindow}
-                //       position={{
-                //         lat: Number(selected.lat),
-                //         lng: Number(selected.lng),
-                //       }}
-                //       clickable={true}
-                //       // setSelected={!null}
-                //       infoWindow={open}
-                //       // anchor={null}
-                //       // disableAutoPan
-                //       onCloseClick={() => {
-                //         setSelected(null);
-                //       }}
-                //     >
-                //       <div css={infoWindow}>
-                //         <label css={titleSearch}>{restaurantname}</label>
-                //         <br />
-                //         <label css={addressSearch} htmlFor>
-                //           {addressplace}
-                //         </label>
-                //         <br />
-                //         <label css={descriptionSearch} htmlFor>
-                //           {descriptionplace}
-                //         </label>
-                //         <br />
-                //         <h4 css={h4}>
-                //           Picture ♥ <br />
-                //           <span role="img" l css={foodIcon}>
-                //             🌮
-                //           </span>
-                //         </h4>
-                //         <label css={ratingSearch} htmlFor>
-                //           ⭐{rating}
-                //         </label>
-                //         <br />
-                //       </div>
-                //     </InfoWindow>
-                //   ) : null;
-                // }
-              }}
-            />
-          )
-        ),
-      )}
+      {props.restaurants.map((restaurant) => (
+        <Marker
+          key={`id-list-${restaurant.id}`}
+          position={{
+            lat: Number(restaurant.latitude),
+            lng: Number(restaurant.longitude),
+          }}
+          async
+          onClick={() => {
+            setSelectedPlaces(restaurant);
+            console.log('selectedPlaces', selectedPlaces);
+            console.log('selected', selected);
+            {
+              //selectedPlaces is one behing in the console. Is not refreshing
+              selectedPlaces ? (
+                <InfoWindow
+                  onCloseClick={() => setInfoOpen(true)}
+                  //look into this property
+                  // css={infowindow}
+                  position={{
+                    lat: Number(selectedPlaces.lat),
+                    lng: Number(selectedPlaces.lng),
+                  }}
+                  clickable={true}
+                  // setSelected={!null}
+                  infoWindow={open}
+                  // anchor={null}
+                  // disableAutoPan
+                  onCloseClick={() => {
+                    setSelected(null);
+                  }}
+                >
+                  <div css={infoWindow}>
+                    <label css={titleSearch}>{restaurantname}</label>
+                    <br />
+                    <label css={addressSearch} htmlFor>
+                      {addressplace}
+                    </label>
+                    <br />
+                    <label css={descriptionSearch} htmlFor>
+                      {descriptionplace}
+                    </label>
+                    <br />
+                    <h4 css={h4}>
+                      Picture ♥ <br />
+                      <span role="img" l css={foodIcon}>
+                        🌮
+                      </span>
+                    </h4>
+                    <label css={ratingSearch} htmlFor>
+                      ⭐{rating}
+                    </label>
+                    <br />
+                  </div>
+                </InfoWindow>
+              ) : null;
+            }
+          }}
+        />
+      ))}
       {/* if(typeof(InfoWindow) != 'undefined') {
                       InfoWindow.close();
                   }

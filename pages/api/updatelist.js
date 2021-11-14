@@ -22,7 +22,6 @@ export default async function handler(req, res) {
     //   rating: body.raTing,
     //   price: body.priCe,
     //   website: body.websiTe,
-    //   openinghours: body.openingHours,
     //   latitude: body.latituDe,
     //   longitude: body.longituDe,
     // });
