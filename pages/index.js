@@ -26,23 +26,6 @@ const title = css`
   margin-bottom: 0;
 `;
 
-const button = css`
-  font-family: 'New Tegomin';
-  color: black;
-  border-radius: 10px;
-  border-color: black;
-  margin-top: 7rem;
-  width: 180px;
-  height: 55px;
-  background-color: #f3ecec;
-  border: black;
-  font-weight: 300;
-  font-size: 16px;
-  &:hover {
-    background-color: #c2a2e2;
-  }
-`;
-
 export default function Home(props) {
   useEffect(() => {
     props.refreshUsername();
@@ -64,14 +47,35 @@ export default function Home(props) {
             alt="someth"
           />
           <p css={title}>TopTip Map</p>
-          <Link href="/register">
-            <a>
-              <button css={button}>Register</button>
-            </a>
-          </Link>
           {/* <Image css={portadaStyle} src={portada} alt="portada" /> */}
         </main>
       </Layout>
     </div>
   );
 }
+
+// export async function getServerSideProps(context) {
+//   const { getValidSessionByToken } = await import('../util/database');
+
+//   const sessionToken = context.req.cookies.sessionToken;
+
+//   const session = await getValidSessionByToken(sessionToken);
+
+//   console.log(session);
+
+//   if (!session) {
+//     // Redirect the user when they have a session
+//     // token by returning an object with the `redirect` prop
+//     // https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
+//     return {
+//       redirect: {
+//         destination: '/login?returnTo=/map',
+//         permanent: false,
+//       },
+//     };
+//   }
+
+//   return {
+//     props: {},
+//   };
+// }

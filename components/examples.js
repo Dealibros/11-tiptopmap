@@ -1,4 +1,90 @@
 
+const divforImg = css`
+  display: inline-block;
+  margin-top: 1 rem;
+  filter: grayscale(70%);
+  text-shadow: 0.075em 0.08em 0.1em rgb(0 0 0);
+  color: white;
+
+  display: flex;
+  position: relative;
+  height: 240px;
+  width: 200px;
+  margin-left: 3rem;
+  margin-top: auto;
+  margin-bottom: auto;
+
+  :nth-of-type(4n + 3) {
+    transform: scale(0.8, 0.8) rotate(-5deg);
+    transition: all 0.35s;
+    /* height: 20%;
+    width: 47%;
+    bottom: 30px;
+    right: 12px; */
+    box-shadow: 0 2.1rem 2rem rgb(0 0 0 / 40%);
+  }
+`;
+
+const polaroid = css`
+  background: rgb(255, 255, 255);
+  padding: 3 rem;
+  box-shadow: 30px 20px 30px rgb(92 87 87);
+  height: 80%;
+  margin-left: 5 rem;
+  ::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    transition: all 0.35s;
+  }
+  :before {
+    transform: rotate(-6deg);
+    height: 20%;
+    width: 47%;
+    bottom: 30px;
+    right: 12px;
+    box-shadow: 0 2.1rem 2rem rgb(0 0 0 / 40%);
+    content: '';
+    position: absolute;
+    z-index: -1;
+    transition: all 0.35s;
+  }
+`;
+
+const img = css`
+  /* display: block; */
+  border-radius: 10px;
+  overflow: hidden;
+  a:after {
+    content: attr(title);
+  }
+`;
+
+const caption = css`
+  font-size: 6rem;
+  text-align: center;
+  line-height: 2rem;
+`;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // // from indide infoCard
 // from mini card
 

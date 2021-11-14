@@ -406,7 +406,6 @@ export async function deleteSessionByToken(token: string) {
 
   return sessions.map((session) => camelcaseKeys(session))[0];
 }
-// console.log(insertUser);
 
 // ///////////////////////Restaurant Databases///////////////////////////
 
@@ -422,6 +421,7 @@ export async function getRestaurantsData() {
 
 export async function getRestaurant(id: number) {
   const restaurant = await sql`
+
     SELECT
     *
     FROM
@@ -461,6 +461,7 @@ export async function createRestaurants({
   latitude: string;
   longitude: string;
 }) {
+  // if (!openinghours) return undefined;
   const [restaurants] = await sql`
     INSERT INTO restaurants
       ( restaurantname, addressplace, descriptionplace, photo, rating, price, website, openinghours, latitude, longitude)
@@ -479,18 +480,6 @@ export async function createRestaurants({
       latitude,
       longitude
   `;
-  console.log(
-    'From DB',
-    restaurantname,
-    addressplace,
-    descriptionplace,
-    photo,
-    rating,
-    price,
-    website,
-    openinghours,
-    latitude,
-    longitude,
-  );
+
   return camelcaseKeys(restaurants);
 }

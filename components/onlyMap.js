@@ -213,13 +213,18 @@ export default function Map(props, create) {
 
       console.log('whats this 2', result);
       console.log('whats this 23', result.photos[0].photo_reference);
-      console.log('eoooo', restaurantname);
-      console.log('price?', result.Price);
 
       setRestaurantname(result.name);
       console.log('restaurantname', restaurantname);
       setAddressplace(result.formatted_address);
-      setDescriptionplace(result.reviews[1].text);
+
+      if (result.reviews[1].text.length > 100) {
+        setDescriptionplace(result.reviews[2].text);
+      }
+      if (result.reviews[2].text.length > 100) {
+        setDescriptionplace(result.reviews[3].text);
+      } else setDescriptionplace(result.reviews[1].text);
+
       setPhoto(
         `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${result.photos[0].photo_reference}&key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM&`,
       );
@@ -237,8 +242,15 @@ export default function Map(props, create) {
       }
 
       setWebsite(result.website);
+
+      //need to find a way to pass the undefined if there is no oppening hours - need to find a way to show full week
+
+      // if (result.opening_hours === undefined) {
+      //   setOpeninghours('open');
+      // } else {
       setOpeninghours(result.opening_hours.weekday_text[0]);
-      console.log(result.opening_hours.weekday_text);
+      // }
+
       setLatitude(result.geometry.location.lat);
       setLongitude(result.geometry.location.lng);
 

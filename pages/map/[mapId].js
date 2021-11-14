@@ -1,154 +1,196 @@
-import { css, Global } from '@emotion/react';
-import axios from 'axios';
-import { GetServerSidePropsContext } from 'next';
-import dynamic from 'next/dynamic';
+import { css } from '@emotion/react';
 import Head from 'next/head';
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import DisqusThread from '../../components/disqusThread';
 import Layout from '../../components/Layout';
-import Map from '../../components/onlyMap';
-import onlyMap from '../../components/onlyMap';
+import StarRating from '../../components/StarRating';
 
 const title = css`
   font-family: 'New Tegomin';
-  margin-top: 1rem;
+  margin-top: 0.2rem;
   color: black;
   font-weight: 700;
-  font-size: 4.6rem;
+  font-size: 4.3rem;
   text-align: center;
   margin-bottom: 0;
 `;
 
+// positions the yellow card
 const secondMain = css`
   display: flex;
   width: 100%;
-  height: 90vh;
+  height: 95vh;
   margin-right: 0 auto;
   margin-left: 0 auto;
-  text-align: center;
   justify-content: center;
 `;
 
-const searchResult = css`
-  /* display: flex;
+const restaurantCard = css`
+  display: flex;
   position: relative;
-  margin: 6px 0 0 0;
-  padding: 10px 0 0 0;
+  margin: 0 0 0.7rem 0;
+  padding: 10px 0 0 1rem;
   border-bottom: 1px, solid lightgray;
   opacity: 1;
-  cursor: pointer; */
+  height: 40vh;
+`;
 
-  :hover {
-    opacity: 0.8;
+// const item = css`
+//   width: 32%;
+//   display: inline-block;
+//   filter: grayscale(50%);
+//   :before {
+//     content: '';
+//     position: absolute;
+//     z-index: -1;
+//     transition: all 0.35s;
+//   }
+//   :nth-of-type(4n + 1) {
+//     transform: scale(0.8, 0.8) rotate(-5deg);
+//     transition: all 0.35s;
+//   }
+//   & :nth-of-type(4n + 1) :before {
+//     transform: rotate(6deg);
+//     height: 20%;
+//     width: 67%;
+//     bottom: 30px;
+//     right: 12px;
+//     box-shadow: 0 2.1rem 2rem rgba(0, 0, 0, 0.4);
+//   }
+//   :hover {
+//     filter: none;
+//     transform: scale(1, 1) rotate(0deg) !important;
+//     transition: all 0.35s;
+//   }
+//   :hover :before {
+//     content: '';
+//     position: absolute;
+//     z-index: -1;
+//     transform: rotate(6deg);
+//     height: 90%;
+//     width: 90%;
+//     bottom: 0%;
+//     right: 5%;
+//     box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.2);
+//     transition: all 0.35s;
+//   }
+// `;
+
+// const polaroid = css`
+//   background: white;
+//   padding: 3rem;
+//   box-shadow: 30px 20px 30px rgb(92, 87, 87);
+//   height: 120%;
+//   width: 120%;
+//   margin-left: 5rem;
+//   :before {
+//     content: '';
+//     position: absolute;
+//     z-index: -1;
+//     transition: all 0.35s;
+//     transform: rotate(6deg);
+//     height: 20%;
+//     width: 60%;
+//     bottom: 30px;
+//     right: 12px;
+//     box-shadow: 0 2.1rem 2rem rgba(0, 0, 0, 0.4);
+//   }
+
+//   /* filter: grayscale(70%); */
+//   /* display: flex;
+//   position: relative;
+//   height: 250px;
+//   width: 240px;
+//   margin-left: 3rem;
+//   margin-top: auto;
+//   margin-bottom: auto; */
+//   img {
+//     position: absolute;
+//     max-width: 80%;
+//   }
+// `;
+
+const img = css`
+  margin-top: 1.5rem !important;
+  border-radius: 0.2rem;
+  /* margin-left: 1.2rem !important; */
+`;
+
+const restaurantCardInfoRight = css`
+  width: 54%;
+  margin: 0 1rem 0 1rem;
+  font-family: 'New Tegomin';
+  p {
+    margin: 0.3rem 0 0 0.9rem;
+    padding-bottom: 0.1rem;
+    padding-top: 0.3rem;
+    font-weight: 600;
+    font-size: 1.2rem;
+  }
+
+  h3 {
+    font-size: 0.5rem;
+    font-weight: 300;
+  }
+  h4 {
+    margin-top: 0.6rem;
+    font-size: 1.1rem;
+    text-align: center;
+    margin-bottom: 0.2rem;
+  }
+
+  h5,
+  h6 {
+    font-family: 'New Tegomin';
+    text-align: center;
+    font-size: 1rem;
+    margin: 0.2rem 1rem 0.3rem 0.3rem;
+    padding: 0;
+    color: gray;
   }
 `;
 
-const divforImg = css`
-  display: flex;
-  position: relative;
-  height: 165px;
-  width: 200px;
-  justify-content: center;
-  margin-right: auto;
-  margin-left: auto;
-  /* margin-left:20rem; */
-  /* margin-top: auto;
-  margin-bottom: auto;
+// const rateButton = css`
+//   text-align: center;
+//   font-weight: 400;
+//   font-size: 14px;
+//   border: 1px solid rgb(176, 176, 176);
+//   background-color: rgb(255, 255, 255);
+//   outline: none;
+//   margin: 0px;
+//   line-height: 18px;
+//   padding: 6px 16px;
+//   border-radius: 17px;
+//   margin: 0 0.7rem 0 0.7rem;
+//   cursor: pointer;
+// `;
 
-  /* flex-shrink: 0; */
-`;
-
-const column = css`
+const titleCard = css`
+  font-family: 'New Tegomin';
   text-align: center;
-  /* margin: 0 1rem 0 1rem; */
-  /* display: flex;
-  flex-direction: colum; */
+  margin: 1.2rem 0 0.3rem 0;
 `;
-
-const rateButton = css`
-  text-align: center;
-  font-weight: 400;
-  font-size: 14px;
-  border: 1px solid rgb(176, 176, 176);
-  background-color: rgb(255, 255, 255);
-  outline: none;
-  margin: 0px;
-  line-height: 18px;
-  padding: 6px 16px;
-  border-radius: 17px;
-  margin: 0 0.7rem 0 0.7rem;
-  cursor: pointer;
-`;
-
-const img = css`
-  border-radius: 10px;
-  overflow: hidden;
-`;
-/* :hover {
-    color: black;
-    background-color: lightgray;
-  } */
-
-/* padding: 0 1rem 0 1rem; */
 
 const infoCard = css`
   height: 60vh;
-  text-align: center;
   width: 50vw;
   background-color: beige;
-  border-radius: 0.9rem;
-  /* overflow: auto; */
-  /* width: 9.3rem;
-  display: flex; *6
-  /* flex-direction: column; */
-  /* flex-grow */
-  /* padding-top: 1.4rem; */
-  /* padding-left: 1.4rem; */
+  border-radius: 1.6rem;
+  margin-top: 0.7rem;
 `;
 
-const titleCard = css`
-  text-align: center;
-  /* margin: 0 0 0.4rem 0;
-
-  /* margin: 1rem 1.2rem 1rem 1.2rem; */
-`;
-
-// to change the staricon and price to the bottom take out the flex-column
-const searchResultInfo = css`
+// to change the starIcon and price to the bottom take out the flex-column
+const allInfoCard = css`
   background-color: beige;
   position: relative;
-  margin-right: 0 auto;
-  margin-left: 0 auto;
-  text-align: center;
-  /* width: 23vw; */
-  /* display: flex;
-  direction: column;
-  justify-content: space-between; */
-`;
+  padding: 0 0.5rem 2.2rem 0.5rem;
+  border-radius: 1.6rem;
 
-const searchResultInfoTop = css`
-  margin-right: 0 auto;
-  margin-left: 0 auto;
-  text-align: center;
-  /* p {
-    margin: 0 0 0 0.9rem;
-    padding-bottom: 0.1rem;
-    padding-top: 0;
-    font-weight: 300;
-    font-size: 13px;
-    color: gray;
+  input {
+    border-radius: 2rem;
   }
-  h3 {
-    font-size: 1.3rem;
-    margin: 0 0 0 0.9rem;
-    font-weight: 300;
-  }
-  h5,
-  h6 {
-    font-size: 0.7rem;
-    margin: 0 0 0 0.9rem;
-    padding: 0;
-  } */
 `;
 
 const space = css`
@@ -157,35 +199,52 @@ const space = css`
   padding: 0;
 `;
 
-const searchResultStars = css`
-  /* display: flex;
-  align-items: center; */
-  /* font-size: 0.5rem; */
-`;
-const searchResultPrice = css`
-  /* font-size: 0.5rem;
-  text-align: right; */
-`;
-
 const description = css`
-  color: gray;
+  font-family: 0.7rem;
 `;
 
 const rating = css`
-  /* font-size: 1.3rem;
-  font-weight: 600; */
+  text-align: center;
 `;
 
-const price = css`
-  /* font-size: 0.7rem !important;
-  font-weight: 600; */
-`;
+// const price = css`
+//   padding-right: 0.5rem;
+//   font-size: 0.1rem;
+//   text-align: right;
+// `;
 
 const lineInfoCard = css`
-  margin-bottom: 0;
+  color: lightgray;
+  width: 65%;
+  margin-top: 2rem;
+  margin-bottom: 0.4rem;
 `;
+
+const mainChat = css`
+  margin-right: auto;
+  margin-left: auto;
+  font-family: 'New Tegomin' !important;
+  max-width: 46rem !important;
+  margin: 0.9rem, 0.4rem 1.9rem 1.9rem !important;
+  padding: 2.1rem 2rem 2rem 2.2rem !important;
+  max-height: 30vh !important;
+  overflow-y: scroll;
+  border-radius: 0.6rem !important;
+`;
+
 export default function Card(props) {
   // console.log('firstmaprestaurants', props.restaurants);
+  const showComments = () => {
+    return (
+      <div>
+        <DisqusThread
+          id={props.restaurant.id}
+          title={props.restaurant.restaurantname}
+          path={`/map/${props.restaurant.id}`}
+        />
+      </div>
+    );
+  };
   return (
     <div>
       <Head>
@@ -199,39 +258,48 @@ export default function Card(props) {
         <main css={secondMain}>
           <div css={infoCard}>
             {' '}
-            <div css={searchResultInfo}>
-              <h1 css={titleCard}> Restaurants </h1>
-
-              <div css={divforImg}>
-                {' '}
-                <Image
-                  css={img}
-                  className="images"
-                  heigh="150px"
-                  width="150px"
-                  src={props.restaurant[0].photo}
-                  alt="restaurant-place"
-                  layout="fill"
-                />
-                {/* <Image src="/../public/pizza2.jpg" layout="fill" objectFit="cover" /> */}
+            <h1 css={titleCard}>{props.restaurant[0].restaurantname}</h1>
+            <div css={allInfoCard}>
+              <div css={restaurantCard}>
+                <div className="item">
+                  <div className="polaroid">
+                    {' '}
+                    <Image
+                      css={img}
+                      className="images"
+                      src={props.restaurant[0].photo}
+                      alt="restaurant-place"
+                      height="278px"
+                      width="243px" //
+                    />
+                    <div className="caption">
+                      {props.restaurant[0].restaurantname}
+                    </div>
+                  </div>
+                </div>
+                <div css={restaurantCardInfoRight}>
+                  <h4>{props.restaurant[0].addressplace}</h4>
+                  <h5>
+                    <Link href={props.restaurant[0].website}>
+                      <a>{props.restaurant[0].website}</a>
+                    </Link>
+                  </h5>
+                  {/* <h3>{props.restaurant[0].openinghours}</h3> */}
+                  <hr css={space} />
+                  <p css={description}>
+                    {props.restaurant[0].descriptionplace}
+                  </p>
+                  <StarRating css={rating} />
+                  {/* <h3 css={price}>
+                    <h3 css={price}>{props.restaurant[0].price}</h3>
+                  </h3> */}
+                </div>
               </div>
-              <h3>{props.restaurant[0].restaurantname}</h3>
-              <p>{props.restaurant[0].addressplace}</p>
-              <h5>{props.restaurant[0].website}</h5>
-              <hr css={space} />
-              <p css={description}>{props.restaurant[0].descriptionplace}</p>
-
-              <h3 css={searchResultStars}>
-                <span>⭐</span>
-              </h3>
-              <h3 css={searchResultPrice}>
-                <p css={price}>
-                  <br />
-                  {props.restaurant[0].price}
-                </p>
-              </h3>
+              <hr css={lineInfoCard} />
+              <div css={mainChat}>
+                <div>{showComments()}</div>
+              </div>
             </div>
-            <hr css={lineInfoCard} />
           </div>
         </main>
       </Layout>
@@ -268,25 +336,3 @@ export async function getServerSideProps(context) {
     },
   };
 }
-
-//   const { getRestaurantsData } = await import('../../util/database');
-//   const restaurants = await getRestaurantsData();
-//   console.log('aha', restaurants);
-//   return {
-//     props: {
-//       restaurants,
-//     },
-//   };
-// }
-
-// Why is this one not working????
-//   const { getRestaurant } = await import('../../util/database');
-
-//   const restaurant = await getRestaurant(context.query.restaurantname);
-//   console.log('singlePage', restaurant);
-//   return {
-//     props: {
-//       restaurant,
-//     },
-//   };
-// }

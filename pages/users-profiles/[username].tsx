@@ -9,30 +9,81 @@ import { Errors, User } from '../../util/types';
 
 // import { SingleUserResponseType } from '../api/users-by-username/[username]';
 
-export const pageContainer = css`
-  font-family: 'New Tegomin';
-  background-color: white;
-  padding-top: 128px;
-  padding-left: 128px;
-  padding-right: 128px;
-  @media (max-width: 768px) {
-    padding: 96px 24px;
+const contentContainer = css`
+  background-image: url('./public/images/backgroundProfile/2.jpg');
+  margin-right: auto 0;
+  margin-left: auto 0;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  height: 87vh;
+  justify-content: center;
+  background-color: #e4e9f7;
+  font-family: 'Caveat', cursive;
+  font-size: 1.5rem;
+  --paper-shadow: #c9bf8d;
+
+  @media (max-width: 450px) {
+    flex-direction: column;
   }
 `;
 
-export const pageContainerWhite = css`
-  background-color: white;
-  height: 100vh;
-  padding-top: 100px;
-  padding-left: 128px;
-  padding-right: 128px;
+const container = css`
+  margin-right: auto 0 !important;
+  margin-left: auto 0 !important;
+  text-align: center !important;
+
+  h1 {
+    font-family: 'New Tegomin';
+    margin: 1rem 0 0.9rem 0;
+    color: gray;
+  }
+  @media (max-width: 450px) {
+    width: 100%;
+  }
+  h3 {
+    margin-bottom: 6px;
+  }
+  @media (max-width: 768px) {
+    margin-right: 12px;
+  }
+  @media (max-width: 450px) {
+    margin-right: 0px;
+    margin-top: 32px;
+    width: 220px;
+  }
+
+  .userInformation {
+    font-family: 'New Tegomin';
+    line-height: 47px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    p {
+      margin: 3.5px 0;
+    }
+  }
+`;
+
+export const pageContainer = css`
+  font-family: 'New Tegomin';
+  background-color: #fcfcfc;
+  padding: 15px 0 14px 0;
+  border-radius: 2rem;
+  width: 38vw;
+  box-shadow: 3px 3px 2px var(--paper-shadow);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0;
+
+  @media (max-width: 768px) {
+    padding: 96px 24px;
+  }
 `;
 
 export const wrapper = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 64px;
+  padding-top: 6px;
   @media (max-width: 450px) {
     flex-direction: column-reverse;
     padding-top: 12px;
@@ -63,73 +114,233 @@ export const registrationForm = css`
       }
     }
   }
-  button {
-    color: purple;
-    display: flex;
-    font-size: 2rem;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    border-radius: 6rem;
-    padding: 5rem;
-  }
 `;
 
-export const imageContainer = css`
-  width: 50%;
-  @media (max-width: 450px) {
-    padding-top: 32px;
-  }
-  img {
-    width: 90%;
-  }
+const button = css`
+  background-color: #e4dcd1;
+  width: 9.4rem;
+  font-family: 'New Tegomin';
+  padding: 0.6rem 0 0.6rem 0;
+  margin: 1.8rem 1rem 1.5rem 1rem;
+  font-size: 1rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 `;
 
-const contentContainer = css`
+// ///////////////////////////////////////////////////////77
+
+// --paper-shadow: #c9bf8d;
+const paper = css`
+  text-align: center;
+  --paper-dark: #e5c93d;
+  --paper-color: #ffed87;
+  position: relative;
+  top: 7rem;
+  left: 5rem;
   display: flex;
-  flex-direction: row;
-  height: 100vh;
-  @media (max-width: 450px) {
-    flex-direction: column;
+  justify-content: center;
+  max-width: 145px;
+  min-height: 155px;
+  background: linear-gradient(
+    135deg,
+    var(--paper-dark),
+    30%,
+    var(--paper-color)
+  );
+  box-shadow: 3px 3px 2px var(--paper-shadow);
+  transform: rotate(-30deg);
+  transform-origin: top left;
+
+  p {
+    margin: auto;
+  }
+
+  paper {
+    margin: 3rem;
   }
 `;
 
-const containerLeft = css`
-  width: 65%;
-  margin-right: 24px;
-  @media (max-width: 450px) {
-    width: 100%;
+const paper2 = css`
+  text-align: center;
+  --paper-dark: #e5c93d;
+  --paper-color: #e3ccee;
+  position: relative;
+  bottom: 2rem;
+  left: 28rem;
+  display: flex;
+  justify-content: center;
+  max-width: 135px;
+  min-height: 135px;
+  background: linear-gradient(
+    -135deg,
+    var(--paper-dark),
+    -30%,
+    var(--paper-color)
+  );
+  box-shadow: 3px 3px 2px var(--paper-shadow);
+  transform: rotate(10deg);
+  transform-origin: top right;
+
+  p {
+    margin: auto;
   }
-  h3 {
-    margin-bottom: 64px;
+
+  paper {
+    margin: 3rem;
   }
-    @media (max-width: 768px) {
-      margin-right: 12px;
-    }
-    @media (max-width: 450px) {
-      margin-right: 0px;
-      margin-top: 32px;
-      width: 220px;
-    }
-  }
-  .userInformation {
-    margin-bottom: 64px;
-    p {
-      margin: 6px 0;
+`;
+
+const pin = css`
+  --pin-color: #d02627;
+  --pin-dark: #a54b4d;
+  --pin-light: #fc7e7d;
+
+  position: absolute;
+  left: 20px;
+  width: 60px;
+  height: 50px;
+`;
+
+const pin2 = css`
+  --pin-color: #d02627;
+  --pin-dark: #a54b4d;
+  --pin-light: #fc7e7d;
+
+  position: absolute;
+  left: 50px;
+  width: 60px;
+  height: 50px;
+`;
+
+const shadow = css`
+  position: absolute;
+  top: 18px;
+  left: -8px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: radial-gradient(var(--paper-shadow), 20%, rgba(201, 191, 141, 0));
+`;
+
+const metal = css`
+  position: absolute;
+  width: 5px;
+  height: 20px;
+  background: linear-gradient(to right, #808080, 40%, #eae8e8, 50%, #808080);
+  border-radius: 0 0 30% 30%;
+  transform: rotate(50deg);
+  transform-origin: bottom left;
+  top: 15px;
+  border-bottom: 1px solid #808080;
+`;
+
+const bottomCircle = css`
+  position: absolute;
+  right: 15px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: var(--pin-color);
+  background: radial-gradient(
+    circle at bottom right,
+    var(--pin-light),
+    25%,
+    var(--pin-dark),
+    90%,
+    var(--pin-color)
+  );
+
+  ::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -2px;
+    width: 20px;
+    height: 30px;
+    transform: rotate(55deg);
+    transform-origin: 100% 100%;
+    border-radius: 0 0 40% 40%;
+    background: linear-gradient(
+      to right,
+      var(--pin-dark),
+      30%,
+      var(--pin-color),
+      90%,
+      var(--pin-light)
+    );
+
+    bottomCircle::after {
+      content: '';
+      position: absolute;
+      right: -10px;
+      top: -5px;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle at right,
+        var(--pin-light),
+        30%,
+        var(--pin-color),
+        var(--pin-dark) 80%
+      );
     }
   }
 `;
 
-const containerRight = css`
-  width: 35%;
-  padding-top: 48px;
-  @media (max-width: 450px) {
-    width: 100%;
+const beCool = css`
+  text-align: center;
+  font-size: 0.3rem;
+  width: 80px;
+  height: 90px;
+  padding-bottom: 10px;
+  padding-top: 15px;
+  border: 1px solid #ddd;
+  background-size: cover;
+  background-clip: content-box;
+  background-color: #f66f6f;
+  box-sizing: border-box;
+  position: absolute;
+  right: 65rem;
+  bottom: -16rem;
+  margin: auto;
+  top: 1px;
+  font: 50 0.9em/30px 'Oswald', sans-serif;
+  color: #fbfbfb;
+  text-indent: 20px;
+  transform: rotate(-10deg);
+  transform-origin: top left;
+
+  :after {
+    content: '';
+    display: block;
+    position: absolute;
+    border: 40px solid transparent;
+    border-bottom: 50px solid #fefefe;
+    bottom: -69px;
+    right: -60px;
+    box-shadow: 0px 7px 6px -9px black;
+    transform: rotate(135deg);
   }
-  img {
-    width: 100%;
+
+  :before {
+    content: '';
+    display: block;
+    position: absolute;
+    border: 50px solid transparent;
+    border-top: 50px solid #fefefe;
+    top: -90px;
+    left: -60px;
+    box-shadow: 0px -5px 6px -9px black;
+    transform: rotate(135deg);
   }
 `;
+
+/* Barrel */
+
+/* Top circle */
 
 type Props = {
   user: User;
@@ -159,7 +370,6 @@ export default function SingleUserProfile(props: Props) {
   }
 
   // Show message if user does not exist
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!props.user) {
     return (
       <Layout username={props.username}>
@@ -180,24 +390,47 @@ export default function SingleUserProfile(props: Props) {
           Profile page for {props.user.firstname} {props.user.lastname}
         </title>
       </Head>
-      <div css={pageContainer}>
-        <div css={contentContainer}>
-          <div css={containerLeft}>
-            <h1>Welcome, {props.user.firstname}!</h1>
 
-            <div className="userInformation">
-              <p>Username: {props.user.username}</p>
-              <p>First name: {props.user.firstname}</p>
-              <p>Last name: {props.user.lastname}</p>
+      <div css={contentContainer}>
+        <div css={container}>
+          <h1>Welcome, {props.user.firstname}!</h1>
+
+          <div css={pageContainer}>
+            <div css={paper}>
+              <div css={pin}>
+                <div css={shadow} />
+                <div css={metal} />
+                <div css={bottomCircle} />
+              </div>
+              <p>zoom call @4pm</p>
             </div>
 
-            {/* CREATE Seed */}
-            <button css="button">
-              Edit
+            <div css={paper2}>
+              <div css={pin2}>
+                <div css={shadow} />
+                <div css={metal} />
+                <div css={bottomCircle} />
+              </div>
+              <p>
+                Finish <br /> Project
+              </p>
+            </div>
+
+            <div css={beCool}>Be cool.</div>
+            <div className="userInformation">
+              <p>Username: {props.user.username}</p>
+              <p>
+                Name: {props.user.firstname} {props.user.lastname}
+              </p>
+              <p>Email: {props.user.email}</p>
+            </div>
+
+            <button css={button}>
+              Edit account
               {/* Edit Account */}
             </button>
             <button
-              css="button"
+              css={button}
               onClick={async (event) => {
                 event.preventDefault();
                 if (
@@ -228,9 +461,6 @@ export default function SingleUserProfile(props: Props) {
               <RiDeleteBin5Line /> Delete account
             </button>
           </div>
-          <div css={containerRight}>
-            <img src="/register.svg" css="Image" alt="welcome" />
-          </div>
         </div>
       </div>
     </Layout>
@@ -240,10 +470,10 @@ export default function SingleUserProfile(props: Props) {
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { getUser } = await import('../../util/database');
 
-  console.log(context.query.userId);
-
   const user = await getUser(context.query.username);
-  console.log();
+
+  console.log('notworking?', context.query.username);
+
   // const response =
   // Since we're fetching on the server side,
   // the browser is not a part of this fetch

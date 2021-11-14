@@ -1,15 +1,11 @@
-import { css, Global } from '@emotion/react';
-import axios from 'axios';
-import { GetServerSidePropsContext } from 'next';
+import { css } from '@emotion/react';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
+// import InfoCard from '../../components/InfoCard.js';
 import Layout from '../../components/Layout';
-import Map from '../../components/onlyMap';
-import onlyMap from '../../components/onlyMap';
 
 const title = css`
   font-family: 'New Tegomin';
@@ -59,7 +55,6 @@ const searchResult = css`
   }
 
   img {
-    border-radius: 10px;
     overflow: hidden;
   }
 `;
@@ -70,14 +65,10 @@ const divforImg = css`
   width: 200px;
   margin-top: auto;
   margin-bottom: auto;
-  /* flex-shrink: 0; */
 `;
 
 const column = css`
   text-align: center;
-  /* margin: 0 1rem 0 1rem; */
-  /* display: flex;
-  flex-direction: colum; */
 `;
 
 const rateButton = css`
@@ -93,38 +84,21 @@ const rateButton = css`
   border-radius: 17px;
   margin: 0 0.7rem 0 0.7rem;
   cursor: pointer;
-
-  /* :hover {
-    color: black;
-    background-color: lightgray;
-  } */
-
-  /* padding: 0 1rem 0 1rem; */
 `;
 
 const infoCard = css`
   height: 60vh;
   overflow: auto;
-  /* width: 9.3rem;
-  display: flex; *6
-  /* flex-direction: column; */
-  /* flex-grow */
-  /* padding-top: 1.4rem; */
-  /* padding-left: 1.4rem; */
 `;
 
 const titleCard = css`
   margin: 0 0 0.4rem 0;
   text-align: center;
-  /* margin: 1rem 1.2rem 1rem 1.2rem; */
 `;
 
 // to change the staricon and price to the bottom take out the flex-column
 const searchResultInfo = css`
   width: 23vw;
-  /* display: flex;
-  direction: column;
-  justify-content: space-between; */
 `;
 
 const searchResultInfoTop = css`
@@ -164,9 +138,6 @@ const searchResultInfoBottom = css`
       margin: 0 0 0 0;
       font-size: 0.5rem;
     }
-  }
-  h2 {
-    /* padding-bottom: 0.4rem; */
   }
 `;
 
@@ -212,15 +183,12 @@ const a = css`
 
 export default function Home(props, { restaurants }) {
   const [updateList, setUpdateList] = useState(props.restaurants);
-  // setupdateList(props.restaurants); => Error: Too many re-renders. React limits the number of renders to prevent an infinite loop. ?
-
-  // console.log('newstate', updateList);
 
   const Map = dynamic(() => import('../../components/onlyMap'), {
     ssr: false,
     isloading: 'Loading',
   });
-  // console.log('firstmaprestaurants', props.restaurants);
+
   function fetchList() {
     const refreshList = async () => {
       const response = await fetch('/api/updatelist');
@@ -246,6 +214,7 @@ export default function Home(props, { restaurants }) {
       </Head>
       <Layout username={props.username}>
         <p css={title}>TopTip Map</p>
+
         <main css={secondMain}>
           <section css={leftMain}>
             <h1 css={titleCard}> Restaurants </h1>
@@ -297,13 +266,11 @@ export function InfoCard(props, { restaurants }) {
       <div css={searchResult}>
         <div css={divforImg}>
           <Image
-            className="images"
             src={props.restaurants.photo}
             alt="restaurant-place"
             layout="fill"
             objectFit="cover"
           />
-          ;
         </div>
         {/* <HeartIcon /> */}
 
@@ -312,13 +279,17 @@ export function InfoCard(props, { restaurants }) {
             <h3>{props.restaurants.restaurantname}</h3>
             <p>{props.restaurants.addressplace}</p>
             <h5>{props.restaurants.website}</h5>
+            <h5>{props.restaurants.openinghours}</h5>
+
             <hr css={space} />
             <p css={description}>{props.restaurants.descriptionplace}</p>
           </div>
 
           <div css={searchResultInfoBottom}>
             <h3 css={searchResultStars}>
-              <span>⭐</span>
+              <span role="img" aria-label="Star">
+                ⭐
+              </span>
               <p css={rating}>
                 <strong>{props.restaurants.rating}</strong>
               </p>

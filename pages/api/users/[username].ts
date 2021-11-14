@@ -23,6 +23,8 @@ export default async function singleUserHandler(
   // Get either an array of errors OR a user
   const result = await getUserByUsernameAndToken(username, token);
 
+  console.log('inside', result);
+
   // Delete user
   if (req.method === 'DELETE') {
     if (username) {

@@ -5,13 +5,17 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-
           <link
             href="https://fonts.googleapis.com/css2?family=Alef:wght@700&display=swap"
             rel="stylesheet"
           />
           <link
             href="https://fonts.googleapis.com/css2?family=New+Tegomin&display=swap"
+            rel="stylesheet"
+          />
+
+          <link
+            href="http://fonts.cdnfonts.com/css/shaynes-handwriting"
             rel="stylesheet"
           />
         </Head>

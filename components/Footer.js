@@ -1,18 +1,5 @@
 import { css } from '@emotion/react';
 
-// const nav = css`
-// display:flex;
-// justify-content:center;
-// align-items:center;
-// gap: 5px;
-// background-color: black;
-// color:white;
-// flex-wrap: wrap;
-// justify-content: space-between;
-// list-style:none;
-
-// `;
-
 const footer = css`
   display: flex;
   background-color: black;
