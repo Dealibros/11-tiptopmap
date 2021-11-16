@@ -37,81 +37,6 @@ const restaurantCard = css`
   height: 40vh;
 `;
 
-// const item = css`
-//   width: 32%;
-//   display: inline-block;
-//   filter: grayscale(50%);
-//   :before {
-//     content: '';
-//     position: absolute;
-//     z-index: -1;
-//     transition: all 0.35s;
-//   }
-//   :nth-of-type(4n + 1) {
-//     transform: scale(0.8, 0.8) rotate(-5deg);
-//     transition: all 0.35s;
-//   }
-//   & :nth-of-type(4n + 1) :before {
-//     transform: rotate(6deg);
-//     height: 20%;
-//     width: 67%;
-//     bottom: 30px;
-//     right: 12px;
-//     box-shadow: 0 2.1rem 2rem rgba(0, 0, 0, 0.4);
-//   }
-//   :hover {
-//     filter: none;
-//     transform: scale(1, 1) rotate(0deg) !important;
-//     transition: all 0.35s;
-//   }
-//   :hover :before {
-//     content: '';
-//     position: absolute;
-//     z-index: -1;
-//     transform: rotate(6deg);
-//     height: 90%;
-//     width: 90%;
-//     bottom: 0%;
-//     right: 5%;
-//     box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.2);
-//     transition: all 0.35s;
-//   }
-// `;
-
-// const polaroid = css`
-//   background: white;
-//   padding: 3rem;
-//   box-shadow: 30px 20px 30px rgb(92, 87, 87);
-//   height: 120%;
-//   width: 120%;
-//   margin-left: 5rem;
-//   :before {
-//     content: '';
-//     position: absolute;
-//     z-index: -1;
-//     transition: all 0.35s;
-//     transform: rotate(6deg);
-//     height: 20%;
-//     width: 60%;
-//     bottom: 30px;
-//     right: 12px;
-//     box-shadow: 0 2.1rem 2rem rgba(0, 0, 0, 0.4);
-//   }
-
-//   /* filter: grayscale(70%); */
-//   /* display: flex;
-//   position: relative;
-//   height: 250px;
-//   width: 240px;
-//   margin-left: 3rem;
-//   margin-top: auto;
-//   margin-bottom: auto; */
-//   img {
-//     position: absolute;
-//     max-width: 80%;
-//   }
-// `;
-
 const img = css`
   margin-top: 1.5rem !important;
   border-radius: 0.2rem;
@@ -213,6 +138,11 @@ const mainChat = css`
 `;
 
 export default function Card(props) {
+  const [user_id, setUser_id] = useState(props.user_id);
+  const [restaurant_id, setRestaurant_id] = useState(props.restaurant_id);
+  console.log(props.user_id);
+  console.log('userid', user_id);
+  console.log('restaurantid', restaurant_id);
   const showComments = () => {
     return (
       <div>
@@ -267,7 +197,13 @@ export default function Card(props) {
                   <p css={description}>
                     {props.restaurant[0].descriptionplace}
                   </p>
-                  <StarRating css={rating} />
+                  <StarRating
+                    restaurant_id={restaurant_id}
+                    setRestaurant_id={setRestaurant_id}
+                    user_id={user_id}
+                    setUser_id={setUser_id}
+                    css={rating}
+                  />
                 </div>
               </div>
               <hr css={lineInfoCard} />
@@ -282,11 +218,13 @@ export default function Card(props) {
   );
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context, props) {
   const { getValidSessionByToken } = await import('../../util/database');
   const sessionToken = context.req.cookies.sessionToken;
   const session = await getValidSessionByToken(sessionToken);
-  // console.log(session);
+  console.log('sessionuser?', session);
+  // need to get the userId  from inside session.
+
   if (!session) {
     // Redirect the user when they have a session
     // token by returning an object with the `redirect` prop
@@ -302,11 +240,16 @@ export async function getServerSideProps(context) {
 
   const { getRestaurant } = await import('../../util/database');
   const restaurant = await getRestaurant(context.query.mapId);
-  console.log('context.query', context.query.mapId);
-  // console.log('aha', restaurant);
+  const restaurant_id = context.query.mapId;
+  const user_id = session.userId;
+  console.log('restaurantid', restaurant_id);
+  console.log('aha', restaurant);
+  console.log('userid', user_id);
   return {
     props: {
       restaurant,
+      restaurant_id,
+      user_id,
     },
   };
 }

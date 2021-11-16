@@ -173,7 +173,7 @@ export async function insertRatings({
   ratings: number;
 }) {
   const [rating] = await sql`
-   INSERT INTO users
+   INSERT INTO ratings
       (user_id, restaurant_id, ratings)
 
     VALUES

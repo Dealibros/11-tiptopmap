@@ -340,7 +340,6 @@ export default function Map(props, create) {
           icon={{
             url: 'images/icons/orange-dot2.png',
           }}
-          infoWindow
         />
       ))}
       {console.log('inforestaurant', infoRestaurant)};
@@ -417,7 +416,6 @@ export default function Map(props, create) {
           css={infoWindow}
           position={{ lat: selected.lat, lng: selected.lng }}
           clickable={true}
-          infoWindow={open}
           onCloseClick={() => {
             setSelected(null);
           }}

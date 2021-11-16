@@ -21,12 +21,15 @@ const ratingDiv = css`
 `;
 
 export default function StarRating(props) {
-  const [rating, setRating] = useState(null);
+  const [ratings, setRatings] = useState(null);
   const [hover, setHover] = useState(null);
+
+  console.log(props.restaurant_id);
+  console.log('ratingshere', ratings);
 
   return (
     <div css={ratingDiv}>
-      <p>Your rating is {rating}</p>
+      <p>Your rating is {ratings}</p>
       {[...Array(5)].map((star, i) => {
         const ratingValue = i + 1;
 
@@ -37,11 +40,11 @@ export default function StarRating(props) {
               type="radio"
               name="starRating"
               value={ratingValue}
-              onClick={() => setRating(ratingValue)}
+              onClick={() => setRatings(ratingValue)}
             />
             <FaStar
               css={stars}
-              color={ratingValue <= (hover || rating) ? '#ffc107' : '#90917E'}
+              color={ratingValue <= (hover || ratings) ? '#ffc107' : '#90917E'}
               key={star}
               size={35}
               onMouseEnter={() => setHover(ratingValue)}
@@ -54,7 +57,9 @@ export default function StarRating(props) {
                     'Content-Type': 'application/json',
                   },
                   body: JSON.stringify({
-                    ratings: rating,
+                    ratings: ratingValue,
+                    user_id: props.user_id,
+                    restaurant_id: Number(props.restaurant_id),
 
                     // csrfToken: props.csrfToken,
                   }),

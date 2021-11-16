@@ -14,7 +14,7 @@ export default async function handler(req, res) {
       restaurant_id: req.body.restaurant_id,
       ratings: req.body.ratings,
     });
-
+    console.log('bodyfrominsertrating', body);
     return res.status(200).json(createRatingsData);
   }
   return res.status(405);
