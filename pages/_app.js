@@ -65,7 +65,7 @@ export default function MyApp({ Component, pageProps }) {
         `}
       />
       <Head>
-        <link rel="icon" href="/favicon.svg" />
+        <link rel="icon" href="/images/sunshine.svg" />
       </Head>
       <Component
         {...pageProps}

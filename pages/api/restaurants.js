@@ -1,5 +1,3 @@
-// import axios from 'axios';
-// import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { createRestaurants, getRestaurantsData } from '../../util/database';
 
 export default async function handler(req, res) {

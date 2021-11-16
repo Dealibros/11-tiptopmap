@@ -20,7 +20,7 @@ const ratingDiv = css`
   }
 `;
 
-export default function StarRating() {
+export default function StarRating(props) {
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
 
@@ -47,6 +47,20 @@ export default function StarRating() {
               onMouseEnter={() => setHover(ratingValue)}
               onMouseLeave={() => setHover(null)}
               onBlur={() => void 0}
+              onClick={async () => {
+                const response = await fetch(`/api/users/ratings`, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                    ratings: rating,
+
+                    // csrfToken: props.csrfToken,
+                  }),
+                });
+                await response.json();
+              }}
             />
           </label>
         );

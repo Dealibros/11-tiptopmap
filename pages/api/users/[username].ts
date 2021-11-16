@@ -19,7 +19,7 @@ export default async function singleUserHandler(
   // Retrieve username from the query string (the square bracket notation in the filename)
   console.log('query', req.query);
   const username = convertQueryValueString(req.query.username);
-  console.log('something here', username);
+  console.log('something here?', username);
   // Retrieve the session token from the cookie that has been forwarded from the frontend (in getServerSideProps in the page component file)
   const token = convertQueryValueString(req.cookies.sessionToken);
 
@@ -33,16 +33,16 @@ export default async function singleUserHandler(
     console.log('user', user);
 
     return res.status(200).json({ user: user });
-    // } else if (req.method === 'PUT') {
-    //   const user = await updateUser(
-    //     username,
-    //     req.body.id,
-    //     req.body.firstname,
-    //     req.body.lastname,
+  } else if (req.method === 'PUT') {
+    const user = await updateUser({
+      username: username,
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      email: req.body.email,
 
-    //     // req.body.email,
-    //   );
-    // return res.status(200).json({ user: user });
+      // req.body.email,
+    });
+    return res.status(200).json({ user: user });
   }
 
   // Delete user

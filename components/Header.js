@@ -133,7 +133,7 @@ function Header(props) {
             </li>
             <li css={navLi}>
               <Link href="/about-us">
-                <a css={a}>About Us</a>
+                <a css={a}>Contact us</a>
               </Link>
             </li>
             {!props.username && (

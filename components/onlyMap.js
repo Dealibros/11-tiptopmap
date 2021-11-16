@@ -19,6 +19,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { FaDatabase } from 'react-icons/fa';
 import { RiContactsBookLine } from 'react-icons/ri';
 import usePlacesAutocomplete, {
   getDetails,
@@ -92,6 +93,7 @@ const addressSearch = css`
   font-size: 0.8rem;
 `;
 const ratingSearch = css`
+  margin-bottom: 0.4rem;
   font-weight: 500;
 `;
 
@@ -156,12 +158,14 @@ export default function Map(props, create) {
   const [markers, setMarkers] = useState([]);
   const [selected, setSelected] = useState(null);
   const [theAddress, setTheAddress] = useState(5);
-  const [info, setInfo] = useState();
+  const [infoRestaurant, setInfoRestaurant] = useState();
   const [selectedPlaces, setSelectedPlaces] = useState(null);
   const [idPlace, setIdPlace] = useState();
   const [refreshRestarurantsMarker, setRrefreshRestarurantsMarker] = useState(
     props.restaurants,
   );
+  console.log('markers', markers);
+  console.log('selected', selected);
 
   // //////////////////Spot for the database adding/////////////////////
   // same Db
@@ -261,9 +265,9 @@ export default function Map(props, create) {
 
       setLatitude(result.geometry.location.lat);
       setLongitude(result.geometry.location.lng);
-
-      console.log('coordelat', latitude);
-      console.log('coordelong', longitude);
+      console.log('are this the coordinates?', result.geometry.location);
+      console.log('coordelat', result.geometry.location.lat);
+      console.log('coordelong', result.geometry.location.lng);
 
       return {};
     };
@@ -318,37 +322,102 @@ export default function Map(props, create) {
         setIdPlace={setIdPlace}
       />
       <Locate panTo={panTo} />
+      {/* Markers from restaurants saved in the Database */}
+      {props.restaurants.map((restaurant) => (
+        <Marker
+          key={`id-list-${restaurant.id}`}
+          position={{
+            lat: Number(restaurant.latitude),
+            lng: Number(restaurant.longitude),
+          }}
+          onClick={() => {
+            setSelectedPlaces({
+              lat: Number(restaurant.latitude),
+              lng: Number(restaurant.longitude),
+            });
+            setInfoRestaurant(restaurant);
+          }}
+          icon={{
+            url: 'images/icons/orange-dot2.png',
+          }}
+          infoWindow
+        />
+      ))}
+      {console.log('inforestaurant', infoRestaurant)};
+      {console.log('hey', selectedPlaces)}
+      {
+        (selectedPlaces,
+        infoRestaurant ? (
+          <InfoWindow
+            css={infoWindow}
+            position={{
+              lat: selectedPlaces.lat,
+              lng: selectedPlaces.lng,
+            }}
+            clickable={true}
+            infoWindow={open}
+            onCloseClick={() => {
+              setInfoRestaurant(null);
+            }}
+            // options={{ pixelOffset: { width: 10, height: 10 } }}
+            // marker={{ selectedPlaces }}
+          >
+            <div css={infoWindow}>
+              <label css={titleSearch}>{infoRestaurant.restaurantname}</label>
+              <br />
+              <label css={addressSearch} htmlFor>
+                {infoRestaurant.addressplace}
+              </label>
+              <br />
+              <div css={displayWindow}>
+                <br />
+                <Image
+                  css={img}
+                  className="images"
+                  src={infoRestaurant.photo}
+                  alt="restaurant-place"
+                  height="90px"
+                  width="90%"
+                />
+                <br />
+                <label css={descriptionSearch} htmlFor>
+                  {infoRestaurant.descriptionplace}
+                  <br />
+                </label>
+              </div>
+              <span css={ratingSearch} htmlFor>
+                ⭐{infoRestaurant.rating}
+              </span>
+
+              <br />
+            </div>
+          </InfoWindow>
+        ) : null)
+      }
       {/* Markers for restaurants found through search */}
       {markers.map((marker) => (
         <Marker
           key={`${marker.lat}-${marker.lng}`}
           position={{ lat: marker.lat, lng: marker.lng }}
           onClick={() => {
-            setSelected(marker);
+            setSelected(marker); // on click stores the searched restaurant corrdinates on selected
           }}
-          icon={{
-            url: '/marker.png',
-            // url: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-            // image,
-            // url: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-            // scaledSize: new window.google.maps.Size(parseFloat(30, 30)), // for size
-            // origin: new window.google.maps.Point(parseFloat(20, 20)),
-            // anchor: new window.google.maps.Point(parseFloat(10, 15)), // not working?
-          }}
+          icon={
+            {
+              // url: 'images/icons/red-dot.png',
+            }
+          }
         />
+        //  map.event.trigger(ourMarker, 'click')
       ))}
+      {/* // selected search is only giving me the latitude and longitude */}
+      {console.log('selectedsearch', selected)}
       {selected ? (
         <InfoWindow
-          // css={infowindow}
+          css={infoWindow}
           position={{ lat: selected.lat, lng: selected.lng }}
-          // pixelOffset={new window.google.maps.Size(parseFloat(215, 265))}
-          //not working yet, to position the infowindow.
           clickable={true}
-          // setSelected={!null}
           infoWindow={open}
-          disableAutoPan={true}
-          // anchor={null}
-          // disableAutoPan
           onCloseClick={() => {
             setSelected(null);
           }}
@@ -403,96 +472,7 @@ export default function Map(props, create) {
         </InfoWindow>
       ) : null}
       //
-      //////////////////////////////////////////////////////////////////////////
-      //
-      {/* Markers from restaurants saved in the Database */}
-      {props.restaurants.map((restaurant) => (
-        <Marker
-          key={`id-list-${restaurant.id}`}
-          position={{
-            lat: Number(restaurant.latitude),
-            lng: Number(restaurant.longitude),
-          }}
-          async
-          onClick={() => {
-            setSelectedPlaces(restaurant);
-            console.log('selectedPlaces', selectedPlaces);
-            console.log('selected', selected);
-            {
-              //selectedPlaces is one behing in the console. Is not refreshing
-              selectedPlaces ? (
-                <InfoWindow
-                  onCloseClick={() => setInfoOpen(true)}
-                  //look into this property
-                  // css={infowindow}
-                  position={{
-                    lat: Number(selectedPlaces.lat),
-                    lng: Number(selectedPlaces.lng),
-                  }}
-                  clickable={true}
-                  // setSelected={!null}
-                  infoWindow={open}
-                  // anchor={null}
-                  // disableAutoPan
-                  onCloseClick={() => {
-                    setSelected(null);
-                  }}
-                >
-                  <div css={infoWindow}>
-                    <label css={titleSearch}>{restaurantname}</label>
-                    <br />
-                    <label css={addressSearch} htmlFor>
-                      {addressplace}
-                    </label>
-                    <br />
-                    <label css={descriptionSearch} htmlFor>
-                      {descriptionplace}
-                    </label>
-                    <br />
-                    <h4 css={h4}>
-                      Picture ♥ <br />
-                      <span role="img" l css={foodIcon}>
-                        🌮
-                      </span>
-                    </h4>
-                    <label css={ratingSearch} htmlFor>
-                      ⭐{rating}
-                    </label>
-                    <br />
-                  </div>
-                </InfoWindow>
-              ) : null;
-            }
-          }}
-        />
-      ))}
-      {/* if(typeof(InfoWindow) != 'undefined') {
-                      InfoWindow.close();
-                  }
-                  infowindow.open(map, marker);
-                  InfoWindow = infowindow;  */}
-      {/* <Marker
-          // position={{ panTo }}
-          icon={{
-            url: image,
-            // anchor: new google.maps.Point(5, 58),
-          }}
-        /> */}
-      {console.log('sP', selectedPlaces)}
-      {/* {selectedPlaces && (
-        <InfoWindow
-          position={{
-            lat: selectedPlaces.latitude,
-            lng: selectedPlaces.longitude,
-          }}
-          onCloseClick={() => {
-            setSelectedPlaces(null);
-          }}
-        >
-          <div>hello</div>
-        </InfoWindow>
-      )
-      } */}
+      ////////////////////////////////////////////////////////////////////////
     </GoogleMap>
   );
 }

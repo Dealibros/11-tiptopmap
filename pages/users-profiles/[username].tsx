@@ -12,7 +12,7 @@ const contentContainer = css`
   text-align: center;
   display: flex;
   flex-direction: row;
-  height: 85vh;
+  height: 89vh;
   justify-content: center;
   background-color: #e4e9f7;
   font-family: 'Caveat', cursive;
@@ -475,18 +475,22 @@ export default function SingleUserProfile(props: Props) {
                 } else {
                   // This is to disable input and save changes
                   setEdit(true);
-                  const response = await fetch(`/api/users/${props.username}`, {
-                    method: 'PUT',
-                    headers: {
-                      'Content-Type': 'application/json',
+                  const response = await fetch(
+                    `/api/users/${props.user.username}`,
+                    {
+                      method: 'PUT',
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({
+                        firstname: firstname,
+                        lastname: lastname,
+                        email: email,
+                        username: username,
+                        // csrfToken: props.csrfToken,
+                      }),
                     },
-                    body: JSON.stringify({
-                      firstname: firstname,
-                      lastname: lastname,
-                      email: email,
-                      // csrfToken: props.csrfToken,
-                    }),
-                  });
+                  );
                   await response.json();
                 }
               }}

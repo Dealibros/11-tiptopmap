@@ -163,6 +163,32 @@ export async function getUserBySessionToken(sessionToken: string | undefined) {
 //   return camelcaseKeys(users[0]);
 // }
 
+export async function insertRatings({
+  user_id,
+  restaurant_id,
+  ratings,
+}: {
+  user_id: number;
+  restaurant_id: number;
+  ratings: number;
+}) {
+  const [rating] = await sql`
+   INSERT INTO users
+      (user_id, restaurant_id, ratings)
+
+    VALUES
+      (${user_id}, ${restaurant_id}, ${ratings})
+
+    RETURNING
+      id,
+      user_id,
+      restaurant_id,
+      ratings
+  `;
+
+  return rating;
+}
+
 // First Table to get new users in registration
 export async function insertUser({
   username,
@@ -218,7 +244,7 @@ export async function insertSession(token: string, userId: number) {
   return sessions.map((session) => camelcaseKeys(session))[0];
 }
 
-// -- // for the profile - Crud Functions
+// for the profile - Crud Functions
 
 export async function updateUser({
   firstname,
@@ -231,7 +257,7 @@ export async function updateUser({
   username: string;
   email: string;
 }) {
-  const users = await sql`
+  const users = await sql<[User]>`
   UPDATE
     users
   SET

@@ -1,4 +1,11 @@
 
+         // 4
+            // url: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+            // image,
+            // url: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+            // scaledSize: new window.google.maps.Size(parseFloat(40, 40)), // for size
+            // origin: new window.google.maps.Point(parseFloat(20, 20)),
+            // anchor: new window.google.maps.Point(parseFloat(10, 15)), // not working?
 const divforImg = css`
   display: inline-block;
   margin-top: 1 rem;

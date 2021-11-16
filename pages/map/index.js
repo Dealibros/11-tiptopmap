@@ -56,6 +56,7 @@ const searchResult = css`
 
   img {
     overflow: hidden;
+    border-radius: 0.2rem;
   }
 `;
 
@@ -88,7 +89,7 @@ const rateButton = css`
 
 const infoCard = css`
   height: 60vh;
-  overflow: auto;
+  overflow-x: hidden !important;
 `;
 
 const titleCard = css`
@@ -96,7 +97,6 @@ const titleCard = css`
   text-align: center;
 `;
 
-// to change the staricon and price to the bottom take out the flex-column
 const searchResultInfo = css`
   width: 23vw;
 `;
@@ -148,8 +148,6 @@ const space = css`
 `;
 
 const searchResultStars = css`
-  /* display: flex;
-  align-items: center; */
   font-size: 0.5rem;
 `;
 const searchResultPrice = css`
@@ -181,7 +179,7 @@ const a = css`
   }
 `;
 
-export default function Home(props, { restaurants }) {
+export default function Home(props) {
   const [updateList, setUpdateList] = useState(props.restaurants);
 
   const Map = dynamic(() => import('../../components/onlyMap'), {
@@ -257,7 +255,7 @@ export default function Home(props, { restaurants }) {
 }
 
 export function InfoCard(props, { restaurants }) {
-  // const router = useRouter();
+
 
   // destructuring from URL and  combine start and end Date
   // for displaying dynamic  info from search bar and  format the data
@@ -273,7 +271,6 @@ export function InfoCard(props, { restaurants }) {
             objectFit="cover"
           />
         </div>
-        {/* <HeartIcon /> */}
 
         <div css={searchResultInfo}>
           <div css={searchResultInfoTop}>

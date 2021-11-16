@@ -123,7 +123,7 @@ const restaurantCardInfoRight = css`
   margin: 0 1rem 0 1rem;
   font-family: 'New Tegomin';
   p {
-    margin: 0.3rem 0 0 0.9rem;
+    margin: 0.3rem 0 0 1.6rem;
     padding-bottom: 0.1rem;
     padding-top: 0.3rem;
     font-weight: 600;
@@ -152,21 +152,6 @@ const restaurantCardInfoRight = css`
   }
 `;
 
-// const rateButton = css`
-//   text-align: center;
-//   font-weight: 400;
-//   font-size: 14px;
-//   border: 1px solid rgb(176, 176, 176);
-//   background-color: rgb(255, 255, 255);
-//   outline: none;
-//   margin: 0px;
-//   line-height: 18px;
-//   padding: 6px 16px;
-//   border-radius: 17px;
-//   margin: 0 0.7rem 0 0.7rem;
-//   cursor: pointer;
-// `;
-
 const titleCard = css`
   font-family: 'New Tegomin';
   text-align: center;
@@ -182,6 +167,7 @@ const infoCard = css`
 `;
 
 // to change the starIcon and price to the bottom take out the flex-column
+
 const allInfoCard = css`
   background-color: beige;
   position: relative;
@@ -207,12 +193,6 @@ const rating = css`
   text-align: center;
 `;
 
-// const price = css`
-//   padding-right: 0.5rem;
-//   font-size: 0.1rem;
-//   text-align: right;
-// `;
-
 const lineInfoCard = css`
   color: lightgray;
   width: 65%;
@@ -233,7 +213,6 @@ const mainChat = css`
 `;
 
 export default function Card(props) {
-  // console.log('firstmaprestaurants', props.restaurants);
   const showComments = () => {
     return (
       <div>
@@ -269,7 +248,7 @@ export default function Card(props) {
                       className="images"
                       src={props.restaurant[0].photo}
                       alt="restaurant-place"
-                      height="278px"
+                      height="273px"
                       width="243px" //
                     />
                     <div className="caption">
@@ -289,9 +268,6 @@ export default function Card(props) {
                     {props.restaurant[0].descriptionplace}
                   </p>
                   <StarRating css={rating} />
-                  {/* <h3 css={price}>
-                    <h3 css={price}>{props.restaurant[0].price}</h3>
-                  </h3> */}
                 </div>
               </div>
               <hr css={lineInfoCard} />
@@ -302,7 +278,6 @@ export default function Card(props) {
           </div>
         </main>
       </Layout>
-      {/* <onlyMap extra={extra} /> */}
     </div>
   );
 }
