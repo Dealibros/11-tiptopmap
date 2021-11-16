@@ -224,7 +224,7 @@ export default function Home(props) {
 
         <main css={secondMain}>
           <section css={leftMain}>
-            <h1 css={titleCard}> Your Places </h1>
+            <h1 css={titleCard}> The best Spots </h1>
             {/* <div css={column}>
               <button css={rateButton}>Rating</button>
               <button css={rateButton}>Type of Place</button>

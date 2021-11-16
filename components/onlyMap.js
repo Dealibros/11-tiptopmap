@@ -232,6 +232,11 @@ export default function Map(props, create) {
       console.log('restaurantname', restaurantname);
       setAddressplace(result.formatted_address);
 
+      // Comes a lot as undefined when changing countries/languages
+      // if (!result.reviews[1].text.length) {
+      //   setDescriptionplace;
+      //   ('No Reviews Available');
+      // }
       if (result.reviews[1].text.length > 70) {
         setDescriptionplace(result.reviews[2].text);
       } else if (result.reviews[2].text.length > 70) {
@@ -384,6 +389,25 @@ export default function Map(props, create) {
               <span css={ratingSearch} htmlFor>
                 ⭐{infoRestaurant.rating}
               </span>
+              <button
+                css={minibutton}
+                onClick={async () => {
+                  await create(
+                    restaurantname,
+                    addressplace,
+                    descriptionplace,
+                    photo,
+                    rating,
+                    price,
+                    website,
+                    latitude,
+                    longitude,
+                  );
+                  props.fetchList();
+                }}
+              >
+                +
+              </button>
 
               <br />
             </div>
@@ -443,7 +467,7 @@ export default function Map(props, create) {
             <label css={ratingSearch} htmlFor>
               ⭐{rating}
             </label>
-
+            <br />
             <button
               css={minibutton}
               onClick={async () => {

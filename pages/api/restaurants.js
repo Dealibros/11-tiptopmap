@@ -22,6 +22,11 @@ export default async function handler(req, res) {
     });
 
     return res.status(200).json(createRestaurantsData);
+    // eliminar restaurantes
+    // } else if (req.method === 'DELETE') {
+    //   if (restaurant) {
+    //     await deleteUserByUserName(username);
+    //   }
   }
   return res.status(405);
 }
