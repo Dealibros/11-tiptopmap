@@ -55,8 +55,16 @@ const searchResult = css`
   }
 
   img {
+    display: inline;
+    margin: 0 auto;
+    margin-left: -25%; //centers the image
+    height: 100%;
+    width: auto;
+
     overflow: hidden;
-    border-radius: 0.2rem;
+    border-radius: 0.3rem;
+    outline: 0.4px solid white !important;
+    outline-offset: -18px !important;
   }
 `;
 
@@ -68,24 +76,24 @@ const divforImg = css`
   margin-bottom: auto;
 `;
 
-const column = css`
-  text-align: center;
-`;
+// const column = css`
+//   text-align: center;
+// `;
 
-const rateButton = css`
-  text-align: center;
-  font-weight: 400;
-  font-size: 14px;
-  border: 1px solid rgb(176, 176, 176);
-  background-color: rgb(255, 255, 255);
-  outline: none;
-  margin: 0px;
-  line-height: 18px;
-  padding: 6px 16px;
-  border-radius: 17px;
-  margin: 0 0.7rem 0 0.7rem;
-  cursor: pointer;
-`;
+// const rateButton = css`
+//   text-align: center;
+//   font-weight: 400;
+//   font-size: 14px;
+//   border: 1px solid rgb(176, 176, 176);
+//   background-color: rgb(255, 255, 255);
+//   outline: none;
+//   margin: 0px;
+//   line-height: 18px;
+//   padding: 6px 16px;
+//   border-radius: 17px;
+//   margin: 0 0.7rem 0 0.7rem;
+//   cursor: pointer;
+// `;
 
 const infoCard = css`
   height: 60vh;
@@ -99,6 +107,7 @@ const titleCard = css`
 
 const searchResultInfo = css`
   width: 23vw;
+  margin-left: 0.5rem;
 `;
 
 const searchResultInfoTop = css`
@@ -107,7 +116,7 @@ const searchResultInfoTop = css`
     padding-bottom: 0.1rem;
     padding-top: 0;
     font-weight: 300;
-    font-size: 13px;
+    font-size: 13.9px;
     color: gray;
   }
   h3 {
@@ -129,14 +138,14 @@ const searchResultInfoBottom = css`
   margin-top: 0.8rem;
   p {
     margin: 0 0 0 0;
-    font-size: 0.6rem;
+    font-size: 0.8rem;
   }
   h3 {
     margin: 0 0 0 0.7rem;
-    font-size: 0.5rem;
+    font-size: 0.6rem;
     span {
       margin: 0 0 0 0;
-      font-size: 0.5rem;
+      font-size: 0.6rem;
     }
   }
 `;
@@ -148,10 +157,10 @@ const space = css`
 `;
 
 const searchResultStars = css`
-  font-size: 0.5rem;
+  font-size: 0.8rem;
 `;
 const searchResultPrice = css`
-  font-size: 0.5rem;
+  font-size: 0.8rem;
   text-align: right;
 `;
 
@@ -160,12 +169,12 @@ const description = css`
 `;
 
 const rating = css`
-  font-size: 1.3rem;
+  font-size: 1.6rem;
   font-weight: 600;
 `;
 
 const price = css`
-  font-size: 0.7rem !important;
+  font-size: 0.9rem !important;
   font-weight: 600;
 `;
 
@@ -215,12 +224,12 @@ export default function Home(props) {
 
         <main css={secondMain}>
           <section css={leftMain}>
-            <h1 css={titleCard}> Restaurants </h1>
-            <div css={column}>
+            <h1 css={titleCard}> Your Places </h1>
+            {/* <div css={column}>
               <button css={rateButton}>Rating</button>
               <button css={rateButton}>Type of Place</button>
               <button css={rateButton}>Price</button>
-            </div>
+            </div> */}
             <div css={infoCard}>
               {updateList.map((restaurant) => {
                 return (
@@ -255,8 +264,6 @@ export default function Home(props) {
 }
 
 export function InfoCard(props, { restaurants }) {
-
-
   // destructuring from URL and  combine start and end Date
   // for displaying dynamic  info from search bar and  format the data
   // const { restaurant } = router.query;

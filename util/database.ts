@@ -173,6 +173,18 @@ export async function insertRatings({
   ratings: number;
 }) {
   const [rating] = await sql`
+  SELECT
+  users.id,
+  restaurants.id,
+  ratings.id
+  FROM
+  users,
+  restaurants,
+  ratings
+  WHERE
+  users.id = user_id AND
+  restaurants.id = restaurants.id
+  // ???
    INSERT INTO ratings
       (user_id, restaurant_id, ratings)
 

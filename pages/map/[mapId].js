@@ -40,6 +40,7 @@ const restaurantCard = css`
 const img = css`
   margin-top: 1.5rem !important;
   border-radius: 0.2rem;
+
   /* margin-left: 1.2rem !important; */
 `;
 
@@ -179,7 +180,7 @@ export default function Card(props) {
                       src={props.restaurant[0].photo}
                       alt="restaurant-place"
                       height="273px"
-                      width="243px" //
+                      width="247px" //
                     />
                     <div className="caption">
                       {props.restaurant[0].restaurantname}
@@ -243,7 +244,6 @@ export async function getServerSideProps(context, props) {
   const restaurant_id = context.query.mapId;
   const user_id = session.userId;
   console.log('restaurantid', restaurant_id);
-  console.log('aha', restaurant);
   console.log('userid', user_id);
   return {
     props: {

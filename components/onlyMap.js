@@ -93,19 +93,17 @@ const addressSearch = css`
   font-size: 0.8rem;
 `;
 const ratingSearch = css`
-  margin-bottom: 0.4rem;
+  margin: -6rem 0 1.6rem 0;
   font-weight: 500;
+  text-align: top;
 `;
 
 const descriptionSearch = css`
   font-size: 0.6;
   font-weight: 400;
-  width: 5rem;
+  width: 6rem;
   text-align: right;
-`;
-
-const foodIcon = css`
-  font-size: 2rem;
+  margin-bottom: 0.5rem;
 `;
 
 const h4 = css`
@@ -117,7 +115,6 @@ const img = css`
   margin-right: 0.2rem;
 `;
 const displayWindow = css`
-  margin-bottom: 0.2rem;
   margin-top: 0.4rem;
   display: flex;
   align-items: center;
@@ -358,7 +355,6 @@ export default function Map(props, create) {
             onCloseClick={() => {
               setInfoRestaurant(null);
             }}
-            // options={{ pixelOffset: { width: 10, height: 10 } }}
             // marker={{ selectedPlaces }}
           >
             <div css={infoWindow}>
@@ -384,6 +380,7 @@ export default function Map(props, create) {
                   <br />
                 </label>
               </div>
+
               <span css={ratingSearch} htmlFor>
                 ⭐{infoRestaurant.rating}
               </span>
@@ -446,7 +443,7 @@ export default function Map(props, create) {
             <label css={ratingSearch} htmlFor>
               ⭐{rating}
             </label>
-            <br />
+
             <button
               css={minibutton}
               onClick={async () => {

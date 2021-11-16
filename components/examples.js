@@ -1,5 +1,32 @@
 
-         // 4
+        img {
+    display: inline;
+    margin: 0 auto;
+    margin-left: -25%; //centers the image
+    height: 100%;
+    width: auto;
+
+    overflow: hidden;
+    /* border-radius: 0.3rem; */
+    outline: 2px solid white !important;
+    outline-offset: -16px !important;
+  }
+`;
+
+const divforImg = css`
+  position: relative;
+  height: 165px;
+  width: 200px;
+  margin-top: auto;
+  margin-bottom: auto;
+
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+  z-index: -3;
+`;
+
+        // 4
             // url: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
             // image,
             // url: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
