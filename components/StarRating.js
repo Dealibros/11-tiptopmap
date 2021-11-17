@@ -23,8 +23,9 @@ const ratingDiv = css`
 export default function StarRating(props) {
   const [ratings, setRatings] = useState(null);
   const [hover, setHover] = useState(null);
-
-  console.log(props.restaurant_id);
+  console.log();
+  console.log('userId starcomponent', props.userId);
+  console.log('restaurants starcomponent', props.restaurantId);
   console.log('ratingshere', ratings);
 
   return (
@@ -51,15 +52,15 @@ export default function StarRating(props) {
               onMouseLeave={() => setHover(null)}
               onBlur={() => void 0}
               onClick={async () => {
-                const response = await fetch(`/api/users/ratings`, {
+                const response = await fetch(`/api/ratings`, {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json',
                   },
                   body: JSON.stringify({
                     ratings: ratingValue,
-                    user_id: props.user_id,
-                    restaurant_id: Number(props.restaurant_id),
+                    userId: props.userId,
+                    restaurantId: props.restaurantId,
 
                     // csrfToken: props.csrfToken,
                   }),

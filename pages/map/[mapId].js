@@ -139,11 +139,11 @@ const mainChat = css`
 `;
 
 export default function Card(props) {
-  const [user_id, setUser_id] = useState(props.user_id);
-  const [restaurant_id, setRestaurant_id] = useState(props.restaurant_id);
-  console.log(props.user_id);
-  console.log('userid', user_id);
-  console.log('restaurantid', restaurant_id);
+  const [userId, setUserId] = useState(props.userId);
+  const [restaurantId, setRestaurantId] = useState(props.restaurantId);
+  console.log('mapId page props', props.userId);
+  console.log('mapId page userId state', userId);
+  console.log('restaurantId mapId page', restaurantId); // number
   const showComments = () => {
     return (
       <div>
@@ -199,10 +199,10 @@ export default function Card(props) {
                     {props.restaurant[0].descriptionplace}
                   </p>
                   <StarRating
-                    restaurant_id={restaurant_id}
-                    setRestaurant_id={setRestaurant_id}
-                    user_id={user_id}
-                    setUser_id={setUser_id}
+                    restaurantId={restaurantId}
+                    setRestaurantId={setRestaurantId}
+                    userId={userId}
+                    setUserId={setUserId}
                     css={rating}
                   />
                 </div>
@@ -241,15 +241,15 @@ export async function getServerSideProps(context, props) {
 
   const { getRestaurant } = await import('../../util/database');
   const restaurant = await getRestaurant(context.query.mapId);
-  const restaurant_id = context.query.mapId;
-  const user_id = session.userId;
-  console.log('restaurantid', restaurant_id);
-  console.log('userid', user_id);
+  const restaurantId = Number(context.query.mapId);
+  const userId = session.userId;
+  console.log('restaurantId  gssp', restaurantId);
+  console.log('userId  gssp', userId);
   return {
     props: {
       restaurant,
-      restaurant_id,
-      user_id,
+      restaurantId,
+      userId,
     },
   };
 }

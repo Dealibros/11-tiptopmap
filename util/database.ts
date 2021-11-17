@@ -111,20 +111,6 @@ export async function getUserWithPasswordHashByUsername(username: string) {
   return user && camelcaseKeys(user);
 }
 
-// export async function getUserWithPasswordHashByUsername(username: string) {
-//   const [user] = await sql<[UserWithPasswordHash | undefined]>`
-//     SELECT
-//       id,
-//       username,
-//       password_hash
-//     FROM
-//       users
-//     WHERE
-//       username = ${username};
-//   `;
-//   return user && camelcaseKeys(user);
-// }
-
 export async function getUserBySessionToken(sessionToken: string | undefined) {
   if (!sessionToken) return undefined;
 
@@ -173,18 +159,6 @@ export async function insertRatings({
   ratings: number;
 }) {
   const [rating] = await sql`
-  SELECT
-  users.id,
-  restaurants.id,
-  ratings.id
-  FROM
-  users,
-  restaurants,
-  ratings
-  WHERE
-  users.id = user_id AND
-  restaurants.id = restaurants.id
-  // ???
    INSERT INTO ratings
       (user_id, restaurant_id, ratings)
 
@@ -199,6 +173,45 @@ export async function insertRatings({
   `;
 
   return rating;
+}
+
+// show ratings average
+
+// export async function getUserWithPasswordHashByUsername(username: string) {
+//   const [user] = await sql<[UserWithPasswordHash | undefined]>`
+//     SELECT
+//       id,
+//       username,
+//       password_hash
+//     FROM
+//       users
+//     WHERE
+//       username = ${username};
+//   `;
+//   return user && camelcaseKeys(user);
+// }
+export async function ratingsAverage() {
+  const ratings = await sql`
+  SELECT
+  ratings.ratings, AVG(ratings.ratings)
+  -- ratings.id as ratings_id,
+  -- ratings.ratings as ratings,
+  -- avg(ratings.ratings) as average_rating,
+  -- count(rating.ratings) as rating_count
+
+  FROM
+  ratings
+
+  WHERE
+
+  restaurant_id = ${restaurantId}
+
+  GROUP BY
+  restaurant_id
+
+`;
+
+  return camelcaseKeys(ratings);
 }
 
 // First Table to get new users in registration
@@ -300,6 +313,20 @@ export async function deleteUserByUserName(username: string) {
       username
   `;
   return camelcaseKeys(users[0]);
+}
+
+// delete restaurant button
+
+export async function deleteRestaurant(id: number) {
+  const restaurant = await sql`
+    DELETE FROM
+      restaurants
+    WHERE
+      id = ${id}
+    RETURNING
+      id
+      `;
+  return camelcaseKeys(restaurant[0]);
 }
 
 export async function getUserByUsernameAndToken(

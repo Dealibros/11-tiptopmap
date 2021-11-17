@@ -101,7 +101,7 @@ const infoCard = css`
 `;
 
 const titleCard = css`
-  margin: 0 0 0.4rem 0;
+  margin: 0 0 1rem 0;
   text-align: center;
 `;
 
@@ -211,6 +211,13 @@ export default function Home(props) {
     };
     refreshList();
   }
+  // console.log('list?', updateList);
+  // const city = updateList[0].addressplace;
+  // const theCity = city.split(' ').slice(-2)[0];
+  // const theRealCity = theCity.slice(0, -1);
+
+  // console.log(city);
+  // console.log(theCity);
 
   return (
     <div>

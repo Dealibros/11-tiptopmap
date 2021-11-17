@@ -243,6 +243,7 @@ export default function Map(props, create) {
         setDescriptionplace(result.reviews[3].text);
       } else if (setDescriptionplace('no reviews yet'));
 
+      setDescriptionplace(result.reviews[2].text);
       setPhoto(
         `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${result.photos[0].photo_reference}&key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM&`,
       );
@@ -389,7 +390,7 @@ export default function Map(props, create) {
               <span css={ratingSearch} htmlFor>
                 ⭐{infoRestaurant.rating}
               </span>
-              <button
+              {/* <button
                 css={minibutton}
                 onClick={async () => {
                   await create(
@@ -407,7 +408,7 @@ export default function Map(props, create) {
                 }}
               >
                 +
-              </button>
+              </button> */}
 
               <br />
             </div>
