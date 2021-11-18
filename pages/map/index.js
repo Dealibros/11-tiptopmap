@@ -63,8 +63,6 @@ const searchResult = css`
 
     overflow: hidden;
     border-radius: 0.3rem;
-    outline: 0.4px solid white !important;
-    outline-offset: -18px !important;
   }
 `;
 
@@ -75,25 +73,6 @@ const divforImg = css`
   margin-top: auto;
   margin-bottom: auto;
 `;
-
-// const column = css`
-//   text-align: center;
-// `;
-
-// const rateButton = css`
-//   text-align: center;
-//   font-weight: 400;
-//   font-size: 14px;
-//   border: 1px solid rgb(176, 176, 176);
-//   background-color: rgb(255, 255, 255);
-//   outline: none;
-//   margin: 0px;
-//   line-height: 18px;
-//   padding: 6px 16px;
-//   border-radius: 17px;
-//   margin: 0 0.7rem 0 0.7rem;
-//   cursor: pointer;
-// `;
 
 const infoCard = css`
   height: 60vh;
@@ -211,6 +190,7 @@ export default function Home(props) {
     };
     refreshList();
   }
+  // Maybe in Geocode
   // console.log('list?', updateList);
   // const city = updateList[0].addressplace;
   // const theCity = city.split(' ').slice(-2)[0];
@@ -231,12 +211,7 @@ export default function Home(props) {
 
         <main css={secondMain}>
           <section css={leftMain}>
-            <h1 css={titleCard}> The best Spots </h1>
-            {/* <div css={column}>
-              <button css={rateButton}>Rating</button>
-              <button css={rateButton}>Type of Place</button>
-              <button css={rateButton}>Price</button>
-            </div> */}
+            <h1 css={titleCard}> Your favouri Spots </h1>
             <div css={infoCard}>
               {updateList.map((restaurant) => {
                 return (
@@ -265,7 +240,6 @@ export default function Home(props) {
           </section>
         </main>
       </Layout>
-      {/* <onlyMap extra={extra} /> */}
     </div>
   );
 }
@@ -337,21 +311,20 @@ export async function getServerSideProps(context) {
     };
   }
 
-  // await fetch('http://localhost:3000/map', {
-  //   method: 'GET',
-  //   headers: {
-  //     // This forwards the cookie to the API route
-  //     cookie: context.req.headers.cookie || '',
-  //   },
-  // });
-  // console.log(context.req.headers.cookie);
-
   const { getRestaurantsData } = await import('../../util/database');
   const restaurants = await getRestaurantsData();
-  // console.log('aha', restaurants);
   return {
     props: {
       restaurants,
     },
   };
 }
+
+// await fetch('http://localhost:3000/map', {
+//   method: 'GET',
+//   headers: {
+//     // This forwards the cookie to the API route
+//     cookie: context.req.headers.cookie || '',
+//   },
+// });
+// console.log(context.req.headers.cookie);

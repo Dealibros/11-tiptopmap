@@ -400,7 +400,7 @@ export default function SingleUserProfile(props: Props) {
                 <div css={metal} />
                 <div css={bottomCircle} />
               </div>
-              <p>zoom call @4pm</p>
+              <p>zoom call @9am</p>
             </div>
 
             <div css={paper2}>

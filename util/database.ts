@@ -190,29 +190,31 @@ export async function insertRatings({
 //   `;
 //   return user && camelcaseKeys(user);
 // }
-export async function ratingsAverage() {
-  const ratings = await sql`
-  SELECT
-  ratings.ratings, AVG(ratings.ratings)
-  -- ratings.id as ratings_id,
-  -- ratings.ratings as ratings,
-  -- avg(ratings.ratings) as average_rating,
-  -- count(rating.ratings) as rating_count
 
-  FROM
-  ratings
+// I dont know how this exactly works!!
+// export async function ratingsAverage() {
+//   const ratings = await sql`
+//   SELECT
+//   ratings.ratings, AVG(ratings.ratings)
+//   -- ratings.id as ratings_id,
+//   -- ratings.ratings as ratings,
+//   -- avg(ratings.ratings) as average_rating,
+//   -- count(rating.ratings) as rating_count
 
-  WHERE
+//   FROM
+//   ratings
 
-  restaurant_id = ${restaurantId}
+//   WHERE
 
-  GROUP BY
-  restaurant_id
+//   restaurant_id = ${restaurantId}
 
-`;
+//   -- GROUP BY
+//   -- restaurant_id
 
-  return camelcaseKeys(ratings);
-}
+// `;
+
+//   return camelcaseKeys(ratings);
+// }
 
 // First Table to get new users in registration
 export async function insertUser({
@@ -316,9 +318,8 @@ export async function deleteUserByUserName(username: string) {
 }
 
 // delete restaurant button
-
 export async function deleteRestaurant(id: number) {
-  const restaurant = await sql`
+  const theRestaurant = await sql`
     DELETE FROM
       restaurants
     WHERE
@@ -326,7 +327,7 @@ export async function deleteRestaurant(id: number) {
     RETURNING
       id
       `;
-  return camelcaseKeys(restaurant[0]);
+  return camelcaseKeys(theRestaurant[0]);
 }
 
 export async function getUserByUsernameAndToken(
@@ -503,10 +504,7 @@ export async function getRestaurant(id: number) {
     id = ${id};
     `;
 
-  //   console.log('eooDB', restaurants);
-  //   console.log('eooDB', restaurants);
   return restaurant.map((onerestaurant) => camelcaseKeys(onerestaurant));
-  // return camelcaseKeys(restaurant); // this is not working
 }
 
 // To add into the Database the new restaurants added.

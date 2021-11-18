@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 
 const main = css`
+  padding: 0 11rem 0 11rem;
   text-align: center;
   margin-top: -1.9rem;
   width: 100vw;
@@ -25,6 +26,29 @@ const title = css`
   margin-bottom: 0;
 `;
 
+const mainText = css`
+  color: white;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  /* text-shadow: 0 0 2px #000; /* horizontal-offset vertical-offset 'blur' colour */
+  /* -moz-text-shadow: 0 0 2px #000;
+  -webkit-text-shadow: 0 0 2px #000; */
+  text-shadow:
+        /* first layer at 1px */ -1px -1px 0px #000,
+    0px -1px 0px #000, 1px -1px 0px #000, -1px 0px 0px #000, 1px 0px 0px #000,
+    -1px 1px 0px #000, 0px 1px 0px #000, 1px 1px 0px #000,
+    /* second layer at 2px */ -2px -2px 0px #000, -1px -2px 0px #000,
+    0px -2px 0px #000, 1px -2px 0px #000, 2px -2px 0px #000, 2px -1px 0px #000,
+    2px 0px 0px #000, 2px 1px 0px #000, 2px 2px 0px #000, 1px 2px 0px #000,
+    0px 2px 0px #000, -1px 2px 0px #000, -2px 2px 0px #000, -2px 1px 0px #000,
+    -2px 0px 0px #000, -2px -1px 0px #000;
+
+  border: 10px black;
+  font-family: 'New Tegomin';
+  font-weight: 600;
+  font-size: 2rem;
+  /* background-color: #a9a8d0; */
+`;
+
 export default function Home(props) {
   useEffect(() => {
     props.refreshUsername();
@@ -41,12 +65,17 @@ export default function Home(props) {
 
       <Layout username={props.username}>
         <main css={main}>
-          <image
-            src="https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"
-            alt="someth"
-          />
           <p css={title}>TopTip Map</p>
-          {/* <Image css={portadaStyle} src={portada} alt="portada" /> */}
+          <p css={mainText}>
+            {' '}
+            Save your Favourite spots.
+            <br />
+            Help Friends find their own. <br />
+            We can all learn from each other to improve our own trips. <br />
+            Use this map to showcase your favourite places, write reviews  of
+            your most memorable experiences and see where your friends have been
+            to help guide decisions on where to go next.
+          </p>
         </main>
       </Layout>
     </div>

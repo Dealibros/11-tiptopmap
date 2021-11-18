@@ -31,6 +31,7 @@ import mapStyles from './mapStyles';
 
 // /////////////////////////DECLARATIONS///////////////////////////
 const minibutton = css`
+  font-family: 'New Tegomin';
   border-radius: 0.4rem;
   text-align: center;
   margin-top: 0.5rem;
@@ -187,7 +188,6 @@ export default function Map(props, create) {
     latituDe,
     longituDe,
   ) {
-    // check await fetch(`${props.baseUrl}/api/cars`,
     const restaurantsResponse = await fetch(`/api/restaurants`, {
       method: 'POST',
       headers: {
@@ -390,25 +390,25 @@ export default function Map(props, create) {
               <span css={ratingSearch} htmlFor>
                 ⭐{infoRestaurant.rating}
               </span>
-              {/* <button
+              <br />
+              <button
                 css={minibutton}
                 onClick={async () => {
-                  await create(
-                    restaurantname,
-                    addressplace,
-                    descriptionplace,
-                    photo,
-                    rating,
-                    price,
-                    website,
-                    latitude,
-                    longitude,
-                  );
+                  const response = await fetch('api/restaurants', {
+                    method: 'DELETE',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      infoRestaurant: infoRestaurant,
+                    }),
+                  });
                   props.fetchList();
+                  await response.json();
                 }}
               >
-                +
-              </button> */}
+                Delete
+              </button>
 
               <br />
             </div>
@@ -491,7 +491,6 @@ export default function Map(props, create) {
           </div>
         </InfoWindow>
       ) : null}
-      //
       ////////////////////////////////////////////////////////////////////////
     </GoogleMap>
   );

@@ -1,4 +1,8 @@
-import { createRestaurants, getRestaurantsData } from '../../util/database';
+import {
+  createRestaurants,
+  deleteRestaurant,
+  getRestaurantsData,
+} from '../../util/database';
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
@@ -7,6 +11,7 @@ export default async function handler(req, res) {
     return res.status(200).json(restaurantsdata);
   } else if (req.method === 'POST') {
     const body = req.body;
+
     console.log('bodyfromcreaterestaurantData', body);
 
     const createRestaurantsData = await createRestaurants({
@@ -22,11 +27,23 @@ export default async function handler(req, res) {
     });
 
     return res.status(200).json(createRestaurantsData);
+
     // eliminar restaurantes
-    // } else if (req.method === 'DELETE') {
-    //   if (restaurant) {
-    //     await deleteUserByUserName(username);
-    //   }
+  } else if (req.method === 'DELETE') {
+    const body = req.body;
+
+    const restaurant = body;
+    const id = body.infoRestaurant.id;
+    console.log('bodyrestaurant', body);
+    console.log('bodyrestaurantId', body.infoRestaurant.id);
+    if (id) {
+      await deleteRestaurant(id);
+    }
   }
-  return res.status(405);
+
+  if (Array.isArray()) {
+    return res.status(405).json;
+  }
+
+  return res.status(200).json();
 }
