@@ -113,6 +113,7 @@ const space = css`
 
 const description = css`
   font-family: 0.7rem;
+  margin-top: 1rem !important;
 `;
 
 const rating = css`
@@ -180,7 +181,7 @@ export default function Card(props) {
                       src={props.restaurant[0].photo}
                       alt="restaurant-place"
                       height="273px"
-                      width="247px" //
+                      width="247px"
                     />
                     <div className="caption">
                       {props.restaurant[0].restaurantname}

@@ -244,7 +244,7 @@ export default function Home(props) {
   );
 }
 
-export function InfoCard(props, { restaurants }) {
+export function InfoCard(props) {
   // destructuring from URL and  combine start and end Date
   // for displaying dynamic  info from search bar and  format the data
   // const { restaurant } = router.query;
@@ -313,6 +313,7 @@ export async function getServerSideProps(context) {
 
   const { getRestaurantsData } = await import('../../util/database');
   const restaurants = await getRestaurantsData();
+
   return {
     props: {
       restaurants,

@@ -301,7 +301,10 @@ export default function Map(props, create) {
     'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
 
   // not a good idea the info coming from the databasr is missing a restaurant
-
+  function showWindow() {
+    setSelected(marker);
+  }
+  console.log('api cjeck', refreshRestarurantsMarker);
   // /////////////////////////GOOGLE MAP///////////////////////////
 
   return (
@@ -482,8 +485,6 @@ export default function Map(props, create) {
                   latitude,
                   longitude,
                 );
-
-                // refreshMap();
                 props.fetchList();
               }}
             >

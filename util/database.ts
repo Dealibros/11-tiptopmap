@@ -177,44 +177,25 @@ export async function insertRatings({
 
 // show ratings average
 
-// export async function getUserWithPasswordHashByUsername(username: string) {
-//   const [user] = await sql<[UserWithPasswordHash | undefined]>`
-//     SELECT
-//       id,
-//       username,
-//       password_hash
-//     FROM
-//       users
-//     WHERE
-//       username = ${username};
-//   `;
-//   return user && camelcaseKeys(user);
-// }
+// check what this ten down there is exactly?
+// -- WHERE
 
-// I dont know how this exactly works!!
-// export async function ratingsAverage() {
-//   const ratings = await sql`
-//   SELECT
-//   ratings.ratings, AVG(ratings.ratings)
-//   -- ratings.id as ratings_id,
-//   -- ratings.ratings as ratings,
-//   -- avg(ratings.ratings) as average_rating,
-//   -- count(rating.ratings) as rating_count
+// -- restaurant_id = ${restaurantId}
 
-//   FROM
-//   ratings
+export async function ratingsAverage() {
+  const ratings = await sql`
+  SELECT
+  AVG(ratings)::numeric(10,0)
 
-//   WHERE
 
-//   restaurant_id = ${restaurantId}
+  FROM
+  ratings
 
-//   -- GROUP BY
-//   -- restaurant_id
+  GROUP BY
+  restaurant_id`;
 
-// `;
-
-//   return camelcaseKeys(ratings);
-// }
+  return camelcaseKeys(ratings);
+}
 
 // First Table to get new users in registration
 export async function insertUser({
