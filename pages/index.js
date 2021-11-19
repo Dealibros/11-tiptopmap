@@ -66,7 +66,7 @@ export default function Home(props) {
       <Layout username={props.username}>
         <main css={main}>
           <p css={title}>TopTip Map</p>
-          <p css={mainText}>
+          {/* <p css={mainText}>
             {' '}
             Save your Favourite spots.
             <br />
@@ -75,7 +75,7 @@ export default function Home(props) {
             Use this map to showcase your favourite places, write reviews  of
             your most memorable experiences and see where your friends have been
             to help guide decisions on where to go next.
-          </p>
+          </p> */}
         </main>
       </Layout>
     </div>

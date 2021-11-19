@@ -159,7 +159,7 @@ export default function Map(props, create) {
   const [infoRestaurant, setInfoRestaurant] = useState();
   const [selectedPlaces, setSelectedPlaces] = useState(null);
   const [idPlace, setIdPlace] = useState();
-  const [refreshRestarurantsMarker, setRrefreshRestarurantsMarker] = useState(
+  const [refreshRestarurantsMarker, setRefreshRestarurantsMarker] = useState(
     props.restaurants,
   );
   console.log('markers', markers);
@@ -300,9 +300,7 @@ export default function Map(props, create) {
   const image =
     'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
 
-  console.log('refresh', refreshRestarurantsMarker);
-  // const newrefresh = [...refreshRestarurantsMarker, props.restaurant];
-  // setRefreshRestarurantsMarker(newrefresh);
+  // not a good idea the info coming from the databasr is missing a restaurant
 
   // /////////////////////////GOOGLE MAP///////////////////////////
 
@@ -326,7 +324,7 @@ export default function Map(props, create) {
       />
       <Locate panTo={panTo} />
       {/* Markers from restaurants saved in the Database */}
-      {props.restaurants.map((restaurant) => (
+      {props.updateList.map((restaurant) => (
         <Marker
           key={`id-list-${restaurant.id}`}
           position={{
@@ -347,6 +345,7 @@ export default function Map(props, create) {
       ))}
       {console.log('inforestaurant', infoRestaurant)};
       {console.log('hey', selectedPlaces)}
+      {console.log('checkupdatelisthere', props.updateList)}
       {
         (selectedPlaces,
         infoRestaurant ? (
@@ -483,6 +482,8 @@ export default function Map(props, create) {
                   latitude,
                   longitude,
                 );
+
+                // refreshMap();
                 props.fetchList();
               }}
             >
