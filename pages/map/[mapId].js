@@ -2,8 +2,9 @@ import { css } from '@emotion/react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import DisqusThread from '../../components/disqusThread';
+import React, { useState } from 'react';
+import Comment from '../../components/Comment';
+// import DisqusThread from '../../components/disqusThread';
 import Layout from '../../components/Layout';
 import StarRating from '../../components/StarRating';
 
@@ -82,6 +83,8 @@ const titleCard = css`
   font-family: 'New Tegomin';
   text-align: center;
   margin: 1.2rem 0 0.3rem 0;
+  font-weight: 700;
+  /* color: #a7766a; */
 `;
 
 const infoCard = css`
@@ -128,12 +131,14 @@ const lineInfoCard = css`
 `;
 
 const mainChat = css`
-  margin-right: auto;
-  margin-left: auto;
+  text-align: center;
+  margin-right: 0 auto;
+  margin-left: 0 auto;
   font-family: 'New Tegomin' !important;
   max-width: 46rem !important;
-  margin: 0.9rem, 0.4rem 1.9rem 1.9rem !important;
-  padding: 2.1rem 2rem 2rem 2.2rem !important;
+  margin: 0.9rem, 0.4rem 0rem 1.9rem !important;
+  /* padding: 2.1rem 2rem 0rem 2.2rem !important; */
+  padding: 0.6rem;
   max-height: 30vh !important;
   overflow-y: scroll;
   border-radius: 0.6rem !important;
@@ -145,17 +150,17 @@ export default function Card(props) {
   console.log('mapId page props', props.userId);
   console.log('mapId page userId state', userId);
   console.log('restaurantId mapId page', restaurantId); // number
-  const showComments = () => {
-    return (
-      <div>
-        <DisqusThread
-          id={props.restaurant.id}
-          title={props.restaurant.restaurantname}
-          path={`/map/${props.restaurant.id}`}
-        />
-      </div>
-    );
-  };
+  // const showComments = () => {
+  //   return (
+  //     <div>
+  //       {/* <DisqusThread
+  //         id={props.restaurant.id}
+  //         title={props.restaurant.restaurantname}
+  //         path={`/map/${props.restaurant.id}`}
+  //       /> */}
+  //     </div>
+  //   );
+  // };
   return (
     <div>
       <Head>
@@ -210,7 +215,14 @@ export default function Card(props) {
               </div>
               <hr css={lineInfoCard} />
               <div css={mainChat}>
-                <div>{showComments()}</div>
+                <Comment
+                  restaurantId={restaurantId}
+                  setRestaurantId={setRestaurantId}
+                  userId={userId}
+                  setUserId={setUserId}
+                >
+                  Comments
+                </Comment>
               </div>
             </div>
           </div>
@@ -242,15 +254,18 @@ export async function getServerSideProps(context, props) {
 
   const { getRestaurant } = await import('../../util/database');
   const restaurant = await getRestaurant(context.query.mapId);
+  // const username = await getUser(context.query.username);
   const restaurantId = Number(context.query.mapId);
   const userId = session.userId;
   console.log('restaurantId  gssp', restaurantId);
   console.log('userId  gssp', userId);
+  console.log('usernametrue?, username');
   return {
     props: {
       restaurant,
       restaurantId,
       userId,
+      // username,
     },
   };
 }

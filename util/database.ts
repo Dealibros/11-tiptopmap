@@ -94,6 +94,7 @@ export async function getUser2(id: number) {
 
   return camelcaseKeys(user);
 }
+
 export async function getUserWithPasswordHashByUsername(username: string) {
   const [user] = await sql<[UserWithPasswordHash | undefined]>`
     SELECT
@@ -178,11 +179,8 @@ export async function insertRatings({
 // show ratings average
 
 // check what this ten down there is exactly?
-// -- WHERE
 
-// -- restaurant_id = ${restaurantId}
-
-export async function ratingsAverage() {
+export async function ratingsAverage(restaurantId: number) {
   const ratings = await sql`
   SELECT
   AVG(ratings)::numeric(10,0)
@@ -190,6 +188,10 @@ export async function ratingsAverage() {
 
   FROM
   ratings
+
+  WHERE
+
+  restaurant_id = ${restaurantId}
 
   GROUP BY
   restaurant_id`;
@@ -530,4 +532,77 @@ export async function createRestaurants({
   `;
 
   return camelcaseKeys(restaurants);
+}
+
+// Comments section
+
+export async function createComment({
+  // username,
+  comment,
+  user_id,
+  restaurant_id,
+}: {
+  // username: string;
+  comment: string;
+  user_id: number;
+  restaurant_id: number;
+}) {
+  const theComment = await sql`
+    INSERT INTO comments
+      ( comment, user_id, restaurant_id)
+    VALUES
+      (${comment}, ${user_id}, ${restaurant_id})
+
+    RETURNING
+      id,
+      user_id,
+      restaurant_id,
+      comment;
+  `;
+  return camelcaseKeys(theComment[0]);
+}
+
+//  -- WHERE
+//   -- id = ${id};
+
+export async function getComment() {
+  const comment = await sql`
+    SELECT
+    *
+    FROM
+    comments
+
+    `;
+
+  return comment.map((commentFirst) => camelcaseKeys(commentFirst));
+}
+
+export async function deleteComment(id: number) {
+  const comment = await sql`
+    DELETE FROM
+      comments
+    WHERE
+      id = ${id}
+    RETURNING
+      id
+  `;
+  return camelcaseKeys(comment[0]);
+}
+
+export async function updateComment({ id }: { id: number }) {
+  const editComment = await sql<[comment]>`
+  UPDATE
+    comment
+  SET
+    comment = ${comment}
+
+  WHERE
+    id = ${id}
+
+  RETURNING
+    id,
+    text
+`;
+
+  return camelcaseKeys(editComment[0]);
 }

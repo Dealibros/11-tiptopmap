@@ -13,6 +13,7 @@
   "dependencies": {
     "@emotion/babel-plugin": "^11.3.0",
     "@emotion/react": "^11.5.0",
+    "@fortawesome/fontawesome-free": "^5.15.4",
     "@googlemaps/js-api-loader": "^1.12.6",
     "@reach/combobox": "^0.16.3",
     "@react-google-maps/api": "^2.5.0",

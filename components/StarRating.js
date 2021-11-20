@@ -37,7 +37,8 @@ export default function StarRating(props) {
 
   useEffect(() => {
     const Stars = async () => {
-      const response = await fetch('/api/ratingsAverage');
+      const response = await fetch(`/api/ratingsAverage`);
+      console.log('restaurantId', props.restaurantId);
       const ratingResponse = await response.json();
       const ratingResponseStars = Number(ratingResponse[0].avg);
       setTheStars(3);
@@ -46,18 +47,6 @@ export default function StarRating(props) {
     };
     Stars();
   }, []);
-
-  // const Stars = async () => {
-  //   const response = await fetch('/api/ratingsAverage');
-  //   const ratingResponse = await response.json();
-  //   const ratingResponseStars = Number(ratingResponse[0].avg);
-  //   setTheStars(ratingResponse);
-  //   console.log('rr', ratingResponse);
-  //   if ('errors' in ratingResponse) {
-  //     console.log(ratingResponse.errors);
-  //     return ratingResponseStars;
-  //   }
-  // };
 
   console.log('stars', theStars);
   if (!ratings) {

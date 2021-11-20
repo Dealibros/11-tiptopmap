@@ -405,6 +405,7 @@ export default function Map(props, create) {
                       infoRestaurant: infoRestaurant,
                     }),
                   });
+                  console.log('infoRestaurantcheck', infoRestaurant);
                   props.fetchList();
                   await response.json();
                 }}
@@ -627,50 +628,3 @@ function Locate({ panTo }) {
 //     },
 //   ]);
 // }, []);
-
-// some old coding from getting the api info right
-//
-// };
-// return {
-//   // place_id: item.place_id,
-// };
-
-// const data = {
-//   status: resJson.status,
-//   result: resJson.result[1].map((item) => {
-//     let image = '';
-
-//     if ('photos' in item) {
-//       image = `https:maps.googleapis.com/maps/api/place/photo?key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM&maxwidth=400&photoreference=${item.photos[0].photo_reference}`;
-//     }
-//     console.log(image);
-//     return {
-//       formatted_address: item.formatted_address,
-//       icon: item.icon,
-//       name: item.name,
-//       place_id: item.place_id,
-//       image: image,
-//   };
-// }),
-// };
-
-// useEffect(() => {
-//   getInfo().then((data) => {
-//     console.log(data);
-//     setPlaces(data);
-//   });
-// }, []);
-
-// const getIdPlace = await fetch('/api/mainApi', {
-//   method: 'POST',
-//   headers: {
-//     'Content-Type': 'application/json',
-//   },
-//   body: JSON.stringify({
-//     idPlace: idPlace,
-//   }),
-// });
-
-// console.log('here', await getIdPlace.json());
-
-//  getParsedCookie(idPlaceValue);

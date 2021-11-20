@@ -1,5 +1,6 @@
 import '../styles/globals.css';
 import '../styles/style.css';
+import '@fortawesome/fontawesome-free/css/all.css';
 import { css, Global } from '@emotion/react';
 import Head from 'next/head';
 import { useCallback, useEffect, useState } from 'react';
