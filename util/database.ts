@@ -589,10 +589,16 @@ export async function deleteComment(id: number) {
   return camelcaseKeys(comment[0]);
 }
 
-export async function updateComment({ id }: { id: number }) {
-  const editComment = await sql<[comment]>`
+export async function updateComment({
+  id,
+  comment,
+}: {
+  id: number;
+  comment: string;
+}) {
+  const editComment = await sql`
   UPDATE
-    comment
+    comments
   SET
     comment = ${comment}
 
@@ -601,7 +607,7 @@ export async function updateComment({ id }: { id: number }) {
 
   RETURNING
     id,
-    text
+    comment
 `;
 
   return camelcaseKeys(editComment[0]);

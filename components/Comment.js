@@ -6,18 +6,18 @@ const inputComment = css`
   font-family: 'New Tegomin';
   font-size: 1.1rem;
   font-weight: 500;
-  line-height: 24px;
-  width: 90%;
-  margin: 0rem 0.2rem 0.2rem 0;
+  line-height: 15px;
+  width: 82%;
+  margin: 0rem 0.2rem 0.2rem 3rem;
   padding: 0.3rem;
   text-align: center;
   border-radius: 0.5rem !important;
   border: white;
 `;
 
-const guestListSmall = css`
-  margin: 0 0 1rem 0;
-`;
+// const guestListSmall = css`
+//   margin: 0 0 1rem 0;
+// `;
 
 const title = css`
   text-align: center;
@@ -30,7 +30,7 @@ const mainChatBox = css`
   text-align: center;
   margin-right: 0 auto;
   margin-left: 0 auto;
-  padding: 5px 50px;
+  padding: 5px 70px;
 `;
 
 const button = css`
@@ -40,7 +40,7 @@ const button = css`
   text-decoration: none;
   letter-spacing: 1px;
   font-size: 0.6rem !important;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.7rem;
   margin-right: 0.1rem;
   padding: 0.2rem 0.2rem;
   border: none;
@@ -66,7 +66,7 @@ const buttonDelete = css`
   letter-spacing: 1px;
   font-size: 0.6rem !important;
 
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.7rem;
   padding: 0.2rem 0.2rem;
   display: inline-block;
   border: none;
@@ -90,7 +90,7 @@ const buttonPlus = css`
   text-decoration: none;
   letter-spacing: 1px;
   font-size: 1rem !important;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.7rem;
   margin-right: 0.1rem;
   padding: 0.4rem 0.6rem;
   border: none;
@@ -109,39 +109,46 @@ const buttonPlus = css`
 `;
 
 const messageContainer = css`
+  text-align: center;
+  margin-right: 0;
+  margin-left: 3.5rem !important;
   position: relative;
-
-  width: 70%;
+  width: 90%;
   word-wrap: break-word;
   margin: 10px 0;
   padding-left: 10px;
   background-color: white;
   border-radius: 0.4rem;
+  /* background-color: #f1f7ed; */
 `;
 
 const faUserCircle = css`
   position: absolute;
   font-size: 2.5rem;
-  margin: 0.9rem 0 0 0.9rem;
+  margin: 0.9rem 0.5rem 0.5rem 0.9rem;
+
   top: 0;
   left: 0;
 `;
 
 const messageUser = css`
-  margin-top: 1rem;
+  margin: 1rem 0 0 2.3rem;
   padding-top: 0.4rem;
   font-weight: bold;
   font-size: 1.2rem;
 `;
 
-const messageText = css`
-  font-size: 1.2rem;
-  margin: 3px 0;
-`;
+// const messageText = css`
+//   font-size: 1.2rem;
+//   margin: 3px 0;
+//   background-color: lightgray;
+// `;
 
 const messageIconContainer = css`
-  margin-top: 13px;
+  margin-top: 6px;
+  margin-left: 2.3rem;
   font-size: 0.5rem;
+
   > * {
     display: inline-block;
     color: gray;
@@ -174,8 +181,8 @@ export default function App(props) {
 
   const [list, setList] = useState();
 
-  const handleCommentChange = (event) =>
-    setTheComment(event.currentTarget.value);
+  // const handleCommentChange = (event) =>
+  //   setTheComment(event.currentTarget.value);
   // const [arrowUp, setArrowUp] = useState(false);
   // const [openReply, setOpenReply] = useState(false);
 
@@ -231,8 +238,7 @@ export default function App(props) {
     };
     getComments();
   }, []);
-  // console.log('commentstate', theComment);
-  // when Submit button is clicked
+
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -257,53 +263,6 @@ export default function App(props) {
     }
     newComment();
   }
-
-  // Delete a Comment DELETE
-
-  // function handleDelete() {
-  //   async function deleteComment() {
-  //     // console.log('thecommentidselected', selectedComment);
-  //     // console.log('thecommentid', theComment);
-
-  //     const response = await fetch(`/api/comment`, {
-  //       method: 'DELETE',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         id: selectedComment,
-  //       }),
-  //     });
-
-  //     const deletedGuest = await response.json();
-
-  //     window.location.reload();
-  //     return deletedGuest;
-  //   }
-  //   deleteComment();
-  // }
-
-  // Edit a Comment PATCH
-
-  // function handleEdit() {
-  //   async function editComment() {
-  //     const response = await fetch(`/api/comment`, {
-  //       method: 'PATCH',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         attending: true,
-  //       }),
-  //     });
-
-  //     const updatedGuest = await response.json();
-
-  //     window.location.reload();
-  //     return updatedGuest;
-  //   }
-  //   editComment();
-  // }
 
   return (
     <div className="App">
@@ -331,10 +290,11 @@ export default function App(props) {
               <div css={messageContainer} key={item.id}>
                 <div css={messageUser}>username</div>
                 <i css={faUserCircle} className="fas fa-user-circle" />
-                {/* <div css={messageText}>{`${item.comment}`}</div> */}
+
                 <input
                   css={inputComment}
-                  onChange={handleCommentChange}
+                  onChange={(e) => setSelectedComment(e.currentTarget.value)}
+                  // I think the issue is here
                   value={item.comment}
                   disabled={edit ? 'disabled' : ''}
                 />
@@ -349,31 +309,6 @@ export default function App(props) {
                   {/* {setSelectedComment(item)} */}
                   {/* <div ref={numLikes}>{props.likes}</div> */}
                   {/* <i className="fas fa-thumbs-down" /> */}
-                  <button
-                    css={button}
-                    onClick={async () => {
-                      if (edit) {
-                        // This is to allow changes
-                        setEdit(false);
-                      } else {
-                        // This is to disable input and save changes
-                        setEdit(true);
-                        const response = await fetch(`/api/comment`, {
-                          method: 'PUT',
-                          headers: {
-                            'Content-Type': 'application/json',
-                          },
-                          body: JSON.stringify({
-                            comment: item.comment,
-                          }),
-                        });
-                        await response.json();
-                      }
-                    }}
-                  >
-                    {edit ? 'Edit Details' : 'Save Changes'}
-                  </button>
-
                   <button
                     css={buttonDelete}
                     type="button"
@@ -398,84 +333,36 @@ export default function App(props) {
                     Delete
                   </button>
 
-                  {/* const response = await fetch(`/api/comment`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          id: selectedComment,
-        }),
-      });
-
-      const deletedGuest = await response.json();
-
-      window.location.reload();
-      return deletedGuest;
-    }
-    deleteComment();
-  } */}
-                  {/* {!props.editable ? (
-                    <div
-                      onClick={deleteMessage}
-                      style={{ cursor: 'pointer' }}
-                      aria-hidden="true"
-                    >
-                      {' '}
-                      REPLY
-                    </div>
-                  ) : (
-                    <div
-                      onClick={deleteMessage}
-                      style={{ cursor: 'pointer' }}
-                      aria-hidden="true"
-                    >
-                      {' '}
-                      DELETE
-                    </div>
-                  )} */}
-                  {/* changeOpenReply */}
+                  <button
+                    css={button}
+                    onClick={async (event) => {
+                      event.preventDefault();
+                      if (edit) {
+                        // This is to allow changes
+                        setEdit(false);
+                      } else {
+                        // This is to disable input and save changes
+                        setEdit(true);
+                        const response = await fetch(`/api/comment`, {
+                          method: 'PUT',
+                          headers: {
+                            'Content-Type': 'application/json',
+                          },
+                          body: JSON.stringify({
+                            comment: item.comment,
+                            id: item.id,
+                          }),
+                        });
+                        await response.json();
+                      }
+                    }}
+                  >
+                    {edit ? 'Edit Details' : 'Save Changes'}
+                  </button>
                 </section>
-                {/* <section
-                  css={arrowReplies}
-                  onClick={changeArrow}
-                  aria-hidden="true"
-                >
-                  {arrow}
-                  <div>View 4 replies</div>
-                </section> */}
               </div>
             ))
           : null}
-
-        {/* <table css={table}>
-          <tbody>
-            <tr>
-              <th css={title}>Name</th>
-              <th css={title}>Comment</th>
-            </tr>
-            {console.log('stateComment', theComment)}
-            {theComment
-              ? theComment.map((item) => (
-                  <tr key={item.id}>
-                    <td>{item.user_id}</td>
-                    <td>{`${item.comment}`}</td>
-                  </tr>
-                ))
-              : null}
-          </tbody>
-        </table> */}
-        {/* <button css={button} type="button" onClick={(e) => handleEdit(e)}>
-          Attending Guest
-        </button>
-        <button
-          css={buttonDelete}
-          type="button"
-          onClick={(item) => handleDelete(item.id)}
-          id="delete"
-        >
-          Deleting guest
-        </button> */}
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 // figure out for what was profile again
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getUser, getUser2, getValidSessionByToken } from '../../util/database';
+import { getUser2, getValidSessionByToken } from '../../util/database';
 import { User } from '../../util/types';
 import { RegisterResponse } from './register';
 
