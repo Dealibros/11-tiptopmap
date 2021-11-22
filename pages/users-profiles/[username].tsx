@@ -333,6 +333,7 @@ export default function SingleUserProfile(props: Props) {
   const router = useRouter();
 
   const [edit, setEdit] = useState(true);
+  console.log('edit', edit);
   const [firstname, setFirstname] = useState(props.user.firstname);
   const [lastname, setLastname] = useState(props.user.lastname);
   const [username, setUsername] = useState(props.user.username);

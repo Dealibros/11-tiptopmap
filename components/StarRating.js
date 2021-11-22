@@ -45,13 +45,11 @@ export default function StarRating(props) {
 
       const ratingResponseStars = Number(ratingResponse[0].avg);
       setTheStars(ratingResponseStars);
-      console.log('rr', ratingResponse);
       return ratingResponseStars;
     };
     Stars();
   }, []);
 
-  console.log('stars', theStars);
   if (!ratings) {
     return (
       <div css={ratingDiv}>
@@ -68,6 +66,7 @@ export default function StarRating(props) {
                 value={ratingValue}
                 onClick={() => setRatings(ratingValue)}
               />
+              {console.log('starRatingValueaa', ratingValue)}
               <FaStar
                 css={stars}
                 color={

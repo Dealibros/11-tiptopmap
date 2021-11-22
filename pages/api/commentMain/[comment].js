@@ -7,7 +7,6 @@ import {
 } from '../../../util/database';
 
 // GET
-
 export default async function handler(req, res) {
   if (req.method === 'GET') {
     const restaurantId = Number(req.query.comment);
@@ -30,7 +29,7 @@ export default async function handler(req, res) {
     // PUT
   } else if (req.method === 'PUT') {
     const body = req.body;
-    console.log('bodyPut', body);
+    console.log('bodyPutahhhhhhhhhhh', body);
     const comment = await updateComment({
       comment: body.comment,
       id: body.id,

@@ -153,9 +153,14 @@ const messageIconContainer = css`
 export default function App(props) {
   const [theComment, setTheComment] = useState('');
   const [addComment, setAddComment] = useState('');
+  const [edit, setEdit] = useState(true);
+  const [changeComment, setChangeComment] = useState('');
   const [selectedComment, setSelectedComment] = useState('');
-  const [edit, setEdit] = useState('');
-  console.log(selectedComment);
+  const [newComment, setNewComment] = useState('');
+  console.log('edit', edit);
+
+  console.log('sc', selectedComment);
+  console.log('changeComment', changeComment);
   // const [list, setList] = useState();
 
   // fetch gets API from the server, will rerender nonStop, in this case runs only once because of useEffect
@@ -178,7 +183,7 @@ export default function App(props) {
     // create a new Comment POST
 
     async function newComment() {
-      const response = await fetch(`/api/commentMain${props.restaurantId}`, {
+      const response = await fetch(`/api/commentMain/comment`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -197,7 +202,7 @@ export default function App(props) {
     }
     newComment();
   }
-
+  let indexComment;
   return (
     <div className="App">
       <header>
@@ -211,7 +216,7 @@ export default function App(props) {
               css={inputComment}
               placeholder="Leave your Comment"
               id="Comment"
-              onChange={(e) => setAddComment(e.target.value)}
+              onChange={(e) => setAddComment(e.currentTarget.value)}
             />
             <button css={buttonPlus}>+</button>
           </form>
@@ -220,12 +225,12 @@ export default function App(props) {
 
       <div css={mainChatBox}>
         {theComment
-          ? theComment.map((item) => (
+          ? theComment.map((item, i) => (
               <div css={messageContainer} key={item.id}>
+                {/* {(indexComment = i + 1)} */}
                 <div css={messageUser}>{item.username}</div>
-                {/* // dont call it as props.username. but as database query */}
-                <i css={faUserCircle} className="fas fa-user-circle" />
 
+                <i css={faUserCircle} className="fas fa-user-circle" />
                 <input
                   css={inputComment}
                   onChange={(e) => setSelectedComment(e.currentTarget.value)}
@@ -239,7 +244,7 @@ export default function App(props) {
                     css={buttonDelete}
                     type="button"
                     onClick={async () => {
-                      const response = await fetch(`/api/comment`, {
+                      const response = await fetch(`/api/commentMain/comment`, {
                         method: 'DELETE',
                         headers: {
                           'Content-Type': 'application/json',
@@ -248,10 +253,9 @@ export default function App(props) {
                           id: item.id,
                         }),
                       });
-                      console.log('infoRestaurantcheck', item.id);
                       const deletedComment = await response.json();
 
-                      setSelectedComment(item);
+                      setChangeComment(item.comment);
                       window.location.reload();
                       return deletedComment;
                     }}
@@ -261,24 +265,32 @@ export default function App(props) {
 
                   <button
                     css={button}
-                    onClick={async (event) => {
-                      event.preventDefault();
+                    onClick={async () => {
+                      setNewComment(item.comment);
+                      console.log('indexNewComment', newComment);
+                      console.log('itemidcomment', item.id);
                       if (edit) {
                         // This is to allow changes
                         setEdit(false);
                       } else {
                         // This is to disable input and save changes
                         setEdit(true);
-                        const response = await fetch(`/api/comment`, {
-                          method: 'PUT',
-                          headers: {
-                            'Content-Type': 'application/json',
+
+                        const response = await fetch(
+                          `/api/commentMain/${item.id}`,
+                          {
+                            method: 'PUT',
+                            headers: {
+                              'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                              comment: item.comment,
+                              id: item.id,
+                            }),
                           },
-                          body: JSON.stringify({
-                            comment: item.comment,
-                            id: item.id,
-                          }),
-                        });
+                        );
+                        console.log('propsid', item.id);
+                        // only works when I save the change. The problem is that I cant do a change.
                         await response.json();
                       }
                     }}
