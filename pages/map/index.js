@@ -134,7 +134,9 @@ const space = css`
   margin: 0.3rem;
   padding: 0;
 `;
-
+const link = css`
+  text-decoration: none;
+`;
 const searchResultStars = css`
   font-size: 0.8rem;
 `;
@@ -264,7 +266,7 @@ export function InfoCard(props) {
           <div css={searchResultInfoTop}>
             <h3>{props.restaurants.restaurantname}</h3>
             <p>{props.restaurants.addressplace}</p>
-            <h5>{props.restaurants.website}</h5>
+            <h5 css={link}>{props.restaurants.website}</h5>
 
             <hr css={space} />
             <p css={description}>{props.restaurants.descriptionplace}</p>

@@ -1,8 +1,6 @@
 import { css } from '@emotion/react';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import sunshine from '../public/images/sunshine.svg';
 
 const navContainer = css`
@@ -58,14 +56,6 @@ const navLi = css`
 const navLiul = css`
   list-style-type: none;
 `;
-// const navUl = css`
-// margin: 0!important;
-// padding:0!important;
-// li{
-
-// list-style: none;
-// }
-// `
 
 const a = css`
   font-size: 1.3rem;

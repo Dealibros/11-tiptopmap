@@ -1,5 +1,5 @@
-import { css, Global } from '@emotion/react';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { css } from '@emotion/react';
+import React, { useEffect, useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 
 const stars = css`
@@ -87,8 +87,6 @@ export default function StarRating(props) {
                       ratings: ratingValue,
                       userId: props.userId,
                       restaurantId: props.restaurantId,
-
-                      // csrfToken: props.csrfToken,
                     }),
                   });
                   await response.json();

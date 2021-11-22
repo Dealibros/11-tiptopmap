@@ -1,8 +1,6 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
-// import Image from 'next/image';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Layout from '../components/Layout';
 
 const main = css`
@@ -46,7 +44,6 @@ const mainText = css`
   font-family: 'New Tegomin';
   font-weight: 600;
   font-size: 2rem;
-  /* background-color: #a9a8d0; */
 `;
 
 export default function Home(props) {
@@ -66,7 +63,7 @@ export default function Home(props) {
       <Layout username={props.username}>
         <main css={main}>
           <p css={title}>TopTip Map</p>
-          {/* <p css={mainText}>
+          <p css={mainText}>
             {' '}
             Save your Favourite spots.
             <br />
@@ -75,35 +72,9 @@ export default function Home(props) {
             Use this map to showcase your favourite places, write reviews  of
             your most memorable experiences and see where your friends have been
             to help guide decisions on where to go next.
-          </p> */}
+          </p>
         </main>
       </Layout>
     </div>
   );
 }
-
-// export async function getServerSideProps(context) {
-//   const { getValidSessionByToken } = await import('../util/database');
-
-//   const sessionToken = context.req.cookies.sessionToken;
-
-//   const session = await getValidSessionByToken(sessionToken);
-
-//   console.log(session);
-
-//   if (!session) {
-//     // Redirect the user when they have a session
-//     // token by returning an object with the `redirect` prop
-//     // https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
-//     return {
-//       redirect: {
-//         destination: '/login?returnTo=/map',
-//         permanent: false,
-//       },
-//     };
-//   }
-
-//   return {
-//     props: {},
-//   };
-// }

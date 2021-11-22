@@ -7,9 +7,6 @@ import { RiDeleteBin5Line } from 'react-icons/ri';
 import Layout from '../../components/Layout';
 import { Errors, User } from '../../util/types';
 
-const wall = css`
-  z-index: 0;
-`;
 const contentContainer = css`
   background-image: url('./public/images/backgroundProfile/2.jpg');
   text-align: center;
@@ -83,10 +80,9 @@ const theDiv = css`
 `;
 export const pageContainer = css`
   font-family: 'New Tegomin';
-  /* display: block;*/
   text-align: center;
   background-color: #fcfcfc;
-  /* padding: 12px 0 14px 0; */
+
   border-radius: 2rem;
   width: 38vw;
   max-height: 35rem;
@@ -325,10 +321,6 @@ const beCool = css`
     transform: rotate(135deg);
   }
 `;
-
-/* Barrel */
-
-/* Top circle */
 
 type Props = {
   user: User;

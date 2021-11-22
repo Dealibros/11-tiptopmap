@@ -85,8 +85,6 @@ export default async function registerHandler(
       email: email,
     });
 
-    // res.send({ user: user });
-
     // clean old sessions
     deleteExpiredSessions();
 

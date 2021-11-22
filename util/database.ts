@@ -3,10 +3,6 @@ import dotenvSafe from 'dotenv-safe';
 import postgres from 'postgres';
 import { Errors, Session, User, UserWithPasswordHash } from './types';
 
-// needs to check what is not needed here
-// good
-// finished
-
 // Read in the environment variables
 // in the .env file, making it possible
 // to connect to PostgreSQL
@@ -128,27 +124,6 @@ export async function getUserBySessionToken(sessionToken: string | undefined) {
   return user && camelcaseKeys(user);
 }
 
-// not sure about this one. its there
-// export async function createUser({
-//   name,
-//   favoriteColor,
-// }: {
-//   name: string;
-//   favoriteColor: string;
-// }) {
-//   const users = await sql`
-//     INSERT INTO users
-//       (name, favorite_color)
-//     VALUES
-//       (${name}, ${favoriteColor})
-//     RETURNING
-//       id,
-//       name,
-//       favorite_color;
-//   `;
-//   return camelcaseKeys(users[0]);
-// }
-
 export async function insertRatings({
   user_id,
   restaurant_id,
@@ -176,8 +151,6 @@ export async function insertRatings({
 }
 
 // show ratings average
-
-// check what this ten down there is exactly?
 
 export async function ratingsAverage(restaurantId: number) {
   const ratings = await sql`
@@ -388,23 +361,6 @@ export async function getCoursesByUserIdAndSessionToken(
     return [];
   }
 }
-// dont think either this one underneath is needed
-//   const courses = await sql<Course[]>`
-//     SELECT
-//       courses.id,
-//       courses.title,
-//       courses.description
-//     FROM
-//       users,
-//       users_courses,
-//       courses
-//     WHERE
-//       users.id = ${userId} AND
-//       users_courses.user_id = users.id AND
-//       courses.id = users_courses.course_id;
-//   `;
-//   return courses.map((course) => camelcaseKeys(course));
-// }
 
 // To redirect to the right page if you are log in and yu have a valid session token *
 export async function getValidSessionByToken(token: string) {

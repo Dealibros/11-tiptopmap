@@ -2,9 +2,8 @@ import { css } from '@emotion/react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Comment from '../../components/Comment';
-// import DisqusThread from '../../components/disqusThread';
 import Layout from '../../components/Layout';
 import StarRating from '../../components/StarRating';
 
@@ -41,8 +40,6 @@ const restaurantCard = css`
 const img = css`
   margin-top: 1.5rem !important;
   border-radius: 0.2rem;
-
-  /* margin-left: 1.2rem !important; */
 `;
 
 const restaurantCardInfoRight = css`
@@ -84,7 +81,6 @@ const titleCard = css`
   text-align: center;
   margin: 1.2rem 0 0.3rem 0;
   font-weight: 700;
-  /* color: #a7766a; */
 `;
 
 const infoCard = css`
@@ -137,30 +133,20 @@ const mainChat = css`
   font-family: 'New Tegomin' !important;
   max-width: 46rem !important;
   margin: 0.9rem, 0.4rem 0rem 1.9rem !important;
-  /* padding: 2.1rem 2rem 0rem 2.2rem !important; */
   padding: 0.6rem;
   max-height: 30vh !important;
   overflow-y: scroll;
   border-radius: 0.6rem !important;
 `;
-
+const link = css`
+  text-decoration: none;
+`;
 export default function Card(props) {
   const [userId, setUserId] = useState(props.userId);
   const [restaurantId, setRestaurantId] = useState(props.restaurantId);
   console.log('mapId page props', props.userId);
   console.log('mapId page userId state', userId);
-  console.log('restaurantId mapId page', restaurantId); // number
-  // const showComments = () => {
-  //   return (
-  //     <div>
-  //       {/* <DisqusThread
-  //         id={props.restaurant.id}
-  //         title={props.restaurant.restaurantname}
-  //         path={`/map/${props.restaurant.id}`}
-  //       /> */}
-  //     </div>
-  //   );
-  // };
+  console.log('restaurantId mapId page', restaurantId);
   return (
     <div>
       <Head>
@@ -197,7 +183,7 @@ export default function Card(props) {
                   <h4>{props.restaurant[0].addressplace}</h4>
                   <h5>
                     <Link href={props.restaurant[0].website}>
-                      <a>{props.restaurant[0].website}</a>
+                      <a css={link}>{props.restaurant[0].website}</a>
                     </Link>
                   </h5>
                   <hr css={space} />
@@ -233,7 +219,7 @@ export default function Card(props) {
   );
 }
 
-export async function getServerSideProps(context, props) {
+export async function getServerSideProps(context) {
   const { getValidSessionByToken } = await import('../../util/database');
   const sessionToken = context.req.cookies.sessionToken;
   const session = await getValidSessionByToken(sessionToken);

@@ -1,6 +1,5 @@
-import { css, Global } from '@emotion/react';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { RiDeleteBin5Line } from 'react-icons/ri';
+import { css } from '@emotion/react';
+import { useEffect, useState } from 'react';
 
 const inputComment = css`
   font-family: 'New Tegomin';
@@ -18,7 +17,6 @@ const inputComment = css`
 const title = css`
   text-align: center;
   font-size: 1.8rem;
-  /* color: #a7766a; */
   margin-top: -0.7rem;
   margin-left: 3rem;
   margin-bottom: 2rem;
@@ -153,60 +151,12 @@ const messageIconContainer = css`
 `;
 
 export default function App(props) {
-  // Guest List input fields
   const [theComment, setTheComment] = useState('');
   const [addComment, setAddComment] = useState('');
   const [selectedComment, setSelectedComment] = useState('');
   const [edit, setEdit] = useState('');
 
-  const [list, setList] = useState();
-
-  // const handleCommentChange = (event) =>
-  //   setTheComment(event.currentTarget.value);
-  // const [arrowUp, setArrowUp] = useState(false);
-  // const [openReply, setOpenReply] = useState(false);
-
-  // const likeIcon = useRef;
-  // const numLikes = useRef();
-
-  // Toggled when CANCEL button and REPLY button are pressed
-  // const changeOpeReply = () => {
-  //   setOpenReply((prevState) => (prevState = !prevState));
-  // };
-
-  // // Toggle arrow up and down
-  // let arrow = <i className="fas fa-caret-down" />;
-
-  // const changeArrow = () => {
-  //   setArrowUp((prevState) => (prevState = !prevState));
-  // };
-
-  // if (arrowUp) {
-  //   arrow = <i className="fas fa-caret-up" />;
-  // } else {
-  //   arrow = <i className="fas fa-caret-down" />;
-  // }
-
-  // Like message
-  // let toogleLike = false;
-  // let likes = props.like;
-
-  // const likeComment = () => {
-  //   toogleLike = !toogleLike;
-  //   if (toogleLike) {
-  //     likes++;
-  //     likeIcon.current.style.color = '#4688de';
-  //   } else {
-  //     likes--;
-  //     likeIcon.current.style.color = 'gray';
-  //   }
-  //   numLikes.current.innerHTML = likes;
-  // };
-
-  // const deleteMessage = () => {};
-
-  // Object.keys() returns an array of strings which are values of specific key of the object
-  // const checkboxKeys = Object.keys(checkboxes);
+  // const [list, setList] = useState();
 
   // fetch gets API from the server, will rerender nonStop, in this case runs only once because of useEffect
   // From GIT "GET"
@@ -282,16 +232,7 @@ export default function App(props) {
                   disabled={edit ? 'disabled' : ''}
                 />
                 <section css={messageIconContainer}>
-                  <i
-                    className="fas fa-thumbs-up"
-                    // ref={likeIcon}
-                    // onClick={likeComment}
-                    aria-hidden="true"
-                  />
-
-                  {/* {setSelectedComment(item)} */}
-                  {/* <div ref={numLikes}>{props.likes}</div> */}
-                  {/* <i className="fas fa-thumbs-down" /> */}
+                  <i className="fas fa-thumbs-up" aria-hidden="true" />
                   <button
                     css={buttonDelete}
                     type="button"

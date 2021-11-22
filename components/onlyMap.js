@@ -10,21 +10,17 @@ import {
 import {
   GoogleMap,
   InfoWindow,
-  LoadScript,
   Marker,
-  useJsApiLoader,
   useLoadScript,
 } from '@react-google-maps/api';
 import Image from 'next/image';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { FaDatabase } from 'react-icons/fa';
-import { RiContactsBookLine } from 'react-icons/ri';
 import usePlacesAutocomplete, {
   getDetails,
   getGeocode,
   getLatLng,
 } from 'use-places-autocomplete';
-import { getParsedCookie, setParsedCookie } from '../util/cookies';
+import { setParsedCookie } from '../util/cookies';
 import mapStyles from './mapStyles';
 
 // /////////////////////////DECLARATIONS///////////////////////////
@@ -88,7 +84,6 @@ const titleSearch = css`
 `;
 
 const addressSearch = css`
-  /* font-style: oblique; */
   font-size: 0.8rem;
 `;
 const ratingSearch = css`
@@ -136,8 +131,6 @@ const options = {
   zoomControl: true,
   streetViewControl: false,
   mapTypeControl: false,
-  // zoomControl: false, // remove the bottom-right buttons look how to make them smaller
-  // fullscreenControl: false, // remove the top-right button
 };
 const image =
   'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
@@ -164,7 +157,7 @@ export default function Map(props, create) {
   console.log('selected', selected);
 
   // //////////////////Spot for the database adding/////////////////////
-  // same Db
+
   const [restaurantname, setRestaurantname] = useState('');
   const [addressplace, setAddressplace] = useState('');
   const [descriptionplace, setDescriptionplace] = useState('');
@@ -289,7 +282,6 @@ export default function Map(props, create) {
   const panTo = useCallback(({ lat, lng }) => {
     mapRef.current.panTo({ lat, lng });
     mapRef.current.setZoom(15);
-    // mapRef.current.setMarkers;
   }, []);
 
   if (loadError) return 'Error loading Maps';
@@ -311,7 +303,6 @@ export default function Map(props, create) {
       mapContainerStyle={mapContainerStyle}
       zoom={13}
       options={options}
-      // onClick={onMapClick}
       onLoad={onMapLoad}
       center={center}
     >
@@ -361,7 +352,6 @@ export default function Map(props, create) {
             onCloseClick={() => {
               setInfoRestaurant(null);
             }}
-            // marker={{ selectedPlaces }}
           >
             <div css={infoWindow}>
               <label css={titleSearch}>{infoRestaurant.restaurantname}</label>
@@ -424,13 +414,8 @@ export default function Map(props, create) {
           onClick={() => {
             setSelected(marker); // on click stores the searched restaurant corrdinates on selected
           }}
-          icon={
-            {
-              // url: 'images/icons/red-dot.png',
-            }
-          }
+          icon={{}}
         />
-        //  map.event.trigger(ourMarker, 'click')
       ))}
       {/* // selected search is only giving me the latitude and longitude */}
       {console.log('selectedsearch', selected)}
@@ -492,12 +477,12 @@ export default function Map(props, create) {
           </div>
         </InfoWindow>
       ) : null}
-      ////////////////////////////////////////////////////////////////////////
+      /////////////////////////////////////////////////////////////////////
     </GoogleMap>
   );
 }
 
-// /////////////////////////Function SEARCH///////////////////////////////////
+// /////////////////////////Function SEARCH///////////////////////////////
 // ({destructuring props => dont need to write props or call with props.something})
 export function Search({
   panTo,
@@ -531,20 +516,13 @@ export function Search({
     // A try / catch block is basically used to handle errors in JavaScript. You use this when you don't want an error in your script to break your code. ... You put your code in the try block, and immediately if there is an error, JavaScript gives the catch statement control and it just does whatever you say.
 
     const results = await getGeocode({ address });
-    // setTheAddress(address);
-    // console.log(theAddress);
-    // console.log(results);
 
     // I need to take this value to the map page, to be able to call the API there with this value. Afterwards I need to bring all this information back here to be able to display it on the map
-    // Why I can't put the place_Id into state?
-    // Because setState is asynchronous?
-    // setIdPlace = results[0].place_id;
 
     let idPlace = results[0].place_id;
 
     setIdPlace(idPlace);
 
-    // console.log('this is the IdPLace in search', idPlace);
     // console.log(results); // gives dirrection from place and other properties
     // getLatlng shows the needed coordinates
 
@@ -560,12 +538,8 @@ export function Search({
 
     console.log(panTo({ lat, lng }));
 
-    // console.log(results[0]);
-
-    // console.log(address);
     setTheAddress(address);
 
-    // console.log('newIdPlace', idPlace);
     // const handleClick = () => setTheAddress(address);
     setParsedCookie('idPlaceValue', idPlace);
   };

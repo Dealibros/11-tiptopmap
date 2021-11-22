@@ -31,8 +31,6 @@ export default async function handler(req, res) {
     // eliminar restaurantes
   } else if (req.method === 'DELETE') {
     const body = req.body;
-
-    const restaurant = body;
     const id = body.infoRestaurant.id;
     console.log('bodyrestaurant', body);
     console.log('bodyrestaurantId', body.infoRestaurant.id);
