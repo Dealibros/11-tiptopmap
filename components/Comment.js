@@ -156,7 +156,6 @@ export default function App(props) {
   const [edit, setEdit] = useState(true);
   const [changeComment, setChangeComment] = useState('');
   const [selectedComment, setSelectedComment] = useState('');
-  const [newComment, setNewComment] = useState('');
   console.log('edit', edit);
 
   console.log('sc', selectedComment);
@@ -266,9 +265,6 @@ export default function App(props) {
                   <button
                     css={button}
                     onClick={async () => {
-                      setNewComment(item.comment);
-                      console.log('indexNewComment', newComment);
-                      console.log('itemidcomment', item.id);
                       if (edit) {
                         // This is to allow changes
                         setEdit(false);

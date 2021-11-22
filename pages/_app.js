@@ -4,8 +4,6 @@ import { css, Global } from '@emotion/react';
 import Head from 'next/head';
 import { useCallback, useEffect, useState } from 'react';
 
-// checked **
-
 export default function MyApp({ Component, pageProps }) {
   const [username, setUsername] = useState();
 
@@ -17,9 +15,11 @@ export default function MyApp({ Component, pageProps }) {
   // a different reference on every rerender
   // (We do this to prevent calls to the API on
   // every page navigation)
+
   const refreshUsername = useCallback(async () => {
     // Call the API to retrieve the user information
     // by automatically passing along the sessionToken cookie
+
     const response = await fetch('/api/profile');
     const profile = await response.json();
 
@@ -33,12 +33,14 @@ export default function MyApp({ Component, pageProps }) {
 
     // Set the username state variable which we can use
     // in other components via passing props
+
     setUsername(profile.user.username);
     console.log(profile.user.username);
   }, []);
 
   // Retrieve username information ONCE the first time
   // that a user loads the page
+
   useEffect(() => {
     refreshUsername();
   }, [refreshUsername]);

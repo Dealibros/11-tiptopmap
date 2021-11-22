@@ -98,8 +98,6 @@ const notThere = css`
   display: none;
 `;
 function Header(props) {
-  // const authenticated = false;
-  // const Logout = () => null;
   return (
     <header css={navContainer}>
       <nav>

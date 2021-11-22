@@ -10,6 +10,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "type": "module",
     "migrate": "dotenv ley",
     "proxy": "http://localhost:3000/",
     "heroku-postbuild": "yarn migrate up && yarn build"

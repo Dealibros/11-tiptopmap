@@ -23,6 +23,7 @@ import { setParsedCookie } from '../util/cookies';
 import mapStyles from './mapStyles';
 
 // /////////////////////////DECLARATIONS///////////////////////////
+
 const minibutton = css`
   font-family: 'New Tegomin';
   border-radius: 0.4rem;
@@ -124,6 +125,7 @@ const options = {
 };
 
 // /////////////////////////Function SEARCH///////////////////////////////
+
 // ({destructuring props => dont need to write props or call with props.something})
 export function Search({ panTo, setMarkers, setTheAddress, setIdPlace }) {
   const {
@@ -147,6 +149,7 @@ export function Search({ panTo, setMarkers, setTheAddress, setIdPlace }) {
   const handleSelect = async (address) => {
     setValue(address, false);
     clearSuggestions();
+
     // A try / catch block is basically used to handle errors in JavaScript. You use this when you don't want an error in your script to break your code. ... You put your code in the try block, and immediately if there is an error, JavaScript gives the catch statement control and it just does whatever you say.
 
     const results = await getGeocode({ address });
@@ -202,7 +205,9 @@ export function Search({ panTo, setMarkers, setTheAddress, setIdPlace }) {
 }
 
 // /////////////////////////Function LOCATE////////////////////////
+
 // This seems only be useful to center where we are. No much needed
+
 function Locate({ panTo }) {
   return (
     <button
@@ -244,22 +249,17 @@ export default function Map(props, create) {
     libraries,
   });
 
-  // let Search;
-  // let Locate;
-
   // To set up the much needed Markers
+
   const [markers, setMarkers] = useState([]);
   const [selected, setSelected] = useState(null);
   const [theAddress, setTheAddress] = useState(5);
   const [infoRestaurant, setInfoRestaurant] = useState();
   const [selectedPlaces, setSelectedPlaces] = useState(null);
   const [idPlace, setIdPlace] = useState();
-  // const [refreshRestarurantsMarker, setRefreshRestarurantsMarker] = useState(
-  //   props.restaurants,
-  // );
+
   console.log('markers', markers);
   console.log('selected', selected);
-  // setRefreshRestarurantsMarker(0)
 
   // //////////////////Spot for the database adding/////////////////////
 
@@ -309,6 +309,7 @@ export default function Map(props, create) {
   // }, []);
 
   // Fetch to grab the API Google Places with correct id_Place added
+
   useEffect(() => {
     const getInfo = async () => {
       const res = await fetch('/api/mainApi', {
@@ -320,7 +321,7 @@ export default function Map(props, create) {
           idPlace: idPlace,
         }),
       });
-      // const res = await fetch('/api/mainApi');
+
       const resJson = await res.json();
       const result = resJson.result;
 
@@ -333,6 +334,7 @@ export default function Map(props, create) {
       //   setDescriptionplace;
       //   ('No Reviews Available');
       // }
+
       if (result.reviews[1].text.length > 70) {
         setDescriptionplace(result.reviews[2].text);
       } else if (result.reviews[2].text.length > 70) {
@@ -373,7 +375,7 @@ export default function Map(props, create) {
     if (idPlace) {
       getInfo();
     }
-  }, [idPlace]);
+  }, [idPlace, restaurantname]);
 
   console.log('a', props.restaurants);
 

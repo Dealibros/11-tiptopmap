@@ -1,7 +1,5 @@
 import { GetServerSidePropsContext } from 'next';
 
-// checked
-
 type Props = {
   refreshUsername: () => void;
   username?: string;
@@ -12,8 +10,6 @@ export default function Logout(props: Props) {
 
   return 'Logged out';
 }
-
-//   props.refreshUsername();
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { serialize } = await import('cookie');

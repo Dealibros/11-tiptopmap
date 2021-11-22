@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 
 const stars = css`
@@ -28,7 +28,7 @@ const ratingDiv = css`
 `;
 
 export default function StarRating(props) {
-  const [ratings, setRatings] = useState(null);
+  const [ratings, setRatings] = useState(Number(null));
   const [hover, setHover] = useState(null);
   const [theStars, setTheStars] = useState();
 
@@ -48,7 +48,7 @@ export default function StarRating(props) {
       return ratingResponseStars;
     };
     Stars();
-  }, []);
+  });
 
   if (!ratings) {
     return (

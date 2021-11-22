@@ -1,7 +1,6 @@
-import setPostgresDefaultsOnHeroku from './util/setPostgresDefaultsOnHeroku';
+const setPostgresDefaultsOnHeroku = require('./util/setPostgresDefaultsOnHeroku');
 
 setPostgresDefaultsOnHeroku();
-
 const options = {};
 
 if (process.env.NODE_ENV === 'production') {

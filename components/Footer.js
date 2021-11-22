@@ -9,7 +9,6 @@ const footer = css`
 const footerCopyright = css`
   font-size: 1.4rem;
   font-family: 'New Tegomin';
-  /* color: rgb(58, 53, 53); */
   font-weight: 300;
   margin-bottom: 1rem;
   position: relative;

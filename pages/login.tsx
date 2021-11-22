@@ -12,7 +12,6 @@ const main = css`
   font-family: 'New Tegomin';
   text-align: center;
   margin-top: 0;
-  /* padding-top: 5rem; */
   width: 100vw;
   height: 85vh;
   background-image: url('../images/portada1.jpg');

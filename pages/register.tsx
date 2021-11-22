@@ -6,13 +6,10 @@ import Layout from '../components/Layout';
 import { Errors } from '../util/types';
 import { RegisterResponse } from './api/register';
 
-// check and well
-
 const main = css`
   font-family: 'New Tegomin';
   text-align: center;
   margin-top: 0;
-  /* padding-top: 5rem; */
   width: 100vw;
   height: 82.5vh;
   background-image: url('../images/portada1.jpg');
@@ -56,7 +53,7 @@ const input = css`
   border-radius: 8px;
   border: #3b3b3b;
   padding-left: 12px;
-  outline: lightgray; //try to change color here
+  outline: lightgray;
 `;
 
 const button = css`
@@ -110,6 +107,7 @@ export default function RegisterPage(props: Props) {
           event.preventDefault();
 
           // This body underneath turns into req.body into register.ts. The API route
+
           const registerResponse = await fetch('/api/register', {
             method: 'POST',
             headers: {
@@ -133,17 +131,10 @@ export default function RegisterPage(props: Props) {
             return;
           }
 
-          console.log('here', registerJson.user);
-          // const destination =
-          //   typeof router.query.returnTo === 'string' && router.query.returnTo
-          //     ? router.query.returnTo
-          //     : `/users/${registerJson.user.id}`;
-
           props.refreshUsername();
 
           router.push(`/map`);
         }}
-        // users-profiles/${registerJson.user.username}
       >
         <div>
           <div css={main}>
@@ -229,12 +220,14 @@ export default function RegisterPage(props: Props) {
 }
 
 // If there is a valid session in the database. And you try to get into this page => login it should redirect you to the page you choose underneath.
+
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { getValidSessionByToken } = await import('../util/database');
   const { createToken } = await import('../util/csrf');
   // const sessionToken = context.req.cookies.sessionTokenRegister;
 
   // Redirect from HTTP to HTTPS on Heroku
+
   if (
     context.req.headers.host &&
     context.req.headers['x-forwarded-proto'] &&
@@ -249,6 +242,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   }
 
   const sessionToken = context.req.cookies.sessionToken;
+
   // If there is a valid session in the database. And you try to get into this page => login it should redirect you to the page you choose underneath.
   const session = await getValidSessionByToken(sessionToken);
 
