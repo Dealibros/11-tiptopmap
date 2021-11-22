@@ -203,7 +203,7 @@ export default function App(props) {
     }
     newComment();
   }
-  let indexComment;
+
   return (
     <div className="App">
       <header>
@@ -228,7 +228,6 @@ export default function App(props) {
         {theComment
           ? theComment.map((item, i) => (
               <div css={messageContainer} key={item.id}>
-                {/* {(indexComment = i + 1)} */}
                 <div css={messageUser}>{item.username}</div>
 
                 <i css={faUserCircle} className="fas fa-user-circle" />
