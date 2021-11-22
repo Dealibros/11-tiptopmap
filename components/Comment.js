@@ -175,7 +175,7 @@ export default function App(props) {
       console.log('daaaata', data);
     };
     getComments();
-  }, []);
+  }, [props.restaurantId]);
 
   function handleSubmit(e) {
     e.preventDefault();

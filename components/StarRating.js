@@ -101,7 +101,7 @@ export default function StarRating(props) {
     return (
       <div css={ratingDiv}>
         <p css={textRating}>The Total Average </p>
-        {[...Array(5)].map((star, i) => {
+        {[...Array(5)].map((star) => {
           const ratingValue = i + 1;
 
           return (
