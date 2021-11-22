@@ -14,7 +14,7 @@ import {
   useLoadScript,
 } from '@react-google-maps/api';
 import Image from 'next/image';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
@@ -123,6 +123,118 @@ const options = {
   mapTypeControl: false,
 };
 
+// /////////////////////////Function SEARCH///////////////////////////////
+// ({destructuring props => dont need to write props or call with props.something})
+export function Search({ panTo, setMarkers, setTheAddress, setIdPlace }) {
+  const {
+    ready,
+    value,
+    suggestions: { status, data },
+    setValue,
+    clearSuggestions,
+  } = usePlacesAutocomplete({
+    requestOptions: {
+      location: { lat: () => 48.2042154830387, lng: () => 16.368015018501982 },
+      radius: 200 * 1000,
+    },
+    debounce: 300,
+  });
+
+  const handleInput = (e) => {
+    setValue(e.target.value);
+  };
+
+  const handleSelect = async (address) => {
+    setValue(address, false);
+    clearSuggestions();
+    // A try / catch block is basically used to handle errors in JavaScript. You use this when you don't want an error in your script to break your code. ... You put your code in the try block, and immediately if there is an error, JavaScript gives the catch statement control and it just does whatever you say.
+
+    const results = await getGeocode({ address });
+
+    // I need to take this value to the map page, to be able to call the API there with this value. Afterwards I need to bring all this information back here to be able to display it on the map
+
+    const idPlace = results[0].place_id;
+
+    setIdPlace(idPlace);
+
+    // console.log(results); // gives dirrection from place and other properties
+    // getLatlng shows the needed coordinates
+
+    const { lat, lng } = await getLatLng(results[0]);
+    setMarkers((current) => [
+      ...current,
+      {
+        lat: parseFloat(lat),
+        lng: parseFloat(lng),
+      },
+    ]);
+    // after address position 48.1946826 16.3938677
+
+    console.log(panTo({ lat, lng }));
+
+    setTheAddress(address);
+
+    // const handleClick = () => setTheAddress(address);
+    setParsedCookie('idPlaceValue', idPlace);
+  };
+
+  return (
+    <div css={search}>
+      <Combobox onSelect={handleSelect}>
+        <ComboboxInput
+          css={searchInput}
+          value={value}
+          onChange={handleInput}
+          disabled={!ready}
+          placeholder="Enter your place"
+        />
+        <ComboboxPopover css={inputPopOver}>
+          <ComboboxList>
+            {status === 'OK' &&
+              data.map(({ id, description }) => (
+                <ComboboxOption key={{ id }} value={description} />
+              ))}
+          </ComboboxList>
+        </ComboboxPopover>
+      </Combobox>
+    </div>
+  );
+}
+
+// /////////////////////////Function LOCATE////////////////////////
+// This seems only be useful to center where we are. No much needed
+function Locate({ panTo }) {
+  return (
+    <button
+      className="locate"
+      onClick={() => {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            panTo({
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            });
+          },
+          () => null,
+        );
+      }}
+    >
+      <img src="/images/compass.png" alt="compass" />
+    </button>
+  );
+}
+
+// to add markers when clicking on the map
+// const onMapClick = useCallback((e) => {
+//   setMarkers((current) => [
+//     ...current,
+//     {
+//       lat: parseFloat(e.latLng.lat()),
+//       lng: parseFloat(e.latLng.lng()),
+//     },
+//   ]);
+// }, []);
+
 // /////////////////////////MAIN FUNCTION MAP//////////////////////
 
 export default function Map(props, create) {
@@ -131,6 +243,9 @@ export default function Map(props, create) {
     googleMapsApiKey: 'AIzaSyCNUiZqrIsqP9MiPrVoqjil8Oz8Nah2CVo',
     libraries,
   });
+
+  // let Search;
+  // let Locate;
 
   // To set up the much needed Markers
   const [markers, setMarkers] = useState([]);
@@ -277,14 +392,6 @@ export default function Map(props, create) {
   if (loadError) return 'Error loading Maps';
   if (!isLoaded) return 'Loading Maps';
 
-  const image =
-    'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
-
-  // not a good idea the info coming from the databasr is missing a restaurant
-  // function showWindow() {
-  //   setSelected(marker);
-  // }
-  // console.log('api cjeck', refreshRestarurantsMarker);
   // /////////////////////////GOOGLE MAP///////////////////////////
 
   return (
@@ -338,7 +445,6 @@ export default function Map(props, create) {
               lng: selectedPlaces.lng,
             }}
             clickable={true}
-            infoWindow={open}
             onCloseClick={() => {
               setInfoRestaurant(null);
             }}
@@ -470,119 +576,6 @@ export default function Map(props, create) {
           </div>
         </InfoWindow>
       ) : null}
-      /////////////////////////////////////////////////////////////////////
     </GoogleMap>
   );
 }
-
-// /////////////////////////Function SEARCH///////////////////////////////
-// ({destructuring props => dont need to write props or call with props.something})
-export function Search({ panTo, setMarkers, setTheAddress, setIdPlace }) {
-  const {
-    ready,
-    value,
-    suggestions: { status, data },
-    setValue,
-    clearSuggestions,
-  } = usePlacesAutocomplete({
-    requestOptions: {
-      location: { lat: () => 48.2042154830387, lng: () => 16.368015018501982 },
-      radius: 200 * 1000,
-    },
-    debounce: 300,
-  });
-
-  const handleInput = (e) => {
-    setValue(e.target.value);
-  };
-
-  const handleSelect = async (address) => {
-    setValue(address, false);
-    clearSuggestions();
-    // A try / catch block is basically used to handle errors in JavaScript. You use this when you don't want an error in your script to break your code. ... You put your code in the try block, and immediately if there is an error, JavaScript gives the catch statement control and it just does whatever you say.
-
-    const results = await getGeocode({ address });
-
-    // I need to take this value to the map page, to be able to call the API there with this value. Afterwards I need to bring all this information back here to be able to display it on the map
-
-    const idPlace = results[0].place_id;
-
-    setIdPlace(idPlace);
-
-    // console.log(results); // gives dirrection from place and other properties
-    // getLatlng shows the needed coordinates
-
-    const { lat, lng } = await getLatLng(results[0]);
-    setMarkers((current) => [
-      ...current,
-      {
-        lat: parseFloat(lat),
-        lng: parseFloat(lng),
-      },
-    ]);
-    // after address position 48.1946826 16.3938677
-
-    console.log(panTo({ lat, lng }));
-
-    setTheAddress(address);
-
-    // const handleClick = () => setTheAddress(address);
-    setParsedCookie('idPlaceValue', idPlace);
-  };
-
-  return (
-    <div css={search}>
-      <Combobox onSelect={handleSelect}>
-        <ComboboxInput
-          css={searchInput}
-          value={value}
-          onChange={handleInput}
-          disabled={!ready}
-          placeholder="Enter your place"
-        />
-        <ComboboxPopover css={inputPopOver}>
-          <ComboboxList>
-            {status === 'OK' &&
-              data.map(({ id, description }) => (
-                <ComboboxOption key={{ id }} value={description} />
-              ))}
-          </ComboboxList>
-        </ComboboxPopover>
-      </Combobox>
-    </div>
-  );
-}
-
-// /////////////////////////Function LOCATE////////////////////////
-// This seems only be useful to center where we are. No much needed
-function Locate({ panTo }) {
-  return (
-    <button
-      className="locate"
-      onClick={() => {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            panTo({
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            });
-          },
-          () => null,
-        );
-      }}
-    >
-      <img src="/images/compass.png" alt="compass" />
-    </button>
-  );
-}
-
-// to add markers when clicking on the map
-// const onMapClick = useCallback((e) => {
-//   setMarkers((current) => [
-//     ...current,
-//     {
-//       lat: parseFloat(e.latLng.lat()),
-//       lng: parseFloat(e.latLng.lng()),
-//     },
-//   ]);
-// }, []);
