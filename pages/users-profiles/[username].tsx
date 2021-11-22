@@ -332,8 +332,8 @@ export type SingleUserResponseType = { user: User } | { errors: Errors[] };
 export default function SingleUserProfile(props: Props) {
   const router = useRouter();
 
-  const [edit, setEdit] = useState(true);
-  console.log('edit', edit);
+  const [disable, setDisable] = useState(false);
+
   const [firstname, setFirstname] = useState(props.user.firstname);
   const [lastname, setLastname] = useState(props.user.lastname);
   const [username, setUsername] = useState(props.user.username);
@@ -420,7 +420,7 @@ export default function SingleUserProfile(props: Props) {
                     <input
                       onChange={handleUsernameChange}
                       value={username}
-                      disabled={edit ? 'disabled' : ''}
+                      disabled={disable}
                     />
                   </span>
                 </p>
@@ -432,7 +432,7 @@ export default function SingleUserProfile(props: Props) {
                     <input
                       onChange={handleFirstnameChange}
                       value={firstname}
-                      disabled={edit ? 'disabled' : ''}
+                      disabled={disable}
                     />
                   </span>
                 </p>
@@ -444,7 +444,7 @@ export default function SingleUserProfile(props: Props) {
                     <input
                       onChange={handleLastnameChange}
                       value={lastname}
-                      disabled={edit ? 'disabled' : ''}
+                      disabled={disable}
                     />
                   </span>
                 </p>
@@ -456,7 +456,8 @@ export default function SingleUserProfile(props: Props) {
                     <input
                       onChange={handleEmailChange}
                       value={email}
-                      disabled={edit ? 'disabled' : ''}
+                      disabled={disable}
+                      // maybe an onclick button, when click edit to change when not not.
                     />
                   </span>
                 </p>
@@ -466,12 +467,12 @@ export default function SingleUserProfile(props: Props) {
             <button
               css={button}
               onClick={async () => {
-                if (edit) {
+                if (disable) {
                   // This is to allow changes
-                  setEdit(false);
+                  setDisable(false);
                 } else {
                   // This is to disable input and save changes
-                  setEdit(true);
+                  setDisable(true);
                   const response = await fetch(
                     `/api/users/${props.user.username}`,
                     {
@@ -492,7 +493,7 @@ export default function SingleUserProfile(props: Props) {
                 }
               }}
             >
-              {edit ? 'Edit Details' : 'Save Changes'}
+              {disable ? 'Edit Details' : 'Save Changes'}
             </button>
 
             <button

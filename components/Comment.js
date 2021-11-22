@@ -173,6 +173,7 @@ export default function App(props) {
 
       const data = await response.json();
       setTheComment(data);
+      console.log('daaaata', data);
     };
     getComments();
   }, []);

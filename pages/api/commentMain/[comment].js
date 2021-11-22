@@ -9,8 +9,11 @@ import {
 // GET
 export default async function handler(req, res) {
   if (req.method === 'GET') {
+    console.log('cookie?here', req.cookies);
+    console.log('cookie??', req.body);
     const restaurantId = Number(req.query.comment);
     const commentsdata = await getComment(restaurantId);
+
     return res.status(200).json(commentsdata);
 
     // POST
@@ -29,7 +32,8 @@ export default async function handler(req, res) {
     // PUT
   } else if (req.method === 'PUT') {
     const body = req.body;
-    console.log('bodyPutahhhhhhhhhhh', body);
+    console.log('bodyP', body);
+    console.log('cookie?', req.cookies);
     const comment = await updateComment({
       comment: body.comment,
       id: body.id,
