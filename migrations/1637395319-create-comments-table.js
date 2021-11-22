@@ -5,7 +5,7 @@ exports.up = async function up(sql) {
 
       comment varchar(200) NOT NULL ,
       user_id integer REFERENCES users(id) ON DELETE CASCADE,
-      username varchar(40) UNIQUE,
+      username varchar(40),
 			restaurant_id integer REFERENCES restaurants(id) ON DELETE CASCADE
 
     )

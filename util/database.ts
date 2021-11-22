@@ -14,7 +14,6 @@ dotenvSafe.config();
 
 // Type needed for the connection function below
 declare module globalThis {
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   let __postgresSqlClient: ReturnType<typeof postgres> | undefined;
 }
 
@@ -537,40 +536,43 @@ export async function createRestaurants({
 // Comments section
 
 export async function createComment({
-  // username,
   comment,
   user_id,
   restaurant_id,
+  username,
 }: {
   // username: string;
   comment: string;
   user_id: number;
   restaurant_id: number;
+  username: string;
 }) {
   const theComment = await sql`
     INSERT INTO comments
-      ( comment, user_id, restaurant_id)
+      ( comment, user_id, restaurant_id, username)
     VALUES
-      (${comment}, ${user_id}, ${restaurant_id})
+      (${comment}, ${user_id}, ${restaurant_id}, ${username})
 
     RETURNING
       id,
       user_id,
       restaurant_id,
-      comment;
+      comment,
+      username;
   `;
   return camelcaseKeys(theComment[0]);
 }
+//  WHERE
+//     restaurantId = ${restaurant_id}
 
-//  -- WHERE
-//   -- id = ${id};
-
+// { restaurant_id }: { restaurant_id: number }
 export async function getComment() {
   const comment = await sql`
     SELECT
     *
     FROM
     comments
+
 
     `;
 

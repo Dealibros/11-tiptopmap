@@ -6,28 +6,27 @@ const inputComment = css`
   font-family: 'New Tegomin';
   font-size: 1.1rem;
   font-weight: 500;
-  line-height: 15px;
+  line-height: 10px;
   width: 82%;
   margin: 0rem 0.2rem 0.2rem 3rem;
-  padding: 0.3rem;
+  padding: 0.1rem;
   text-align: center;
   border-radius: 0.5rem !important;
-  border: white;
+  border: 0.1rem solid #f4f0ec !important;
 `;
-
-// const guestListSmall = css`
-//   margin: 0 0 1rem 0;
-// `;
 
 const title = css`
   text-align: center;
   font-size: 1.8rem;
-  color: #a7766a;
-  margin-top: 0.5rem;
+  /* color: #a7766a; */
+  margin-top: -0.7rem;
+  margin-left: 3rem;
+  margin-bottom: 2rem;
 `;
 
 const mainChatBox = css`
   text-align: center;
+  margin-top: -1rem;
   margin-right: 0 auto;
   margin-left: 0 auto;
   padding: 5px 70px;
@@ -118,8 +117,9 @@ const messageContainer = css`
   margin: 10px 0;
   padding-left: 10px;
   background-color: white;
-  border-radius: 0.4rem;
-  /* background-color: #f1f7ed; */
+  border-radius: 0.5rem;
+  box-shadow: inset 0 -2em 1em #f1f0e1, 0 0 0 0px rgb(255, 255, 255),
+    0.1em 0.1em 1em rgba(0, 0, 0, 0.1);
 `;
 
 const faUserCircle = css`
@@ -138,12 +138,6 @@ const messageUser = css`
   font-size: 1.2rem;
 `;
 
-// const messageText = css`
-//   font-size: 1.2rem;
-//   margin: 3px 0;
-//   background-color: lightgray;
-// `;
-
 const messageIconContainer = css`
   margin-top: 6px;
   margin-left: 2.3rem;
@@ -155,20 +149,6 @@ const messageIconContainer = css`
     margin-right: 10px;
     cursor: pointer;
     font-size: 1.1rem;
-  }
-`;
-
-const arrowReplies = css`
-  /* margin-top: 3px; */
-  cursor: pointer;
-  > * {
-    color: #4688de;
-    font-size: 1.1rem;
-    display: inline-block;
-    padding-bottom: 0.4rem;
-  }
-  > i {
-    margin-right: 10px;
   }
 `;
 
@@ -230,9 +210,11 @@ export default function App(props) {
 
   // fetch gets API from the server, will rerender nonStop, in this case runs only once because of useEffect
   // From GIT "GET"
+
   useEffect(() => {
     const getComments = async () => {
       const response = await fetch(`/api/comment`);
+      //  const response = await fetch(`/api/mapsCard/${props.restaurantId}`);
       const data = await response.json();
       setTheComment(data);
     };
@@ -253,13 +235,13 @@ export default function App(props) {
           comment: addComment,
           user_id: props.userId,
           restaurant_id: props.restaurantId,
-          // username missing here
+          username: props.username,
         }),
       });
 
-      const createdGuest = await response.json();
+      const created = await response.json();
       window.location.reload();
-      return createdGuest;
+      return created;
     }
     newComment();
   }
@@ -288,7 +270,8 @@ export default function App(props) {
         {theComment
           ? theComment.map((item) => (
               <div css={messageContainer} key={item.id}>
-                <div css={messageUser}>username</div>
+                <div css={messageUser}>{item.username}</div>
+                {/* // dont call it as props.username. but as database query */}
                 <i css={faUserCircle} className="fas fa-user-circle" />
 
                 <input
@@ -312,8 +295,7 @@ export default function App(props) {
                   <button
                     css={buttonDelete}
                     type="button"
-                    onClick={async (event) => {
-                      event.preventDefault();
+                    onClick={async () => {
                       const response = await fetch(`/api/comment`, {
                         method: 'DELETE',
                         headers: {
@@ -325,8 +307,9 @@ export default function App(props) {
                       });
                       console.log('infoRestaurantcheck', item.id);
                       const deletedComment = await response.json();
-                      window.location.reload();
+
                       setSelectedComment(item);
+                      window.location.reload();
                       return deletedComment;
                     }}
                   >

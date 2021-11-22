@@ -22,6 +22,7 @@ export default async function handler(req, res) {
       comment: body.comment,
       restaurant_id: body.restaurant_id,
       user_id: body.user_id,
+      username: body.username,
     });
 
     return res.status(200).json(createCommentData);

@@ -40,9 +40,11 @@ export default function StarRating(props) {
       const response = await fetch(`/api/ratingsAverage`);
       console.log('restaurantId', props.restaurantId);
       const ratingResponse = await response.json();
+
       const ratingResponseStars = Number(ratingResponse[0].avg);
       setTheStars(3);
       console.log('rr', ratingResponseStars);
+      console.log('fanelcheck', ratingResponse);
       return ratingResponseStars;
     };
     Stars();

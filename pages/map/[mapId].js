@@ -127,7 +127,7 @@ const lineInfoCard = css`
   color: lightgray;
   width: 65%;
   margin-top: 2rem;
-  margin-bottom: 0.4rem;
+  margin-bottom: 2rem;
 `;
 
 const mainChat = css`
@@ -220,6 +220,7 @@ export default function Card(props) {
                   setRestaurantId={setRestaurantId}
                   userId={userId}
                   setUserId={setUserId}
+                  username={props.username}
                 >
                   Comments
                 </Comment>

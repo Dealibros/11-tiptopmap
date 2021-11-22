@@ -15,8 +15,6 @@ import {
   useJsApiLoader,
   useLoadScript,
 } from '@react-google-maps/api';
-import axios from 'axios';
-import Cookies from 'js-cookie';
 import Image from 'next/image';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { FaDatabase } from 'react-icons/fa';
