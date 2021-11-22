@@ -407,7 +407,8 @@ export default function SingleUserProfile(props: Props) {
                 <div css={bottomCircle} />
               </div>
               <p>
-                Finish <br /> Project
+                Finish <br />
+                Project
               </p>
             </div>
 
@@ -535,58 +536,13 @@ export default function SingleUserProfile(props: Props) {
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { getUser } = await import('../../util/database');
 
-  const user = await getUser(context.query.username);
+  const user = await getUser(String(context.query.username));
 
   console.log('notworking?', context.query.username); // is working, shows the username of the user
-
-  // const usersResponse = await fetch('http://localhost:3000/api/users');
-  // const users = await usersResponse.json();
-
-  // console.log('from gssp, users');
-
-  // return {
-  //   users,
-  // };
-  // const response =
-  // Since we're fetching on the server side,
-  // the browser is not a part of this fetch
-  // and it is therefore not sending the cookies along
-  //
-  // This is using the node-fetch library internally
-  //
-
-  // await fetch(
-  //   `${process.env.BASE_URL}/users-profiles/${context.query.username}`,
-  //   {
-  //     method: 'GET',
-  //     headers: {
-  //       // This forwards the cookie to the API route
-  //       cookie: context.req.headers.cookie || '',
-  //     },
-  //   },
-  // );
-  // console.log('hola', context.query.username);
-  // const json = (await response.json()) as SingleUserResponseType;
-
-  // console.log('API decoded JSON from response', json);
-
-  // // checking for a property called errors inside object json
-  // if ('errors' in json) {
-  //   context.res.statusCode = 403;
-  // } else if (!json.user) {
-  //   // Return a proper status code for a response
-  //   // with a null user (which indicates it has
-  //   // not been found in the database)
-  //   context.res.statusCode = 404;
-  // }
 
   return {
     props: {
       user,
-      // users,
-      // json is an object with a user property OR an error property
-      // if it has an error property, it's still rendering
-      // ...json,
     },
   };
 }
