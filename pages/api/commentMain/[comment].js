@@ -1,17 +1,17 @@
-import '../../util/database';
+import '../../../util/database';
 import {
   createComment,
   deleteComment,
   getComment,
   updateComment,
-} from '../../util/database';
+} from '../../../util/database';
 
 // GET
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
-    const commentsdata = await getComment();
-
+    const restaurantId = Number(req.query.comment);
+    const commentsdata = await getComment(restaurantId);
     return res.status(200).json(commentsdata);
 
     // POST

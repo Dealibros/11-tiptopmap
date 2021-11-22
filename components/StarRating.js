@@ -37,14 +37,15 @@ export default function StarRating(props) {
 
   useEffect(() => {
     const Stars = async () => {
-      const response = await fetch(`/api/ratingsAverage`);
+      const response = await fetch(
+        `/api/ratingsAverageMain/${props.restaurantId}`,
+      );
       console.log('restaurantId', props.restaurantId);
       const ratingResponse = await response.json();
 
       const ratingResponseStars = Number(ratingResponse[0].avg);
-      setTheStars(3);
-      console.log('rr', ratingResponseStars);
-      console.log('fanelcheck', ratingResponse);
+      setTheStars(ratingResponseStars);
+      console.log('rr', ratingResponse);
       return ratingResponseStars;
     };
     Stars();

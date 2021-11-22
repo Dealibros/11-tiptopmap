@@ -16,7 +16,6 @@ import {
 import Image from 'next/image';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import usePlacesAutocomplete, {
-  getDetails,
   getGeocode,
   getLatLng,
 } from 'use-places-autocomplete';
@@ -32,11 +31,6 @@ const minibutton = css`
   padding-right: 2.2rem;
   padding-left: 2.2rem;
   padding-top: 0.2rem;
-`;
-
-const miniImg = css`
-  height: 50px;
-  width: 50px;
 `;
 
 const search = css`
@@ -100,10 +94,6 @@ const descriptionSearch = css`
   margin-bottom: 0.5rem;
 `;
 
-const h4 = css`
-  margin: 0;
-`;
-
 const img = css`
   border-radius: 10rem;
   margin-right: 0.2rem;
@@ -132,8 +122,7 @@ const options = {
   streetViewControl: false,
   mapTypeControl: false,
 };
-const image =
-  'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+
 // /////////////////////////MAIN FUNCTION MAP//////////////////////
 
 export default function Map(props, create) {
@@ -150,11 +139,12 @@ export default function Map(props, create) {
   const [infoRestaurant, setInfoRestaurant] = useState();
   const [selectedPlaces, setSelectedPlaces] = useState(null);
   const [idPlace, setIdPlace] = useState();
-  const [refreshRestarurantsMarker, setRefreshRestarurantsMarker] = useState(
-    props.restaurants,
-  );
+  // const [refreshRestarurantsMarker, setRefreshRestarurantsMarker] = useState(
+  //   props.restaurants,
+  // );
   console.log('markers', markers);
   console.log('selected', selected);
+  // setRefreshRestarurantsMarker(0)
 
   // //////////////////Spot for the database adding/////////////////////
 
@@ -291,10 +281,10 @@ export default function Map(props, create) {
     'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
 
   // not a good idea the info coming from the databasr is missing a restaurant
-  function showWindow() {
-    setSelected(marker);
-  }
-  console.log('api cjeck', refreshRestarurantsMarker);
+  // function showWindow() {
+  //   setSelected(marker);
+  // }
+  // console.log('api cjeck', refreshRestarurantsMarker);
   // /////////////////////////GOOGLE MAP///////////////////////////
 
   return (
@@ -377,7 +367,7 @@ export default function Map(props, create) {
                 </label>
               </div>
 
-              <span css={ratingSearch} htmlFor>
+              <span role="img" aria-label="Star" css={ratingSearch} htmlFor>
                 ⭐{infoRestaurant.rating}
               </span>
               <br />
@@ -452,7 +442,10 @@ export default function Map(props, create) {
               </label>
             </div>
             <label css={ratingSearch} htmlFor>
-              ⭐{rating}
+              <span role="img" aria-label="Panda">
+                ⭐
+              </span>
+              {rating}
             </label>
             <br />
             <button
@@ -484,14 +477,7 @@ export default function Map(props, create) {
 
 // /////////////////////////Function SEARCH///////////////////////////////
 // ({destructuring props => dont need to write props or call with props.something})
-export function Search({
-  panTo,
-  setMarkers,
-  setTheAddress,
-  theAddress,
-  idPlace,
-  setIdPlace,
-}) {
+export function Search({ panTo, setMarkers, setTheAddress, setIdPlace }) {
   const {
     ready,
     value,
@@ -519,7 +505,7 @@ export function Search({
 
     // I need to take this value to the map page, to be able to call the API there with this value. Afterwards I need to bring all this information back here to be able to display it on the map
 
-    let idPlace = results[0].place_id;
+    const idPlace = results[0].place_id;
 
     setIdPlace(idPlace);
 

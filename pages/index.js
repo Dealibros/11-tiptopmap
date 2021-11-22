@@ -27,9 +27,6 @@ const title = css`
 const mainText = css`
   color: white;
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-  /* text-shadow: 0 0 2px #000; /* horizontal-offset vertical-offset 'blur' colour */
-  /* -moz-text-shadow: 0 0 2px #000;
-  -webkit-text-shadow: 0 0 2px #000; */
   text-shadow:
         /* first layer at 1px */ -1px -1px 0px #000,
     0px -1px 0px #000, 1px -1px 0px #000, -1px 0px 0px #000, 1px 0px 0px #000,
@@ -50,7 +47,7 @@ export default function Home(props) {
   useEffect(() => {
     props.refreshUsername();
     console.log(1213);
-  }, []);
+  }, [props]); // there was an error here
 
   return (
     <div>

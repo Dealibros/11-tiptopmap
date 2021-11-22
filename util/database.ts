@@ -518,20 +518,18 @@ export async function createComment({
   `;
   return camelcaseKeys(theComment[0]);
 }
-//  WHERE
-//     restaurantId = ${restaurant_id}
 
-// { restaurant_id }: { restaurant_id: number }
-export async function getComment() {
+export async function getComment(restaurantId: number) {
+  console.log('database', restaurantId);
   const comment = await sql`
     SELECT
     *
     FROM
     comments
-
-
+    WHERE
+     restaurant_id = ${restaurantId}
     `;
-
+  // restaurantId column doesn't exist. First is the database
   return comment.map((commentFirst) => camelcaseKeys(commentFirst));
 }
 

@@ -57,11 +57,7 @@ export default async function handler(req, res) {
 
     res.status(200).json(restaurant);
   } else if (req.method === 'PATCH') {
-    const body = req.body;
-
-    console.log('from api body', req.body);
-
-    // return res.status(200).json(updateCardata);
+    // return res.status(200).json(restaurant);
   }
   return res.status(405);
 }

@@ -155,7 +155,7 @@ export default function App(props) {
   const [addComment, setAddComment] = useState('');
   const [selectedComment, setSelectedComment] = useState('');
   const [edit, setEdit] = useState('');
-
+  console.log(selectedComment);
   // const [list, setList] = useState();
 
   // fetch gets API from the server, will rerender nonStop, in this case runs only once because of useEffect
@@ -163,8 +163,9 @@ export default function App(props) {
 
   useEffect(() => {
     const getComments = async () => {
-      const response = await fetch(`/api/comment`);
-      //  const response = await fetch(`/api/mapsCard/${props.restaurantId}`);
+      const response = await fetch(`/api/commentMain/${props.restaurantId}`);
+      console.log('restaurantid', props.restaurantId);
+
       const data = await response.json();
       setTheComment(data);
     };
@@ -175,8 +176,9 @@ export default function App(props) {
     e.preventDefault();
 
     // create a new Comment POST
+
     async function newComment() {
-      const response = await fetch(`/api/comment`, {
+      const response = await fetch(`/api/commentMain${props.restaurantId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
