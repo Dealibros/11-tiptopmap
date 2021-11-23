@@ -150,17 +150,25 @@ const messageIconContainer = css`
   }
 `;
 
+const thumbsUp = css`
+  margin-bottom: 0.5rem;
+`;
+
+const likeText = css`
+  margin-bottom: 0.2rem;
+  margin-top: 0.1rem;
+`;
+
 export default function App(props) {
   const [theComment, setTheComment] = useState('');
   const [addComment, setAddComment] = useState('');
-  const [edit, setEdit] = useState(true);
-  const [changeComment, setChangeComment] = useState('');
+  // const [edit, setEdit] = useState(true);
+  // const [changeComment, setChangeComment] = useState('');
   const [selectedComment, setSelectedComment] = useState('');
-  console.log('edit', edit);
+  const [editCommentId, setEditCommentId] = useState(0);
+  const [disable, setDisable] = useState(true);
 
-  console.log('sc', selectedComment);
-  console.log('changeComment', changeComment);
-  // const [list, setList] = useState();
+  console.log('whatsTheCommentId?', editCommentId);
 
   // fetch gets API from the server, will rerender nonStop, in this case runs only once because of useEffect
   // From GIT "GET"
@@ -225,77 +233,112 @@ export default function App(props) {
 
       <div css={mainChatBox}>
         {theComment
-          ? theComment.map((item, i) => (
-              <div css={messageContainer} key={item.id}>
-                <div css={messageUser}>{item.username}</div>
+          ? theComment.map((item) => {
+              if (item.isLocked === false) {
+                console.log('itemisLockedfalse');
+                return (
+                  <div css={messageContainer} key={item.id}>
+                    <div css={messageUser}>{item.username}</div>
+                    <i css={faUserCircle} className="fas fa-user-circle" />
+                    <input
+                      css={inputComment}
+                      // onChange={(e) =>
+                      //   setSelectedComment(e.currentTarget.value)
+                      // }
+                      // I think the issue is here
+                      value={item.comment}
+                      disabled={true}
+                    />
 
-                <i css={faUserCircle} className="fas fa-user-circle" />
-                <input
-                  css={inputComment}
-                  onChange={(e) => setSelectedComment(e.currentTarget.value)}
-                  // I think the issue is here
-                  value={item.comment}
-                  disabled={edit ? 'disabled' : ''}
-                />
-                <section css={messageIconContainer}>
-                  <i className="fas fa-thumbs-up" aria-hidden="true" />
-                  <button
-                    css={buttonDelete}
-                    type="button"
-                    onClick={async () => {
-                      const response = await fetch(`/api/commentMain/comment`, {
-                        method: 'DELETE',
-                        headers: {
-                          'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                          id: item.id,
-                        }),
-                      });
-                      const deletedComment = await response.json();
-
-                      setChangeComment(item.comment);
-                      window.location.reload();
-                      return deletedComment;
-                    }}
-                  >
-                    Delete
-                  </button>
-
-                  <button
-                    css={button}
-                    onClick={async () => {
-                      if (edit) {
-                        // This is to allow changes
-                        setEdit(false);
-                      } else {
-                        // This is to disable input and save changes
-                        setEdit(true);
-
-                        const response = await fetch(
-                          `/api/commentMain/${item.id}`,
-                          {
-                            method: 'PUT',
-                            headers: {
-                              'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                              comment: item.comment,
-                              id: item.id,
-                            }),
-                          },
-                        );
-                        console.log('propsid', item.id);
-                        // only works when I save the change. The problem is that I cant do a change.
-                        await response.json();
+                    <section css={messageIconContainer}>
+                      <i
+                        css={thumbsUp}
+                        className="fas fa-thumbs-up"
+                        aria-hidden="true"
+                      />
+                      <h2 css={likeText}>like</h2>
+                    </section>
+                  </div>
+                );
+              } else {
+                return (
+                  <div css={messageContainer} key={item.id}>
+                    <div css={messageUser}>{item.username}</div>
+                    <i css={faUserCircle} className="fas fa-user-circle" />
+                    <input
+                      css={inputComment}
+                      onChange={(e) =>
+                        setSelectedComment(e.currentTarget.value)
                       }
-                    }}
-                  >
-                    {edit ? 'Edit Details' : 'Save Changes'}
-                  </button>
-                </section>
-              </div>
-            ))
+                      // I think the issue is here
+                      value={item.comment}
+                      disabled={disable ? 'disabled' : ''}
+                    />
+
+                    <section css={messageIconContainer}>
+                      <i className="fas fa-thumbs-up" aria-hidden="true" />
+                      <button
+                        css={buttonDelete}
+                        type="button"
+                        onClick={async () => {
+                          const response = await fetch(
+                            `/api/commentMain/comment`,
+                            {
+                              method: 'DELETE',
+                              headers: {
+                                'Content-Type': 'application/json',
+                              },
+                              body: JSON.stringify({
+                                id: item.id,
+                              }),
+                            },
+                          );
+                          const deletedComment = await response.json();
+
+                          // setChangeComment(item.comment);
+                          window.location.reload();
+                          return deletedComment;
+                        }}
+                      >
+                        Delete
+                      </button>
+
+                      <button
+                        css={button}
+                        onClick={async () => {
+                          setEditCommentId(item.id);
+                          console.log('itemID', item.id);
+                          console.log('whatsTheCommentId?', editCommentId);
+                          if (editCommentId === item.Id) {
+                            setDisable(true);
+                          } else {
+                            setDisable(false);
+                            const response = await fetch(
+                              `/api/commentMain/${item.id}`,
+                              {
+                                method: 'PUT',
+                                headers: {
+                                  'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                  comment: item.comment,
+                                  id: item.id,
+                                }),
+                              },
+                            );
+                            console.log('propsid', item.id);
+                            // only works when I save the change. The problem is that I cant do a change.
+                            await response.json();
+                          }
+                        }}
+                      >
+                        {disable ? 'Edit Details' : 'Save Changes'}
+                      </button>
+                    </section>
+                  </div>
+                );
+              }
+            })
           : null}
       </div>
     </div>

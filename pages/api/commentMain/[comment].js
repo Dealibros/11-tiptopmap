@@ -31,13 +31,13 @@ export default async function handler(req, res) {
 
     const isLocked = false;
     // const anArray = { ...commentsdata, isLocked };
-    const newArray = commentsdata.map((array) => {
-      if (theUserId === array.userId) {
-        array.isLocked = true;
+    const newArray = commentsdata.map((commentObj) => {
+      if (theUserId === commentObj.userId) {
+        commentObj.isLocked = true;
       } else {
-        array.isLocked = false;
+        commentObj.isLocked = false;
       }
-      return [...commentsdata];
+      return { ...commentObj };
     });
 
     console.log('newArrayCheck', newArray);
