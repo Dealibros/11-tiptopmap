@@ -1,3 +1,4 @@
+import '@reach/combobox/styles.css';
 import { css } from '@emotion/react';
 import {
   Combobox,
