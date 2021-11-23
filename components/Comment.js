@@ -162,11 +162,9 @@ const likeText = css`
 export default function App(props) {
   const [theComment, setTheComment] = useState('');
   const [addComment, setAddComment] = useState('');
-  // const [edit, setEdit] = useState(true);
-  // const [changeComment, setChangeComment] = useState('');
-  const [selectedComment, setSelectedComment] = useState('');
   const [editCommentId, setEditCommentId] = useState(0);
   const [disable, setDisable] = useState(true);
+  const [commentUpdated, setCommentUpdated] = useState('');
 
   console.log('whatsTheCommentId?', editCommentId);
 
@@ -274,17 +272,20 @@ export default function App(props) {
                           if (newItem.id === editCommentId) {
                             const newItemWithNewComment =
                               newItem.comment === e.currentTarget.value;
-                            return newItemWithNewComment;
+                            return { ...newItem };
                           } else {
-                            return theCommentUpdated;
+                            return newItem;
                           }
                         });
+                        // setCommentUpdated(theCommentUpdated);
+                        // console.log('theCommentUpdated', theCommentUpdated);
+
+                        // // setCommentUpdated(e.currentTarget.value);
                       }}
-                      // setTheComment(e.currentTarget.value)
-                      // I think the issue is here
                       value={item.comment}
-                      disabled={disable ? 'disabled' : ''}
+                      // disabled={disable ? 'disabled' : ''}
                     />
+
                     <section css={messageIconContainer}>
                       <i className="fas fa-thumbs-up" aria-hidden="true" />
                       <button
@@ -316,8 +317,8 @@ export default function App(props) {
                         css={button}
                         onClick={async () => {
                           setEditCommentId(item.id);
-                          console.log('itemID', item.id);
-                          console.log('whatsTheCommentId?', editCommentId);
+                          // console.log('itemID', item.id);
+                          // console.log('whatsTheCommentId?', editCommentId);
                           if (editCommentId === item.Id) {
                             setDisable(true);
                           } else {

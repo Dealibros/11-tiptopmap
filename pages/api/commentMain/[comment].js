@@ -30,7 +30,7 @@ export default async function handler(req, res) {
     console.log('whatsinside here id', theUser.id);
 
     const isLocked = false;
-    // const anArray = { ...commentsdata, isLocked };
+
     const newArray = commentsdata.map((commentObj) => {
       if (theUserId === commentObj.userId) {
         commentObj.isLocked = true;
