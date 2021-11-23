@@ -236,6 +236,7 @@ export default function App(props) {
           ? theComment.map((item) => {
               if (item.isLocked === false) {
                 console.log('itemisLockedfalse');
+                console.log('thecomment', theComment);
                 return (
                   <div css={messageContainer} key={item.id}>
                     <div css={messageUser}>{item.username}</div>
@@ -263,18 +264,27 @@ export default function App(props) {
               } else {
                 return (
                   <div css={messageContainer} key={item.id}>
+                    {/* {setSelectedComment(item.comment)} */}
                     <div css={messageUser}>{item.username}</div>
                     <i css={faUserCircle} className="fas fa-user-circle" />
                     <input
                       css={inputComment}
-                      onChange={(e) =>
-                        setSelectedComment(e.currentTarget.value)
-                      }
+                      onChange={(e) => {
+                        const theCommentUpdated = theComment.map((newItem) => {
+                          if (newItem.id === editCommentId) {
+                            const newItemWithNewComment =
+                              newItem.comment === e.currentTarget.value;
+                            return newItemWithNewComment;
+                          } else {
+                            return theCommentUpdated;
+                          }
+                        });
+                      }}
+                      // setTheComment(e.currentTarget.value)
                       // I think the issue is here
                       value={item.comment}
                       disabled={disable ? 'disabled' : ''}
                     />
-
                     <section css={messageIconContainer}>
                       <i className="fas fa-thumbs-up" aria-hidden="true" />
                       <button
@@ -295,7 +305,6 @@ export default function App(props) {
                           );
                           const deletedComment = await response.json();
 
-                          // setChangeComment(item.comment);
                           window.location.reload();
                           return deletedComment;
                         }}
@@ -327,6 +336,7 @@ export default function App(props) {
                               },
                             );
                             console.log('propsid', item.id);
+                            console.log('put', 'response');
                             // only works when I save the change. The problem is that I cant do a change.
                             await response.json();
                           }
