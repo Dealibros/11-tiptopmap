@@ -28,21 +28,21 @@ export default async function handler(req, res) {
 
     console.log('whatsinside here', theUser);
     console.log('whatsinside here id', theUser.id);
-    isLocked = false;
+
+    const isLocked = false;
     // const anArray = { ...commentsdata, isLocked };
     const newArray = commentsdata.map((array) => {
-      isLocked = false;
       if (theUserId === array.userId) {
-        isLocked = true;
+        array.isLocked = true;
       } else {
-        isLocked = false;
+        array.isLocked = false;
       }
-      return [...commentsdata, isLocked];
+      return [...commentsdata];
     });
 
-    console.log('newArray', newArray);
+    console.log('newArrayCheck', newArray);
 
-    return res.status(200).json(commentsdata);
+    return res.status(200).json(newArray);
 
     // POST
   } else if (req.method === 'POST') {
