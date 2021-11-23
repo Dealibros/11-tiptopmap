@@ -88,7 +88,7 @@ export default async function registerHandler(
     // clean old sessions
     deleteExpiredSessions();
 
-    if (!user) {
+    if (user) {
       res.status(500).send({ errors: [{ message: 'User not create' }] });
       return;
     }
