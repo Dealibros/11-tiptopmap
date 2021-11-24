@@ -232,8 +232,6 @@ export default function App(props) {
         {theComment
           ? theComment.map((item) => {
               if (item.isLocked === false) {
-                console.log('itemisLockedfalse');
-                console.log('thecomment', theComment);
                 return (
                   <div css={messageContainer} key={item.id}>
                     <div css={messageUser}>{item.username}</div>
@@ -257,7 +255,6 @@ export default function App(props) {
               } else {
                 return (
                   <div css={messageContainer} key={item.id}>
-                    {/* {setSelectedComment(item.comment)} */}
                     <div css={messageUser}>{item.username}</div>
                     <i css={faUserCircle} className="fas fa-user-circle" />
                     <input
