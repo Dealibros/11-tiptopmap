@@ -164,7 +164,6 @@ export default function App(props) {
   const [addComment, setAddComment] = useState('');
   const [editCommentId, setEditCommentId] = useState(0);
   const [disable, setDisable] = useState(true);
-  const [commentUpdated, setCommentUpdated] = useState('');
 
   console.log('whatsTheCommentId?', editCommentId);
 
@@ -241,10 +240,6 @@ export default function App(props) {
                     <i css={faUserCircle} className="fas fa-user-circle" />
                     <input
                       css={inputComment}
-                      // onChange={(e) =>
-                      //   setSelectedComment(e.currentTarget.value)
-                      // }
-                      // I think the issue is here
                       value={item.comment}
                       disabled={true}
                     />
@@ -268,22 +263,17 @@ export default function App(props) {
                     <input
                       css={inputComment}
                       onChange={(e) => {
-                        const theCommentUpdated = theComment.map((newItem) => {
-                          if (newItem.id === editCommentId) {
-                            const newItemWithNewComment =
-                              newItem.comment === e.currentTarget.value;
-                            return { ...newItem };
-                          } else {
-                            return newItem;
+                        const modifiedComments = [];
+                        theComment.forEach((element) => {
+                          if (element.id === item.id) {
+                            element.comment = e.currentTarget.value;
                           }
+                          modifiedComments.push(element);
                         });
-                        // setCommentUpdated(theCommentUpdated);
-                        // console.log('theCommentUpdated', theCommentUpdated);
-
-                        // // setCommentUpdated(e.currentTarget.value);
+                        console.log(modifiedComments);
+                        setTheComment(modifiedComments);
                       }}
                       value={item.comment}
-                      // disabled={disable ? 'disabled' : ''}
                     />
 
                     <section css={messageIconContainer}>
@@ -317,8 +307,6 @@ export default function App(props) {
                         css={button}
                         onClick={async () => {
                           setEditCommentId(item.id);
-                          // console.log('itemID', item.id);
-                          // console.log('whatsTheCommentId?', editCommentId);
                           if (editCommentId === item.Id) {
                             setDisable(true);
                           } else {
@@ -338,7 +326,6 @@ export default function App(props) {
                             );
                             console.log('propsid', item.id);
                             console.log('put', 'response');
-                            // only works when I save the change. The problem is that I cant do a change.
                             await response.json();
                           }
                         }}
