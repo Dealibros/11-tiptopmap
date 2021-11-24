@@ -11,25 +11,11 @@ import {
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
-    console.log('cookie?here', req.cookies);
-    console.log('cookie??', req.body);
-
     const restaurantId = Number(req.query.comment);
     const commentsdata = await getComment(restaurantId);
-    // Inside commentsData I have the userId and the username
-
-    console.log('commentsData??', commentsdata);
-    console.log('commentsDatauserId??', commentsdata[0].userId);
-    // commentsdata[].userId gives me the userId
-    // In the mapping I will have access to each one as a single.
 
     const theUser = await getUserByValidSessionToken(req.cookies.sessionToken);
     const theUserId = theUser.id;
-
-    console.log('whatsinside here', theUser);
-    console.log('whatsinside here id', theUser.id);
-
-    // const isLocked = false;
 
     const newArray = commentsdata.map((commentObj) => {
       if (theUserId === commentObj.userId) {
@@ -39,8 +25,6 @@ export default async function handler(req, res) {
       }
       return { ...commentObj };
     });
-
-    console.log('newArrayCheck', newArray);
 
     return res.status(200).json(newArray);
 
@@ -60,8 +44,6 @@ export default async function handler(req, res) {
     // PUT
   } else if (req.method === 'PUT') {
     const body = req.body;
-    console.log('bodyP', body);
-    console.log('cookie?', req.cookies);
     const comment = await updateComment({
       comment: body.comment,
       id: body.id,
