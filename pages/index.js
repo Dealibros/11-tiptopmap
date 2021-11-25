@@ -21,7 +21,7 @@ const title = css`
   font-weight: 700;
   font-size: 4.8rem;
   text-align: center;
-  margin-bottom: 0;
+  margin-bottom: 0.1rem;
 `;
 
 const mainText = css`
