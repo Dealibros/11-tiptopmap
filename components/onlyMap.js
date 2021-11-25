@@ -242,7 +242,7 @@ function Locate({ panTo }) {
 
 // /////////////////////////MAIN FUNCTION MAP//////////////////////
 
-export default function Map(props, create) {
+export default function Map(props) {
   const { isLoaded, loadError } = useLoadScript({
     id: 'google-map-script',
     googleMapsApiKey: 'AIzaSyCNUiZqrIsqP9MiPrVoqjil8Oz8Nah2CVo',
@@ -339,9 +339,10 @@ export default function Map(props, create) {
         setDescriptionplace(result.reviews[2].text);
       } else if (result.reviews[2].text.length > 70) {
         setDescriptionplace(result.reviews[3].text);
-      } else if (setDescriptionplace('no reviews yet'));
+      } else if (setDescriptionplace('no reviews yet')) {
+        setDescriptionplace(result.reviews[2].text);
+      }
 
-      setDescriptionplace(result.reviews[2].text);
       setPhoto(
         `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${result.photos[0].photo_reference}&key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM&`,
       );
