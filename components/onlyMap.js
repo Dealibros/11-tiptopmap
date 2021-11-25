@@ -63,6 +63,7 @@ const inputPopOver = css`
 `;
 
 const infoWindow = css`
+  max-width: 13rem;
   :not(span) {
     text-align: center;
 
@@ -93,6 +94,15 @@ const descriptionSearch = css`
   width: 6rem;
   text-align: right;
   margin-bottom: 0.5rem;
+`;
+
+const definingText = css`
+  margin-left: 1rem;
+  width: 6rem;
+  /* height: 8rem; */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: right;
 `;
 
 const img = css`
@@ -326,7 +336,6 @@ export default function Map(props) {
       const result = resJson.result;
 
       setRestaurantname(result.name);
-      console.log('restaurantname', restaurantname);
       setAddressplace(result.formatted_address);
 
       // Comes a lot as undefined when changing countries/languages
@@ -335,14 +344,68 @@ export default function Map(props) {
       //   ('No Reviews Available');
       // }
 
-      if (result.reviews[1].text.length > 70) {
-        setDescriptionplace(result.reviews[2].text);
-      } else if (result.reviews[2].text.length > 70) {
-        setDescriptionplace(result.reviews[3].text);
-      } else if (setDescriptionplace('no reviews yet')) {
-        setDescriptionplace(result.reviews[2].text);
-      }
+      String.prototype.truncateBySent = function (
+        sentCount = 10,
+        moreText = '',
+      ) {
+        //match ".","!","?" - english ending sentence punctuation
+        let sentences = this.match(/[^\.!\?]+[\.!?]+/g);
+        if (sentences) {
+          console.log(sentences.length);
+          console.log('hey', sentences);
+          if (sentences.length >= sentCount && sentences.length > sentCount) {
+            //has enough sentences
+            return sentences.slice(0, sentCount).join(' ') + moreText;
+          }
+        }
+        //return full text if nothing else
+        return result.reviews[1].text;
+      };
 
+      let end = result.reviews[1].text.truncateBySent(2);
+      console.log('end', end);
+      setDescriptionplace(end);
+
+      console.log('check this out!', result.reviews[1].text.substring(0, 300));
+      // result.reviews[0].text =
+      //   result.reviews[0].text.length > 300
+      //     ? result.reviews[1].text.substring(0, 300)
+      //     : result.reviews[1].text;
+      // result.reviews[1].text =
+      //   result.reviews[1].text.length === 300
+      //     ? result.reviews[1].text.substring(
+      //         0,
+      //         Math.min(
+      //           result.reviews[0].text.length,
+      //           result.reviews[0].text.lastIndexOf(' '),
+      //         ),
+      //       ) + ' . . .'
+      //     : result.reviews[0].text;
+      // setDescriptionplace(result.reviews[1].text);
+
+      //   firstCut.substring(
+      //     0,
+      //     Math.min(
+      //       result.reviews[0].text.length,
+      //       result.reviews[0].text.lastIndexOf(' '),
+      //     ),
+      //   ) + ' . . .';
+      // setDescriptionplace(firstCut);
+      console.log('outcome', descriptionplace);
+
+      //  if (result.reviews[0].text.length > 200) {
+      //    setDescriptionplace(result.reviews[1].text.substring(0, 200));
+      //    // let secondCut =
+      //    //   firstCut.substring(
+      //    //     0,
+      //    //     Math.min(
+      //    //       result.reviews[0].text.length,
+      //    //       result.reviews[0].text.lastIndexOf(' '),
+      //    //     ),
+      //    //   ) + ' . . .';
+      //    // setDescriptionplace(firstCut);
+      //    console.log('outcome', descriptionplace);
+      //  }
       setPhoto(
         `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${result.photos[0].photo_reference}&key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM&`,
       );
@@ -435,9 +498,6 @@ export default function Map(props) {
           }}
         />
       ))}
-      {console.log('inforestaurant', infoRestaurant)};
-      {console.log('hey', selectedPlaces)}
-      {console.log('checkupdatelisthere', props.updateList)}
       {
         (selectedPlaces,
         infoRestaurant ? (
@@ -470,10 +530,12 @@ export default function Map(props) {
                   width="90%"
                 />
                 <br />
-                <label css={descriptionSearch} htmlFor>
-                  {infoRestaurant.descriptionplace}
-                  <br />
-                </label>
+                <div css={definingText}>
+                  <label css={descriptionSearch} htmlFor>
+                    {infoRestaurant.descriptionplace}
+                    <br />
+                  </label>
+                </div>
               </div>
 
               <span role="img" aria-label="Star" css={ratingSearch} htmlFor>
@@ -546,9 +608,11 @@ export default function Map(props) {
                 width="90%"
               />
               <br />
-              <label css={descriptionSearch} htmlFor>
-                {descriptionplace}
-              </label>
+              <div css={definingText}>
+                <label css={descriptionSearch} htmlFor>
+                  {descriptionplace}
+                </label>
+              </div>
             </div>
             <label css={ratingSearch} htmlFor>
               <span role="img" aria-label="Panda">

@@ -83,6 +83,13 @@ const titleCard = css`
   font-weight: 700;
 `;
 
+const caption = css`
+  padding: 0 0.4rem 0 0.4rem;
+  font-family: 'New Tegomin';
+  font-size: 1.7rem !important;
+  line-height: 1.7rem;
+`;
+
 const infoCard = css`
   height: 60vh;
   width: 50vw;
@@ -113,6 +120,13 @@ const space = css`
 const description = css`
   font-family: 0.7rem;
   margin-top: 1rem !important;
+`;
+
+const definingText = css`
+  margin-left: 0.7rem;
+  height: 12rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const rating = css`
@@ -174,7 +188,7 @@ export default function Card(props) {
                       height="273px"
                       width="247px"
                     />
-                    <div className="caption">
+                    <div css={caption} className="caption">
                       {props.restaurant[0].restaurantname}
                     </div>
                   </div>
@@ -187,9 +201,11 @@ export default function Card(props) {
                     </Link>
                   </h5>
                   <hr css={space} />
-                  <p css={description}>
-                    {props.restaurant[0].descriptionplace}
-                  </p>
+                  <div css={definingText}>
+                    <p css={description}>
+                      {props.restaurant[0].descriptionplace}
+                    </p>
+                  </div>
                   <StarRating
                     restaurantId={restaurantId}
                     setRestaurantId={setRestaurantId}

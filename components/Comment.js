@@ -165,7 +165,9 @@ export default function App(props) {
   const [editCommentId, setEditCommentId] = useState(0);
   const [disable, setDisable] = useState(true);
 
-  console.log('whatsTheCommentId?', editCommentId);
+  function refreshPage() {
+    window.location.reload(false);
+  }
 
   // fetch gets API from the server, will rerender nonStop, in this case runs only once because of useEffect
   // From GIT "GET"
@@ -290,10 +292,9 @@ export default function App(props) {
                                 id: item.id,
                               }),
                             },
+                            refreshPage(),
                           );
                           const deletedComment = await response.json();
-
-                          window.location.reload();
                           return deletedComment;
                         }}
                       >
