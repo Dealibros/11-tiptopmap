@@ -79,16 +79,20 @@ height:75vh;
 display: flex;
 align-content: center;
 width: 100vh,
-
-
 `;
 
+
+type Props = {
+  refreshUsername: () => void;
+  username: string;
+  csrfToken: string;
+};
  const World = dynamic(() => import('../components/World'),{
  ssr: false,
  loading:() => <p>loading...</p>
 });
 
-export default function Home(props) {
+export default function Home(props: Props) {
   useEffect(() => {
     props.refreshUsername();
     console.log(1213);
