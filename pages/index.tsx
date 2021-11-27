@@ -11,7 +11,7 @@ const main = css`
   width: 100vw;
   height: 85vh;
   background-image: url('../images/background-Profile/background3.jpg');
-  background-color: rgba(230, 217, 217, 0.3);
+  background-color: rgba(230, 217, 217, 0.4);
   background-blend-mode: lighten;
   .shadow {
     text-shadow: 4px 4px 2px rgba(150, 150, 150, 1);
@@ -150,8 +150,8 @@ export default function Home(props: Props) {
               <h2>
                 Use this map to showcase your favourite places, <br /> write
                 reviews  of your most memorable experiences <br />
-                and see where your friends have been to <br /> help guide
-                decisions on where to go next.
+                and see where your friends have been to <br /> inspire you where
+                to go next.
               </h2>
             </p>
             <World />

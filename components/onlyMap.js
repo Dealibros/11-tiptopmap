@@ -581,18 +581,21 @@ export default function Map(props) {
             <button
               css={minibutton}
               onClick={async () => {
-                await create(
-                  restaurantname,
-                  addressplace,
-                  descriptionplace,
-                  photo,
-                  rating,
-                  price,
-                  website,
-                  latitude,
-                  longitude,
-                );
-                props.fetchList();
+                if (!restaurantname) {
+                  await create(
+                    restaurantname,
+                    addressplace,
+                    descriptionplace,
+                    photo,
+                    rating,
+                    price,
+                    website,
+                    latitude,
+                    longitude,
+                  );
+                  props.fetchList();
+                } else {
+                }
               }}
             >
               +
