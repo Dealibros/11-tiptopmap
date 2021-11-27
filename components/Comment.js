@@ -5,13 +5,14 @@ const inputComment = css`
   font-family: 'New Tegomin';
   font-size: 1.1rem;
   font-weight: 500;
-  line-height: 10px;
-  width: 82%;
+  line-height: 1.3rem;
+  width: 81%;
   margin: 0rem 0.2rem 0.2rem 3rem;
-  padding: 0.1rem;
+  padding: 0.4rem;
   text-align: center;
   border-radius: 0.5rem !important;
   border: 0.1rem solid #f4f0ec !important;
+  min-height: 2rem;
 `;
 
 const title = css`
@@ -221,6 +222,7 @@ export default function App(props) {
           <form onSubmit={handleSubmit}>
             <input
               css={inputComment}
+              multiline={true}
               placeholder="Leave your Comment"
               id="Comment"
               onChange={(e) => setAddComment(e.currentTarget.value)}
@@ -238,7 +240,7 @@ export default function App(props) {
                   <div css={messageContainer} key={item.id}>
                     <div css={messageUser}>{item.username}</div>
                     <i css={faUserCircle} className="fas fa-user-circle" />
-                    <input
+                    <textarea
                       css={inputComment}
                       value={item.comment}
                       disabled={true}
@@ -259,7 +261,7 @@ export default function App(props) {
                   <div css={messageContainer} key={item.id}>
                     <div css={messageUser}>{item.username}</div>
                     <i css={faUserCircle} className="fas fa-user-circle" />
-                    <input
+                    <textarea
                       css={inputComment}
                       onChange={(e) => {
                         const modifiedComments = [];

@@ -208,7 +208,7 @@ export function Search({ panTo, setMarkers, setTheAddress, setIdPlace }) {
           <ComboboxList>
             {status === 'OK' &&
               data.map(({ id, description }) => (
-                <ComboboxOption key={{ id }} value={description} />
+                <ComboboxOption key={`place-${id}`} value={description} />
               ))}
           </ComboboxList>
         </ComboboxPopover>
@@ -534,7 +534,6 @@ export default function Map(props) {
           onClick={() => {
             setSelected(marker); // on click stores the searched restaurant corrdinates on selected
           }}
-          icon={{}}
         />
       ))}
       {/* // selected search is only giving me the latitude and longitude */}

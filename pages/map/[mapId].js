@@ -21,7 +21,7 @@ const title = css`
 const secondMain = css`
   display: flex;
   width: 100%;
-  height: 95vh;
+  height: 103vh;
   margin-right: 0 auto;
   margin-left: 0 auto;
   justify-content: center;
@@ -48,10 +48,10 @@ const restaurantCardInfoRight = css`
   font-family: 'New Tegomin';
   p {
     margin: 0.3rem 0 0 1.6rem;
-    padding-bottom: 0.1rem;
-    padding-top: 0.3rem;
+
+    padding: 0.3rem 0.5rem 0.1rem 0.5rem;
     font-weight: 600;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
   }
 
   h3 {
@@ -69,8 +69,8 @@ const restaurantCardInfoRight = css`
   h6 {
     font-family: 'New Tegomin';
     text-align: center;
-    font-size: 1rem;
-    margin: 0.2rem 1rem 0.3rem 0.3rem;
+    font-size: 1.3rem;
+    margin: 0.2rem 1rem 0.6rem 0.3rem;
     padding: 0;
     color: gray;
   }
@@ -118,13 +118,12 @@ const space = css`
 `;
 
 const description = css`
-  font-family: 0.7rem;
-  margin-top: 1rem !important;
+  margin-top: 0.3rem !important;
 `;
 
 const definingText = css`
   margin-left: 0.7rem;
-  height: 12rem;
+  height: 14rem;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
@@ -136,8 +135,8 @@ const rating = css`
 const lineInfoCard = css`
   color: lightgray;
   width: 65%;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  margin-top: 6.9rem;
+  margin-bottom: 1rem;
 `;
 
 const mainChat = css`
@@ -200,6 +199,7 @@ export default function Card(props) {
                       <a css={link}>{props.restaurant[0].website}</a>
                     </Link>
                   </h5>
+
                   <hr css={space} />
                   <div css={definingText}>
                     <p css={description}>
@@ -215,7 +215,7 @@ export default function Card(props) {
                   />
                 </div>
               </div>
-              <br/>
+              <br />
               <hr css={lineInfoCard} />
               <div css={mainChat}>
                 <Comment

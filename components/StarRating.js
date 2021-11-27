@@ -6,6 +6,7 @@ const stars = css`
   cursor: pointer;
   transition: color 200ms;
   margin-top: 0.4rem;
+  margin-bottom: 0.4rem !important;
 `;
 
 const textRating = css`
@@ -18,10 +19,19 @@ const input = css`
   display: none;
 `;
 
+const centerStarsDiv = css`
+  display: flex;
+`;
+
 const ratingDiv = css`
   text-align: center;
-  margin-top: 0.6rem;
-  margin-right: 1.5rem;
+  border: solid 0.2rem lightgray;
+  border-radius: 0.3rem;
+  width: 16rem;
+  background-color: white;
+  position: relative;
+  margin: 0 auto;
+  /* box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24); */
   p {
     color: darkkhaki;
   }
@@ -52,49 +62,52 @@ export default function StarRating(props) {
 
   if (!ratings) {
     return (
-      <div css={ratingDiv}>
-        <p css={textRating}>Your Rating?</p>
-        {[...Array(5)].map((star, i) => {
-          const ratingValue = i + 1;
+      <div css={centerStarsDiv}>
+        <div css={ratingDiv}>
+          <p css={textRating}>Your Rating?</p>
+          {[...Array(5)].map((star, i) => {
+            const ratingValue = i + 1;
 
-          return (
-            <label key={star}>
-              <input
-                css={input}
-                type="radio"
-                name="starRating"
-                value={ratingValue}
-                onClick={() => setRatings(ratingValue)}
-              />
-              {console.log('starRatingValueaa', ratingValue)}
-              <FaStar
-                css={stars}
-                color={
-                  ratingValue <= (hover || ratings) ? '#ffc107' : '#90917E'
-                }
-                key={star}
-                size={35}
-                onMouseEnter={() => setHover(ratingValue)}
-                onMouseLeave={() => setHover(null)}
-                onBlur={() => void 0}
-                onClick={async () => {
-                  const response = await fetch(`/api/ratings`, {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                      ratings: ratingValue,
-                      userId: props.userId,
-                      restaurantId: props.restaurantId,
-                    }),
-                  });
-                  await response.json();
-                }}
-              />
-            </label>
-          );
-        })}
+            return (
+              <label key={star}>
+                <input
+                  css={input}
+                  type="radio"
+                  name="starRating"
+                  value={ratingValue}
+                  onClick={() => setRatings(ratingValue)}
+                />
+                {console.log('starRatingValueaa', ratingValue)}
+
+                <FaStar
+                  css={stars}
+                  color={
+                    ratingValue <= (hover || ratings) ? '#ffc107' : '#90917E'
+                  }
+                  key={star}
+                  size={41}
+                  onMouseEnter={() => setHover(ratingValue)}
+                  onMouseLeave={() => setHover(null)}
+                  onBlur={() => void 0}
+                  onClick={async () => {
+                    const response = await fetch(`/api/ratings`, {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({
+                        ratings: ratingValue,
+                        userId: props.userId,
+                        restaurantId: props.restaurantId,
+                      }),
+                    });
+                    await response.json();
+                  }}
+                />
+              </label>
+            );
+          })}
+        </div>
       </div>
     );
   } else {
@@ -111,7 +124,6 @@ export default function StarRating(props) {
                 type="radio"
                 name="starRating"
                 value={theStars}
-                // onClick={() => setRatings(ratingValue)}
               />
               <FaStar
                 css={stars}

@@ -62,8 +62,10 @@ const a = css`
   text-decoration: none;
   color: white !important;
   margin-left: 0.8rem;
+  cursor: pointer;
+  cursor: pointer;
   :hover {
-    color: #a5966d;
+    color: #ff9900 !important;
   }
 `;
 
@@ -72,20 +74,25 @@ const ab = css`
   text-decoration: none;
   color: white !important;
   margin-right: 7rem;
-
-  :hover  {
-    color: #a5966d;
+  cursor: pointer;
+  :hover {
+    color: #ff9900 !important;
   }
 `;
 
 const myProfile = css`
   font-size: 1.3rem;
   margin-left: 2rem;
+  cursor: pointer;
+  :hover {
+    color: #ff9900;
+  }
 `;
 
 const logout = css`
   font-size: 1.3rem;
   margin-right: 5rem;
+  cursor: pointer;
 `;
 const sunshineLogo = css`
   z-index: 10;
