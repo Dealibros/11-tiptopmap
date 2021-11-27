@@ -37,7 +37,8 @@
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
     "sharp": "^0.29.2",
-    "use-places-autocomplete": "^1.10.0"
+    "use-places-autocomplete": "^1.10.0",
+    "framer-motion": "^5.3.3"
   },
   "devDependencies": {
     "@babel/eslint-parser": "7.15.8",
@@ -71,7 +72,6 @@
     "eslint-plugin-react-hooks": "4.2.0",
     "eslint-plugin-testing-library": "5.0.0",
     "eslint-plugin-unicorn": "37.0.1",
-    "framer-motion": "^5.3.3",
     "styled-components": "^5.3.3",
     "three": "^0.135.0",
     "typescript": "4.4.4"
