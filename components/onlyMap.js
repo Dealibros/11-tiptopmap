@@ -19,7 +19,7 @@ import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from 'use-places-autocomplete';
-import { setParsedCookie } from '../util/cookies';
+import { getParsedCookie, setParsedCookie } from '../util/cookies';
 import mapStyles from './mapStyles';
 
 // /////////////////////////DECLARATIONS///////////////////////////
@@ -164,6 +164,7 @@ export function Search({ panTo, setMarkers, setTheAddress, setIdPlace }) {
 
     const results = await getGeocode({ address });
 
+    console.log('address results', results);
     // I need to take this value to the map page, to be able to call the API there with this value. Afterwards I need to bring all this information back here to be able to display it on the map
 
     const idPlace = results[0].place_id;
@@ -188,7 +189,9 @@ export function Search({ panTo, setMarkers, setTheAddress, setIdPlace }) {
     setTheAddress(address);
 
     // const handleClick = () => setTheAddress(address);
-    setParsedCookie('idPlaceValue', idPlace);
+    // results[0].formatted_address;
+    setParsedCookie('address', results);
+    setParsedCookie('city', results[0].formatted_address);
   };
 
   return (
@@ -268,9 +271,6 @@ export default function Map(props) {
   const [selectedPlaces, setSelectedPlaces] = useState(null);
   const [idPlace, setIdPlace] = useState();
 
-  console.log('markers', markers);
-  console.log('selected', selected);
-
   // //////////////////Spot for the database adding/////////////////////
 
   const [restaurantname, setRestaurantname] = useState('');
@@ -334,7 +334,6 @@ export default function Map(props) {
 
       const resJson = await res.json();
       const result = resJson.result;
-
       setRestaurantname(result.name);
       setAddressplace(result.formatted_address);
 
@@ -367,45 +366,7 @@ export default function Map(props) {
       setDescriptionplace(end);
 
       console.log('check this out!', result.reviews[1].text.substring(0, 300));
-      // result.reviews[0].text =
-      //   result.reviews[0].text.length > 300
-      //     ? result.reviews[1].text.substring(0, 300)
-      //     : result.reviews[1].text;
-      // result.reviews[1].text =
-      //   result.reviews[1].text.length === 300
-      //     ? result.reviews[1].text.substring(
-      //         0,
-      //         Math.min(
-      //           result.reviews[0].text.length,
-      //           result.reviews[0].text.lastIndexOf(' '),
-      //         ),
-      //       ) + ' . . .'
-      //     : result.reviews[0].text;
-      // setDescriptionplace(result.reviews[1].text);
 
-      //   firstCut.substring(
-      //     0,
-      //     Math.min(
-      //       result.reviews[0].text.length,
-      //       result.reviews[0].text.lastIndexOf(' '),
-      //     ),
-      //   ) + ' . . .';
-      // setDescriptionplace(firstCut);
-      console.log('outcome', descriptionplace);
-
-      //  if (result.reviews[0].text.length > 200) {
-      //    setDescriptionplace(result.reviews[1].text.substring(0, 200));
-      //    // let secondCut =
-      //    //   firstCut.substring(
-      //    //     0,
-      //    //     Math.min(
-      //    //       result.reviews[0].text.length,
-      //    //       result.reviews[0].text.lastIndexOf(' '),
-      //    //     ),
-      //    //   ) + ' . . .';
-      //    // setDescriptionplace(firstCut);
-      //    console.log('outcome', descriptionplace);
-      //  }
       setPhoto(
         `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${result.photos[0].photo_reference}&key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM&`,
       );
@@ -440,8 +401,6 @@ export default function Map(props) {
       getInfo();
     }
   }, [idPlace, restaurantname]);
-
-  console.log('a', props.restaurants);
 
   // //////////////////////////////////////////
 
@@ -579,7 +538,6 @@ export default function Map(props) {
         />
       ))}
       {/* // selected search is only giving me the latitude and longitude */}
-      {console.log('selectedsearch', selected)}
       {selected ? (
         <InfoWindow
           css={infoWindow}

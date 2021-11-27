@@ -1,6 +1,7 @@
 import '../styles/style.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import { css, Global } from '@emotion/react';
+import { AnimatePresence } from 'framer-motion';
 import Head from 'next/head';
 import { useCallback, useEffect, useState } from 'react';
 
@@ -47,6 +48,7 @@ export default function MyApp({ Component, pageProps }) {
 
   return (
     <>
+
       <Global
         styles={css`
           * {
@@ -65,15 +67,19 @@ export default function MyApp({ Component, pageProps }) {
             color: rgba(0, 0, 0, 0.9);
           }
         `}
+
+
       />
       <Head>
         <link rel="icon" href="/images/sunshine.svg" />
       </Head>
+         <AnimatePresence>
       <Component
         {...pageProps}
         username={username}
         refreshUsername={refreshUsername}
       />
+      </AnimatePresence>
     </>
   );
 }

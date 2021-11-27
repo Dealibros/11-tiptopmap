@@ -215,6 +215,7 @@ export default function Card(props) {
                   />
                 </div>
               </div>
+              <br/>
               <hr css={lineInfoCard} />
               <div css={mainChat}>
                 <Comment

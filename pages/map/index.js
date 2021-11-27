@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import InfoCard from '../../components/InfoCard.js';
 import Layout from '../../components/Layout';
+import { getParsedCookie, setParsedCookie } from '../../util/cookies';
 
 const title = css`
   font-family: 'New Tegomin';
@@ -58,6 +59,22 @@ const a = css`
 
 export default function Home(props) {
   const [updateList, setUpdateList] = useState(props.restaurants);
+  const [getCity, setGetCity] = useState();
+
+  const catchingTheAddress = getParsedCookie('address');
+  // const catchingCity = getParsedCookie('city');
+  // console.log('catchyouaddress', catchingCity);
+
+  // function getLastWord(words) {
+  //   var n = words.split(' ');
+  //   return n[n.length - 4];
+  // }
+
+  // if (catchingTheAddress) {
+  // var str =  catchingTheAddress[0].formatted_address;
+  // console.log('cathchingTheAddress', catchingTheAddress[0].formatted_address);
+  // const grabcityName = getLastWord(catchingCity);
+  // }
 
   const Map = dynamic(() => import('../../components/onlyMap'), {
     ssr: false,
@@ -69,7 +86,6 @@ export default function Home(props) {
       const response = await fetch('/api/updatelist');
       const newList = await response.json();
 
-      console.log('are you working updatedList?', newList);
       setUpdateList(newList);
 
       if ('errors' in newList) {
@@ -100,7 +116,7 @@ export default function Home(props) {
 
         <main css={secondMain}>
           <section css={leftMain}>
-            <h1 css={titleCard}> Your favourite Spots </h1>
+            <h1 css={titleCard}> Your favourite Spots in . </h1>
             <div css={infoCard}>
               {updateList.map((restaurant) => {
                 return (
