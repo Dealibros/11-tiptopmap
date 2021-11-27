@@ -15,7 +15,6 @@ import {
 } from '@react-google-maps/api';
 import Image from 'next/image';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import Popup from 'reactjs-popup';
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
