@@ -31,6 +31,16 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Italiana&family=Vollkorn:wght@900&display=swap"
             rel="stylesheet"
           />
+
+          <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/sweetalert2@8/dist/sweetalert2.min.css"
+          />
+
+          <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+          />
         </Head>
         <body>
           <Main />

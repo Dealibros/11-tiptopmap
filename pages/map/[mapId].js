@@ -21,7 +21,7 @@ const title = css`
 const secondMain = css`
   display: flex;
   width: 100%;
-  height: 103vh;
+  height: 109vh;
   margin-right: 0 auto;
   margin-left: 0 auto;
   justify-content: center;
@@ -51,7 +51,7 @@ const restaurantCardInfoRight = css`
 
     padding: 0.3rem 0.5rem 0.1rem 0.5rem;
     font-weight: 600;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
   }
 
   h3 {
@@ -91,7 +91,7 @@ const caption = css`
 `;
 
 const infoCard = css`
-  height: 60vh;
+  height: 55vh !important;
   width: 50vw;
   background-color: beige;
   border-radius: 1.6rem;
@@ -123,7 +123,7 @@ const description = css`
 
 const definingText = css`
   margin-left: 0.7rem;
-  height: 14rem;
+  height: 12rem;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
@@ -135,7 +135,7 @@ const rating = css`
 const lineInfoCard = css`
   color: lightgray;
   width: 65%;
-  margin-top: 6.9rem;
+  margin-top: 3rem;
   margin-bottom: 1rem;
 `;
 

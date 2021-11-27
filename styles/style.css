@@ -87,3 +87,55 @@
   box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.2);
   transition: all 0.35s;
 }
+
+
+/* swal2-styled.swal2-cancel{
+  background-color: #dc3545 !important;
+} */
+
+
+.swal2-modal {
+  width: 680px;
+  height: 200px
+}
+
+.swal2-title {
+  margin: 0px;
+  font-size: 20px;
+  margin-bottom: 10px;
+  align-self: top
+}
+
+.swal-text {
+  font-size: 23px;
+
+}
+.swal2-footer {
+  background-color: white;
+  margin-top: 10px;
+  border-top: 1px solid #E9EEF1;
+  overflow: hidden;
+}
+
+.swal2-popup {
+  padding-top: 3rem;
+ font-size: 0.9rem !important;
+ font-family: "New Tegomin";
+ max-height: 200px !important;
+  max-width: 300px !important; }
+
+.swal2-icon {
+  font-size: 1px !important;
+}
+
+.swal2-text {
+  max-height: 70px;
+}
+
+.swal2-confirm {
+  background: #3aa9a9 !important;
+  font-size: 0.2rem;
+  width: 0.4rem;
+  height: 0.7rem;
+  text-align: center;
+}

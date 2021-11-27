@@ -14,3 +14,21 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.swal-modal {
+    background-color: rgba(0, 0, 0, 0.651);
+    color: white;
+}
+.swal-text {
+    color: white;
+    font-size: 33px;
+}
+.swal-button {
+    background-color: #ff2600;
+    color: #ffffff;
+}
+
+.swal2-close{
+ background-color:black;
+ color: red;
+ }

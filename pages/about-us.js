@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
+import Floater from 'react-floater';
 import Layout from '../components/Layout';
 
 const title = css`

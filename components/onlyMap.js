@@ -15,6 +15,7 @@ import {
 } from '@react-google-maps/api';
 import Image from 'next/image';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
@@ -581,7 +582,8 @@ export default function Map(props) {
             <button
               css={minibutton}
               onClick={async () => {
-                if (!restaurantname) {
+                if (restaurantname) {
+                  console.log('rn', restaurantname);
                   await create(
                     restaurantname,
                     addressplace,
@@ -595,6 +597,16 @@ export default function Map(props) {
                   );
                   props.fetchList();
                 } else {
+                  Swal.fire({
+                    title: 'The spot is already on the list',
+                    className: '.swalModal',
+                    showClass: {
+                      popup: 'animate__animated animate__fadeInUp',
+                    },
+                    hideClass: {
+                      popup: 'animate__animated animate__fadeOutDown',
+                    },
+                  });
                 }
               }}
             >
