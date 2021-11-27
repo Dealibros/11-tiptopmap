@@ -19,7 +19,7 @@ import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from 'use-places-autocomplete';
-import { getParsedCookie, setParsedCookie } from '../util/cookies';
+import { setParsedCookie } from '../util/cookies';
 import mapStyles from './mapStyles';
 
 // /////////////////////////DECLARATIONS///////////////////////////
@@ -347,25 +347,25 @@ export default function Map(props) {
         sentCount = 10,
         moreText = '',
       ) {
-        //match ".","!","?" - english ending sentence punctuation
-        let sentences = this.match(/[^\.!\?]+[\.!?]+/g);
+        // match ".","!","?" - english ending sentence punctuation
+        const sentences = this.match(/[^\.!\?]+[\.!?]+/g);
         if (sentences) {
           console.log(sentences.length);
           console.log('hey', sentences);
           if (sentences.length >= sentCount && sentences.length > sentCount) {
-            //has enough sentences
+            // has enough sentences
             return sentences.slice(0, sentCount).join(' ') + moreText;
           }
         }
-        //return full text if nothing else
+        // return full text if nothing else
         return result.reviews[1].text;
       };
 
-      let end = result.reviews[1].text.truncateBySent(2);
+      const end = result.reviews[1].text.truncateBySent(2);
       console.log('end', end);
       setDescriptionplace(end);
 
-      console.log('check this out!', result.reviews[1].text.substring(0, 300));
+      console.log('check this out!', result.reviews[1].text.slice(0, 300));
 
       setPhoto(
         `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${result.photos[0].photo_reference}&key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM&`,
