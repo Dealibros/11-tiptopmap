@@ -1,5 +1,4 @@
 import { css } from '@emotion/react';
-import type { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useEffect } from 'react';
