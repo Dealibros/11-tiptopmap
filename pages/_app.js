@@ -48,7 +48,6 @@ export default function MyApp({ Component, pageProps }) {
 
   return (
     <>
-
       <Global
         styles={css`
           * {
@@ -67,18 +66,16 @@ export default function MyApp({ Component, pageProps }) {
             color: rgba(0, 0, 0, 0.9);
           }
         `}
-
-
       />
       <Head>
         <link rel="icon" href="/images/sunshine.svg" />
       </Head>
-         <AnimatePresence>
-      <Component
-        {...pageProps}
-        username={username}
-        refreshUsername={refreshUsername}
-      />
+      <AnimatePresence>
+        <Component
+          {...pageProps}
+          username={username}
+          refreshUsername={refreshUsername}
+        />
       </AnimatePresence>
     </>
   );

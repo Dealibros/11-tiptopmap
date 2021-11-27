@@ -13,7 +13,6 @@
     "heroku-postbuild": "yarn migrate up && yarn build"
   },
   "engines": {
-    "node": "16.7.0",
     "npm": "7.20.0",
     "yarn": "1.22.5"
   },
