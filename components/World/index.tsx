@@ -109,7 +109,7 @@ const World: React.FC = () => {
         renderer.dispose();
       };
     }
-  });
+  }, []);
 
   useEffect(() => {
     window.addEventListener('resize', handleWindowResize, false);
