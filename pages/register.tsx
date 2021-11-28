@@ -19,6 +19,10 @@ const main = css`
   justify-content: center;
   padding-top: 60px;
   padding-bottom: 30px;
+
+  @media (min-width: 801px) and (max-width: 1100px) {
+    height: 88vh;
+  }
 `;
 
 const wrap = css`
@@ -35,6 +39,31 @@ const wrap = css`
   border-radius: 24px;
   flex-direction: column;
   align-items: center;
+
+  @media (min-width: 400px) and (max-width: 600px) {
+    margin-right: 0rem;
+    display: flex;
+    flex-wrap: wrap;
+    min-width: 300px;
+  }
+
+  @media (min-width: 601px) and (max-width: 800px) {
+    margin-right: 3rem;
+    display: flex;
+    flex-wrap: wrap;
+    min-width: 400px;
+    margin-top: 5rem;
+  }
+  @media (min-width: 801px) and (max-width: 1100px) {
+    margin-right: 3rem;
+    display: flex;
+    flex-wrap: wrap;
+    min-width: 500px;
+    margin-top: 20rem;
+    max-height: 540px;
+    padding-top: 1.6rem;
+    margin-top: 15rem;
+  }
 `;
 
 const sign = css`

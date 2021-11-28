@@ -16,17 +16,19 @@ const main = css`
   .shadow {
     text-shadow: 4px 4px 2px rgba(150, 150, 150, 1);
   }
-  /* background-image: linear-gradient(
-    -20deg,
-    rgb(233, 222, 250) 0%,
-    rgb(251, 252, 219) 100%
-  ); */
-  /* background-image: linear-gradient(top, #9AB0B3 0%, #92BD9E 50%, #ACC889 100%);
-    background: -webkit-linear-gradient(top, #9AB0B3 0%, #92BD9E 50%, #dce6d0 100%);
-    background: linear-gradient(to bottom, #9AB0B3 0%, #92BD9E 50%, #ACC889 100%); */
-
   background-size: cover;
   position: relative;
+  @media (min-width: 400px) and (max-width: 600px) {
+    height: 88vh;
+  }
+  @media (min-width: 601px) and (max-width: 800px) {
+    height: 89.5vh;
+  }
+  @media (min-width: 801px) and (max-width: 1100px) {
+    height: 89.5vh;
+  }
+  @media (min-width: 801px) and (max-width: 1100px) {
+  }
 `;
 
 const title = css`
@@ -37,6 +39,18 @@ const title = css`
   text-align: center;
   margin-bottom: 0.5rem;
   margin-top: 2rem !important;
+  @media (min-width: 400px) and (max-width: 600px) {
+    font-size: 2.9rem;
+    padding-top: 2rem !important;
+  }
+  @media (min-width: 601px) and (max-width: 800px) {
+    font-size: 4.2rem;
+    padding-top: 3rem !important;
+  }
+  @media (min-width: 801px) and (max-width: 1100px) {
+    font-size: 4rem;
+    padding-top: 2rem !important;
+  }
 `;
 
 const mainText = css`
@@ -45,6 +59,18 @@ const mainText = css`
   width: 60vw;
   z-index: 3;
   text-shadow: #242121 0px 0px 90px;
+
+  @media (min-width: 601px) and (max-width: 800px) {
+    font-size: 2.9rem;
+    padding-top: 2rem !important;
+    padding-left: 1.7rem;
+  }
+
+  @media (min-width: 801px) and (max-width: 1100px) {
+    text-align: center !important;
+    margin: 0 auto;
+  }
+
   h1 {
     color: white;
     color: #fff;
@@ -74,6 +100,44 @@ const mainText = css`
     text-align: left;
     margin-left: 2rem;
     margin-bottom: 2rem;
+
+    @media (min-width: 400px) and (max-width: 600px) {
+      display: flex;
+      flex-direction: column;
+      font-size: 1.9rem;
+      line-height: 1.7rem;
+      margin-left: 0rem;
+      margin-top: 0.7rem;
+      margin-bottom: 1.3rem;
+    }
+
+    @media (min-width: 601px) and (max-width: 800px) {
+      display: flex;
+      flex-direction: column;
+      font-size: 2.5rem;
+      line-height: 2.3rem;
+      margin-left: 5rem;
+      margin-top: 0.1rem;
+      margin-bottom: 1.3rem;
+    }
+    @media (min-width: 801px) and (max-width: 1100px) {
+      font-size: 2.5rem;
+      line-height: 2rem;
+      margin-top: 1rem;
+      margin-bottom: 1.3rem;
+      position: absolute;
+      padding-right: 12rem !important;
+      padding-top: 2rem;
+    }
+    @media (min-width: 1100px) and (max-width: 1300px) {
+      font-size: 3rem;
+      line-height: 2.5rem;
+    }
+
+    @media (min-width: 1301px) and (max-width: 1550px) {
+      font-size: 2.5rem;
+      line-height: 2.2rem;
+    }
   }
   margin: 1.6rem 0.5rem 0rem 4rem;
   h2 {
@@ -103,6 +167,40 @@ const mainText = css`
     margin-left: 2rem;
     font-weight: 900;
     border: 30px black !important;
+
+    @media (min-width: 400px) and (max-width: 600px) {
+      display: flex;
+      flex-direction: column;
+      font-size: 1.3rem;
+      line-height: 1.3rem;
+      margin-left: 0rem;
+    }
+    @media (min-width: 601px) and (max-width: 800px) {
+      display: flex;
+      flex-direction: column;
+      font-size: 1.9rem;
+      line-height: 1.9rem;
+      margin-left: 5rem;
+      margin-top: 0.9rem;
+      margin-bottom: 1.3rem;
+    }
+    @media (min-width: 801px) and (max-width: 1100px) {
+      font-size: 1.9rem;
+      line-height: 1.7rem;
+      margin-top: 0.7rem;
+      margin-bottom: 1.3rem;
+      padding-top: 11.5rem;
+    }
+
+    @media (min-width: 1103px) and (max-width: 1300px) {
+      font-size: 1.8rem;
+      line-height: 1.7rem;
+    }
+
+    @media (min-width: 1301px) and (max-width: 1550px) {
+      font-size: 2rem;
+      line-height: 2rem;
+    }
   }
 `;
 
@@ -111,6 +209,11 @@ const positionEarth = css`
   display: flex;
   align-content: center;
   /* width: 100vh, */
+
+  @media (min-width: 801px) and (max-width: 1100px) {
+    // position:relative;
+    padding-left: 5rem;
+  }
 `;
 
 type Props = {

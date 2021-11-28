@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
-import Floater from 'react-floater';
+// import Floater from 'react-floater';
 import Layout from '../components/Layout';
 
 const title = css`
@@ -22,6 +22,13 @@ const form = css`
   align-items: right;
   margin: 5rem 0 0 1.5rem;
   padding: 2.5rem 10rem;
+
+  @media (min-width: 400px) and (max-width: 600px) {
+    padding: 2rem 3rem;
+    margin-left: 0rem;
+  }
+  @media (min-width: 801px) and (max-width: 1100px) {
+  }
 `;
 
 const mainForm = css`
@@ -29,6 +36,15 @@ const mainForm = css`
   text-align: center;
   margin-bottom: 6rem;
   margin-top: 2rem;
+
+  @media (min-width: 601px) and (max-width: 800px) {
+    height: 75vh;
+  }
+
+  @media (min-width: 801px) and (max-width: 1100px) {
+    height: 80vh;
+    padding-top: 10rem;
+  }
 `;
 
 const row = css`

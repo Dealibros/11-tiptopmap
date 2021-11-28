@@ -19,8 +19,18 @@ const contentContainer = css`
   font-size: 1.5rem;
   --paper-shadow: #c9bf8d;
 
-  @media (max-width: 450px) {
-    flex-direction: column;
+  @media (min-width: 400px) and (max-width: 600px) {
+    font-size: 1rem;
+    height: 78vh;
+    padding-top: 2rem;
+  }
+  @media (min-width: 601px) and (max-width: 800px) {
+    font-size: 1.5rem;
+    padding-top: 2rem;
+  }
+  @media (min-width: 801px) and (max-width: 1100px) {
+    font-size: 1.7rem;
+    padding-top: 7rem;
   }
 `;
 
@@ -33,19 +43,10 @@ const container = css`
     margin: 1rem 0 0.9rem 0;
     color: gray;
   }
-  @media (max-width: 450px) {
-    width: 100%;
-  }
   h3 {
     margin-bottom: 6px;
   }
-  @media (max-width: 768px) {
-    margin-right: 12px;
-  }
-  @media (max-width: 450px) {
-    margin-right: 0px;
-    margin-top: 32px;
-    width: 220px;
+  @media (min-width: 400px) and (max-width: 600px) {
   }
 `;
 
@@ -59,6 +60,11 @@ const userInformation = css`
   justify-content: center;
   text-align: center;
   z-index: 4;
+
+  @media (min-width: 400px) and (max-width: 600px) {
+    text-align: center;
+  }
+
   p {
     margin: 3.5px 0;
     text-align: center;
@@ -73,16 +79,33 @@ const userInformation = css`
     border: none;
     width: 12rem;
   }
+
+  @media (min-width: 400px) and (max-width: 600px) {
+    font-size: 1.3rem;
+  }
+  @media (min-width: 601px) and (max-width: 800px) {
+    font-size: 1.4rem;
+  }
+  @media (min-width: 801px) and (max-width: 1100px) {
+    font-size: 1.9rem;
+    text-align: left !important;
+  }
 `;
 
 const theDiv = css`
   text-align: center;
+  @media (min-width: 400px) and (max-width: 600px) {
+    font-size: 1.5rem;
+  }
+  @media (min-width: 801px) and (max-width: 1100px) {
+    font-size: 2rem;
+  }
 `;
+
 export const pageContainer = css`
   font-family: 'New Tegomin';
   text-align: center;
   background-color: #fcfcfc;
-
   border-radius: 2rem;
   width: 38vw;
   max-height: 35rem;
@@ -92,8 +115,20 @@ export const pageContainer = css`
   margin-left: auto 0 !important;
   justify-content: center;
   text-align: center;
-  @media (max-width: 768px) {
-    padding: 96px 24px;
+
+  @media (min-width: 400px) and (max-width: 600px) {
+    width: 89vw;
+  }
+  @media (min-width: 601px) and (max-width: 800px) {
+    width: 80vw;
+    padding-top: 2rem;
+    margin-top: 3rem;
+  }
+  @media (min-width: 801px) and (max-width: 1100px) {
+    width: 60vw;
+    height: 40rem !important;
+    padding-top: 3rem;
+    margin-top: 5rem;
   }
 `;
 
@@ -108,6 +143,11 @@ const button = css`
   align-items: center;
   border-radius: 0.5rem;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  @media (min-width: 801px) and (max-width: 1100px) {
+    width: 11rem;
+    height: 3.5rem;
+    font-size: 1.2rem;
+  }
 `;
 
 const emailstyle = css`
@@ -136,13 +176,36 @@ const paper = css`
   box-shadow: 3px 3px 2px var(--paper-shadow);
   transform: rotate(-30deg);
   transform-origin: top left;
-
+  @media (min-width: 400px) and (max-width: 601px) {
+    position: relative;
+    display: flex;
+    left: 14rem;
+    max-width: 110px !important;
+    min-height: 122px !important;
+  }
+  @media (min-width: 601px) and (max-width: 800px) {
+    left: 25rem;
+  }
+  @media (min-width: 801px) and (max-width: 1100px) {
+    left: 25rem;
+  }
   p {
     margin: auto;
+    @media (min-width: 400px) and (max-width: 601px) {
+      font-size: 0.8rem;
+    }
   }
 
   paper {
     margin: 3rem;
+  }
+  @media (min-width: 400px) and (max-width: 600px) {
+    max-width: 120px;
+    min-height: 122px;
+  }
+  @media (min-width: 601px) and (max-width: 800px) {
+    max-width: 120px;
+    min-height: 122px;
   }
 `;
 
@@ -163,6 +226,20 @@ const paper2 = css`
     -30%,
     var(--paper-color)
   );
+
+  @media (min-width: 400px) and (max-width: 601px) {
+    display: none;
+  }
+  @media (min-width: 601px) and (max-width: 800px) {
+    display: none;
+  }
+  @media (min-width: 801px) and (max-width: 1100px) {
+    display: none;
+  }
+  @media (min-width: 1100px) and (max-width: 1300px) {
+    left: 22rem;
+  }
+
   box-shadow: 3px 3px 2px var(--paper-shadow);
   transform: rotate(10deg);
   transform-origin: top right;
@@ -296,6 +373,19 @@ const beCool = css`
   text-indent: 20px;
   transform: rotate(-10deg);
   transform-origin: top left;
+
+  @media (min-width: 400px) and (max-width: 600px) {
+    display: none;
+  }
+  @media (min-width: 601px) and (max-width: 800px) {
+    display: none;
+  }
+  @media (min-width: 801px) and (max-width: 1100px) {
+    display: none;
+  }
+  @media (min-width: 1100px) and (max-width: 1300px) {
+    display: none;
+  }
 
   :after {
     content: '';

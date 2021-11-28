@@ -32,11 +32,24 @@ const divforImg = css`
   width: 200px;
   margin-top: auto;
   margin-bottom: auto;
+
+  @media (min-width: 400px) and (max-width: 600px) {
+    display: none;
+  }
+  @media (min-width: 601px) and (max-width: 800px) {
+    height: 265px;
+    width: 183px;
+  }
 `;
 
 const searchResultInfo = css`
   width: 23vw;
   margin-left: 0.5rem;
+
+  @media (min-width: 400px) and (max-width: 600px) {
+    width: 27vw;
+    margin-left: 0.7rem;
+  }
 `;
 
 const searchResultInfoTop = css`
@@ -59,6 +72,24 @@ const searchResultInfoTop = css`
     margin: 0 0 0 0.9rem;
     padding: 0;
   }
+  @media (min-width: 400px) and (max-width: 600px) {
+    margin-left: -2rem;
+  }
+  @media (min-width: 601px) and (max-width: 800px) {
+    margin-left: -0.4rem;
+  }
+
+  @media (min-width: 400px) and (max-width: 600px) {
+    h3 {
+      font-size: 1.1rem;
+    }
+    h5 {
+      display: none;
+    }
+    p {
+      font-size: 0.8rem;
+    }
+  }
 `;
 
 const searchResultInfoBottom = css`
@@ -77,6 +108,10 @@ const searchResultInfoBottom = css`
       font-size: 0.6rem;
     }
   }
+
+  @media (min-width: 400px) and (max-width: 600px) {
+    margin-bottom: -0.6rem;
+  }
 `;
 
 const space = css`
@@ -89,10 +124,16 @@ const link = css`
 `;
 const searchResultStars = css`
   font-size: 0.8rem;
+  @media (min-width: 400px) and (max-width: 600px) {
+    display: none;
+  }
 `;
 const searchResultPrice = css`
   font-size: 0.8rem;
   text-align: right;
+  @media (min-width: 400px) and (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const description = css`
@@ -117,6 +158,27 @@ export default function InfoCard(props) {
   // destructuring from URL and  combine start and end Date
   // for displaying dynamic  info from search bar and  format the data
   // const { restaurant } = router.query;
+  function findTheType() {
+    if (props.restaurants.types.search('restaurant') === true) {
+      console.log('forks and knifes');
+    } else if (props.restaurants.types.search('museum') === true) {
+      console.log('is a museum');
+    } else if (
+      props.restaurants.types.search('park') === true ||
+      props.restaurants.types.search('natural_feature') === true
+    ) {
+      console.log('its a park');
+    } else if (props.restaurants.types.search('bar') === true) {
+      console.log('Its a Bar');
+    } else if (props.restaurants.types.search('cafe') === true) {
+      console.log('Its a cooffee place');
+    } else if (props.restaurants.types.search('tourist_attraction') === true) {
+      console.log('Its for tourists');
+    } else {
+      console.log('something else');
+    }
+  }
+  findTheType();
   return (
     <div>
       <div css={searchResult}>
@@ -130,7 +192,9 @@ export default function InfoCard(props) {
         </div>
         <div css={searchResultInfo}>
           <div css={searchResultInfoTop}>
-            <h3>{props.restaurants.restaurantname}</h3>
+            <h3>
+              {props.restaurants.restaurantname},{findTheType()}
+            </h3>
             <p>{props.restaurants.addressplace}</p>
             <h5 css={link}>{props.restaurants.website}</h5>
             <hr css={space} />

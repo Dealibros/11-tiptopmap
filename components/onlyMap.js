@@ -43,7 +43,12 @@ const search = css`
   width: 100%;
   max-width: 400px;
   z-index: 10;
+  @media (min-width: 400px) and (max-width: 600px) {
+    width: 6rem;
+    padding-left: 4rem;
+  }
 `;
+
 const searchInput = css`
   font-family: 'New Tegomin';
   font-weight: 600;
@@ -53,6 +58,9 @@ const searchInput = css`
   border-color: lightgray;
   :focus {
     outline: none;
+  }
+  @media (min-width: 400px) and (max-width: 600px) {
+    width: 9rem;
   }
 `;
 
@@ -100,7 +108,6 @@ const descriptionSearch = css`
 const definingText = css`
   margin-left: 1rem;
   width: 6rem;
-  /* height: 8rem; */
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: right;
@@ -120,7 +127,7 @@ const displayWindow = css`
 const libraries = ['places'];
 const mapContainerStyle = {
   width: '100%',
-  height: '570px',
+  // height: '570px',
 };
 // this centers the map to this coordinates. Vienna
 const center = {
@@ -135,7 +142,7 @@ const options = {
   mapTypeControl: false,
 };
 
-// /////////////////////////Function SEARCH///////////////////////////////
+// /////////////////////////Function SEARCH//////////
 
 // ({destructuring props => dont need to write props or call with props.something})
 export function Search({ panTo, setMarkers, setTheAddress, setIdPlace }) {
@@ -172,7 +179,6 @@ export function Search({ panTo, setMarkers, setTheAddress, setIdPlace }) {
 
     setIdPlace(idPlace);
 
-    // console.log(results); // gives dirrection from place and other properties
     // getLatlng shows the needed coordinates
 
     const { lat, lng } = await getLatLng(results[0]);
@@ -209,7 +215,10 @@ export function Search({ panTo, setMarkers, setTheAddress, setIdPlace }) {
           <ComboboxList>
             {status === 'OK' &&
               data.map(({ id, description }) => (
-                <ComboboxOption key={`place-${id}`} value={description} />
+                <ComboboxOption
+                  key={`place-${description}-${id}`}
+                  value={description}
+                />
               ))}
           </ComboboxList>
         </ComboboxPopover>
@@ -283,6 +292,7 @@ export default function Map(props) {
   const [website, setWebsite] = useState('');
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
+  const [types, setTypes] = useState('');
 
   async function create(
     restaurantName,
@@ -294,6 +304,7 @@ export default function Map(props) {
     websiTe,
     latituDe,
     longituDe,
+    tyPes,
   ) {
     try {
       const restaurantsResponse = await fetch(`/api/restaurants`, {
@@ -312,17 +323,16 @@ export default function Map(props) {
           websiTe,
           latituDe,
           longituDe,
+          tyPes,
         }),
       });
 
       const restaurant = restaurantsResponse.json();
-      console.log('check2', restaurant);
     } catch (error) {
-      console.log('eerrroor', error);
+      console.log('error', error);
     }
   }
   // }, []);
-
   // Fetch to grab the API Google Places with correct id_Place added
 
   useEffect(() => {
@@ -342,6 +352,8 @@ export default function Map(props) {
       setRestaurantname(result.name);
       setAddressplace(result.formatted_address);
 
+      // Step 2 works. The info from the mainApi is correct
+
       // Comes a lot as undefined when changing countries/languages
       // if (!result.reviews[1].text.length) {
       //   setDescriptionplace;
@@ -355,8 +367,6 @@ export default function Map(props) {
         //match ".","!","?" - english ending sentence punctuation
         let sentences = this.match(/[^\.!\?]+[\.!?]+/g);
         if (sentences) {
-          console.log(sentences.length);
-          console.log('hey', sentences);
           if (sentences.length >= sentCount && sentences.length > sentCount) {
             //has enough sentences
             return sentences.slice(0, sentCount).join(' ') + moreText;
@@ -367,10 +377,7 @@ export default function Map(props) {
       };
 
       const end = result.reviews[1].text.truncateBySent(2);
-      console.log('end', end);
       setDescriptionplace(end);
-
-      console.log('check this out!', result.reviews[1].text.substring(0, 300));
 
       setPhoto(
         `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${result.photos[0].photo_reference}&key=AIzaSyAWCz-geuuBdQaGkXM9OnFdvW0e9jIfwYM&`,
@@ -395,10 +402,13 @@ export default function Map(props) {
       }
 
       setLatitude(result.geometry.location.lat);
+
       setLongitude(result.geometry.location.lng);
-      console.log('are this the coordinates?', result.geometry.location);
-      console.log('coordelat', result.geometry.location.lat);
-      console.log('coordelong', result.geometry.location.lng);
+
+      const arrayTypes = result.types;
+      const stringTypes = arrayTypes.toString();
+      const betterStringTypes = stringTypes.replace(/,/g, ', ');
+      setTypes(betterStringTypes);
 
       return {};
     };
@@ -445,7 +455,7 @@ export default function Map(props) {
       {/* Markers from restaurants saved in the Database */}
       {props.updateList.map((restaurant) => (
         <Marker
-          key={`id-list-${restaurant.id}`}
+          key={`id-newlist-${restaurant.id}`}
           position={{
             lat: Number(restaurant.latitude),
             lng: Number(restaurant.longitude),
@@ -518,7 +528,6 @@ export default function Map(props) {
                       infoRestaurant: infoRestaurant,
                     }),
                   });
-                  console.log('infoRestaurantcheck', infoRestaurant);
                   props.fetchList();
                   await response.json();
                 }}
@@ -587,7 +596,6 @@ export default function Map(props) {
               css={minibutton}
               onClick={async () => {
                 if (restaurantname) {
-                  console.log('rn', restaurantname);
                   await create(
                     restaurantname,
                     addressplace,
@@ -598,6 +606,7 @@ export default function Map(props) {
                     website,
                     latitude,
                     longitude,
+                    types,
                   );
                   props.fetchList();
                 } else {

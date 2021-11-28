@@ -21,6 +21,9 @@ const input = css`
 
 const centerStarsDiv = css`
   display: flex;
+  @media (min-width: 400px) and (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const ratingDiv = css`

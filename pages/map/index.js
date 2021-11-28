@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import InfoCard from '../../components/InfoCard.js';
 import Layout from '../../components/Layout';
-import { getParsedCookie, setParsedCookie } from '../../util/cookies';
+import { getParsedCookie } from '../../util/cookies';
 
 const title = css`
   font-family: 'New Tegomin';
@@ -14,12 +14,47 @@ const title = css`
   font-weight: 700;
   font-size: 4.6rem;
   text-align: center;
-  margin-bottom: 0;
+  margin-bottom: -5.5rem;
+
+  @media (min-width: 400px) and (max-width: 600px) {
+    font-size: 3rem;
+  }
+  @media (min-width: 601px) and (max-width: 800px) {
+  }
+  @media (min-width: 801px) and (max-width: 1100px) {
+  }
 `;
 
+const secondTitle = css`
+  visibility: hidden;
+
+  @media (min-width: 601px) and (max-width: 800px) {
+    visibility: visible;
+    text-align: center;
+    margin-top: 6rem;
+    font-size: 2.5rem;
+  }
+
+  @media (min-width: 801px) and (max-width: 1100px) {
+    visibility: visible;
+    text-align: center;
+    font-family: 'New Tegomin';
+    margin-bottom: 4rem;
+    font-size: 3.3rem;
+    margin-top: 5rem;
+  }
+`;
 const secondMain = css`
   display: flex;
   width: 100%;
+
+  @media (min-width: 400px) and (max-width: 600px) {
+  }
+  @media (min-width: 601px) and (max-width: 800px) {
+  }
+  @media (min-width: 801px) and (max-width: 1100px) {
+    height: 84vh;
+  }
 `;
 
 const leftMain = css`
@@ -27,6 +62,11 @@ const leftMain = css`
   width: 40vw;
   padding: 0 0 0 20px;
   margin: 0 0 0 30px;
+
+  @media (min-width: 400px) and (max-width: 600px) {
+    margin-left: -0.7rem;
+    margin-right: 0rem;
+  }
 `;
 
 const rightMain = css`
@@ -34,21 +74,67 @@ const rightMain = css`
   width: 56.9vw;
   text-align: right;
   padding: 0.8rem;
+
+  @media (min-width: 400px) and (max-width: 600px) {
+    width: 250px;
+    margin-right: -5rem !important;
+  }
+  @media (min-width: 601px) and (max-width: 800px) {
+    height: 770px !important;
+    margin-top: 1rem;
+  }
+  @media (min-width: 801px) and (max-width: 1100px) {
+    height: 770px !important;
+    margin-top: 4rem;
+  }
 `;
 
 const mapDiv = css`
   width: 50vw;
   object-fit: contain;
+
+  @media (min-width: 400px) and (max-width: 600px) {
+  }
+  @media (min-width: 601px) and (max-width: 800px) {
+  }
+  @media (min-width: 801px) and (max-width: 1100px) {
+    height: 60vh !important;
+  }
 `;
 
 const infoCard = css`
-  height: 60vh;
+  height: 84vh;
   overflow-x: hidden !important;
+
+  @media (min-width: 400px) and (max-width: 600px) {
+    padding-left: 1rem;
+    margin-left: 0rem;
+  }
+  @media (min-width: 601px) and (max-width: 800px) {
+    height: 78vh !important;
+    margin-top: 1.5rem;
+    margin-left: -2.2rem;
+  }
+  @media (min-width: 801px) and (max-width: 1100px) {
+    height: 82vh !important;
+  }
 `;
 
 const titleCard = css`
   margin: 0 0 1rem 0;
   text-align: center;
+
+  @media (min-width: 400px) and (max-width: 600px) {
+    font-size: 1.2rem;
+  }
+
+  @media (min-width: 601px) and (max-width: 800px) {
+    display: none;
+  }
+
+  @media (min-width: 801px) and (max-width: 1100px) {
+    display: none;
+  }
 `;
 
 const a = css`
@@ -59,9 +145,9 @@ const a = css`
 
 export default function Home(props) {
   const [updateList, setUpdateList] = useState(props.restaurants);
-  const [getCity, setGetCity] = useState();
+  // const [getCity, setGetCity] = useState();
 
-  const catchingTheAddress = getParsedCookie('address');
+  // const catchingTheAddress = getParsedCookie('address');
   // const catchingCity = getParsedCookie('city');
   // console.log('catchyouaddress', catchingCity);
 
@@ -113,7 +199,7 @@ export default function Home(props) {
       </Head>
       <Layout username={props.username}>
         <p css={title}>TopTip Map</p>
-
+        <h1 css={secondTitle}>Your favourite Spots</h1>
         <main css={secondMain}>
           <section css={leftMain}>
             <h1 css={titleCard}> Your favourite Spots in . </h1>

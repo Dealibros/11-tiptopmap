@@ -13,6 +13,7 @@ export default async function handler(req, res) {
     const body = req.body;
 
     console.log('bodyfromcreaterestaurantData', body);
+    // this works, comes as an array
 
     const createRestaurantsData = await createRestaurants({
       restaurantname: body.restaurantName,
@@ -24,7 +25,11 @@ export default async function handler(req, res) {
       website: body.websiTe,
       latitude: body.latituDe,
       longitude: body.longituDe,
+      types: body.tyPes,
     });
+    console.log('typ', body.tyPes);
+    console.log('typ', body);
+    // not working
 
     return res.status(200).json(createRestaurantsData);
 

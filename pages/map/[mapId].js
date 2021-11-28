@@ -15,13 +15,21 @@ const title = css`
   font-size: 4.3rem;
   text-align: center;
   margin-bottom: 0;
+  @media (min-width: 400px) and (max-width: 600px) {
+    font-size: 3rem;
+  }
+
+  @media (min-width: 801px) and (max-width: 1100px) {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
 `;
 
 // positions the yellow card
 const secondMain = css`
   display: flex;
   width: 100%;
-  height: 109vh;
+  height: 103vh;
   margin-right: 0 auto;
   margin-left: 0 auto;
   justify-content: center;
@@ -74,6 +82,10 @@ const restaurantCardInfoRight = css`
     padding: 0;
     color: gray;
   }
+  @media (min-width: 400px) and (max-width: 600px) {
+    margin-left: -3.5rem;
+    width: 60%;
+  }
 `;
 
 const titleCard = css`
@@ -81,6 +93,13 @@ const titleCard = css`
   text-align: center;
   margin: 1.2rem 0 0.3rem 0;
   font-weight: 700;
+  @media (min-width: 400px) and (max-width: 600px) {
+    font-size: 2rem;
+  }
+  @media (min-width: 801px) and (max-width: 1100px) {
+    font-size: 3rem;
+    margin-top: 2rem;
+  }
 `;
 
 const caption = css`
@@ -96,6 +115,18 @@ const infoCard = css`
   background-color: beige;
   border-radius: 1.6rem;
   margin-top: 0.7rem;
+
+  @media (min-width: 400px) and (max-width: 600px) {
+    width: 90vw;
+  }
+
+  @media (min-width: 601px) and (max-width: 800px) {
+    width: 90vw;
+  }
+  @media (min-width: 801px) and (max-width: 1100px) {
+    width: 90vw;
+    height: 95vh !important;
+  }
 `;
 
 // to change the starIcon and price to the bottom take out the flex-column
@@ -119,6 +150,10 @@ const space = css`
 
 const description = css`
   margin-top: 0.3rem !important;
+  @media (min-width: 400px) and (max-width: 600px) {
+    margin: 0rem;
+    width: 50vw !important;
+  }
 `;
 
 const definingText = css`
@@ -126,6 +161,9 @@ const definingText = css`
   height: 12rem;
   overflow: hidden;
   text-overflow: ellipsis;
+  @media (min-width: 400px) and (max-width: 600px) {
+    margin-left: -1.5rem;
+  }
 `;
 
 const rating = css`
@@ -137,6 +175,9 @@ const lineInfoCard = css`
   width: 65%;
   margin-top: 3rem;
   margin-bottom: 1rem;
+  @media (min-width: 400px) and (max-width: 600px) {
+    margin-top: 0.5rem;
+  }
 `;
 
 const mainChat = css`
@@ -150,10 +191,20 @@ const mainChat = css`
   max-height: 30vh !important;
   overflow-y: scroll;
   border-radius: 0.6rem !important;
+
+  @media (min-width: 801px) and (max-width: 1100px) {
+    max-width: 50rem !important;
+  }
 `;
+
 const link = css`
   text-decoration: none;
+
+  @media (min-width: 400px) and (max-width: 600px) {
+    margin-left: -1.5rem;
+  }
 `;
+
 export default function Card(props) {
   const [userId, setUserId] = useState(props.userId);
   const [restaurantId, setRestaurantId] = useState(props.restaurantId);

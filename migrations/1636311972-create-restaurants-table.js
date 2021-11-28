@@ -10,7 +10,8 @@ exports.up = async function up(sql) {
 			price varchar(10),
 			website varchar(150),
 			latitude varchar(100),
-      longitude varchar(100)
+      longitude varchar(100),
+      types varchar(400)
     )
   `;
 };

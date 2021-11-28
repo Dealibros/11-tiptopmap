@@ -13,6 +13,12 @@ const inputComment = css`
   border-radius: 0.5rem !important;
   border: 0.1rem solid #f4f0ec !important;
   min-height: 2rem;
+
+  @media (min-width: 400px) and (max-width: 600px) {
+    width: 80%;
+    margin-left: 1.5rem;
+    font-size: 0.8rem;
+  }
 `;
 
 const title = css`
@@ -21,6 +27,11 @@ const title = css`
   margin-top: -0.7rem;
   margin-left: 3rem;
   margin-bottom: 2rem;
+
+  @media (min-width: 400px) and (max-width: 600px) {
+   margin-left:-1rem;´
+   font-size:2rem;
+  }
 `;
 
 const mainChatBox = css`
@@ -29,6 +40,16 @@ const mainChatBox = css`
   margin-right: 0 auto;
   margin-left: 0 auto;
   padding: 5px 70px;
+
+  @media (min-width: 400px) and (max-width: 600px) {
+    margin-left: -7rem !important;
+  }
+  @media (min-width: 601px) and (max-width: 800px) {
+    margin-left: -5rem !important;
+  }
+  @media (min-width: 801px) and (max-width: 1100px) {
+    margin-left: -3rem !important;
+  }
 `;
 
 const button = css`
@@ -103,6 +124,10 @@ const buttonPlus = css`
     -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
     box-shadow: 5px 40px -10px rgba(0, 0, 0, 0.57);
     transition: all 0.4s ease 0s;
+  }
+
+  @media (min-width: 400px) and (max-width: 600px) {
+    margin-right: -3rem;
   }
 `;
 
