@@ -295,27 +295,31 @@ export default function Map(props) {
     latituDe,
     longituDe,
   ) {
-    const restaurantsResponse = await fetch(`/api/restaurants`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+    try {
+      const restaurantsResponse = await fetch(`/api/restaurants`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
 
-      body: JSON.stringify({
-        restaurantName,
-        addressPlace,
-        descriptionpPlace,
-        phoTo,
-        raTing,
-        priCe,
-        websiTe,
-        latituDe,
-        longituDe,
-      }),
-    });
+        body: JSON.stringify({
+          restaurantName,
+          addressPlace,
+          descriptionpPlace,
+          phoTo,
+          raTing,
+          priCe,
+          websiTe,
+          latituDe,
+          longituDe,
+        }),
+      });
 
-    const restaurant = restaurantsResponse.json();
-    console.log('check2', restaurant);
+      const restaurant = restaurantsResponse.json();
+      console.log('check2', restaurant);
+    } catch (error) {
+      console.log('eerrroor', error);
+    }
   }
   // }, []);
 
