@@ -244,7 +244,7 @@ export default function Home(props: Props) {
         <main css={main}>
           <p css={title}>TopTip Map</p>
           <div css={positionEarth}>
-            <p css={mainText}>
+            <div css={mainText}>
               {' '}
               <h1>
                 Save your Favourite spots
@@ -257,7 +257,7 @@ export default function Home(props: Props) {
                 and see where your friends have been <br />
                 to inspire you where to go next.
               </h2>
-            </p>
+            </div>
             <World />
           </div>
         </main>

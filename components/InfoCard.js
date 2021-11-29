@@ -28,7 +28,7 @@ const searchResult = css`
 
 const divforImg = css`
   position: relative;
-  height: 165px;
+  height: 175px;
   width: 200px;
   margin-top: auto;
   margin-bottom: auto;
@@ -37,7 +37,7 @@ const divforImg = css`
     display: none;
   }
   @media (min-width: 601px) and (max-width: 800px) {
-    height: 265px;
+    height: 165px;
     width: 183px;
   }
 `;
@@ -158,27 +158,27 @@ export default function InfoCard(props) {
   // destructuring from URL and  combine start and end Date
   // for displaying dynamic  info from search bar and  format the data
   // const { restaurant } = router.query;
-  function findTheType() {
-    if (props.restaurants.types.search('restaurant') === true) {
-      console.log('forks and knifes');
-    } else if (props.restaurants.types.search('museum') === true) {
-      console.log('is a museum');
-    } else if (
-      props.restaurants.types.search('park') === true ||
-      props.restaurants.types.search('natural_feature') === true
-    ) {
-      console.log('its a park');
-    } else if (props.restaurants.types.search('bar') === true) {
-      console.log('Its a Bar');
-    } else if (props.restaurants.types.search('cafe') === true) {
-      console.log('Its a cooffee place');
-    } else if (props.restaurants.types.search('tourist_attraction') === true) {
-      console.log('Its for tourists');
-    } else {
-      console.log('something else');
-    }
-  }
-  findTheType();
+  // function findTheType() {
+  //   if (props.restaurants.types.search('restaurant') === true) {
+  //     console.log('forks and knifes');
+  //   } else if (props.restaurants.types.search('museum') === true) {
+  //     console.log('is a museum');
+  //   } else if (
+  //     props.restaurants.types.search('park') === true ||
+  //     props.restaurants.types.search('natural_feature') === true
+  //   ) {
+  //     console.log('its a park');
+  //   } else if (props.restaurants.types.search('bar') === true) {
+  //     console.log('Its a Bar');
+  //   } else if (props.restaurants.types.search('cafe') === true) {
+  //     console.log('Its a cooffee place');
+  //   } else if (props.restaurants.types.search('tourist_attraction') === true) {
+  //     console.log('Its for tourists');
+  //   } else {
+  //     console.log('something else');
+  //   }
+  // }
+  // findTheType();
   return (
     <div>
       <div css={searchResult}>
@@ -192,9 +192,7 @@ export default function InfoCard(props) {
         </div>
         <div css={searchResultInfo}>
           <div css={searchResultInfoTop}>
-            <h3>
-              {props.restaurants.restaurantname},{findTheType()}
-            </h3>
+            <h3>{props.restaurants.restaurantname}</h3>
             <p>{props.restaurants.addressplace}</p>
             <h5 css={link}>{props.restaurants.website}</h5>
             <hr css={space} />

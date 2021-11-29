@@ -45,15 +45,11 @@ export default function StarRating(props) {
   const [hover, setHover] = useState(null);
   const [theStars, setTheStars] = useState();
 
-  console.log('userId starcomponent', props.userId);
-  console.log('restaurants starcomponent', props.restaurantId);
-
   useEffect(() => {
     const Stars = async () => {
       const response = await fetch(
         `/api/ratingsAverageMain/${props.restaurantId}`,
       );
-      console.log('restaurantId', props.restaurantId);
       const ratingResponse = await response.json();
 
       const ratingResponseStars = Number(ratingResponse[0].avg);
@@ -72,7 +68,7 @@ export default function StarRating(props) {
             const ratingValue = i + 1;
 
             return (
-              <label key={star}>
+              <label key={`${i + 1}${star}`}>
                 <input
                   css={input}
                   type="radio"
@@ -80,7 +76,6 @@ export default function StarRating(props) {
                   value={ratingValue}
                   onClick={() => setRatings(ratingValue)}
                 />
-                {console.log('starRatingValueaa', ratingValue)}
 
                 <FaStar
                   css={stars}
@@ -119,9 +114,9 @@ export default function StarRating(props) {
         <p css={textRating}>The Total Average </p>
         {[...Array(5)].map((star, i) => {
           const ratingValue = i + 1;
-          console.log(i);
+
           return (
-            <label key={star}>
+            <label key={`secondPlace-${star}`}>
               <input
                 css={input}
                 type="radio"
