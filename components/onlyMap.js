@@ -351,6 +351,7 @@ export default function Map(props) {
       const result = resJson.result;
       setRestaurantname(result.name);
       setAddressplace(result.formatted_address);
+      console.log(typeof addressplace);
 
       // Step 2 works. The info from the mainApi is correct
 
@@ -406,12 +407,13 @@ export default function Map(props) {
       setLongitude(result.geometry.location.lng);
 
       const arrayTypes = result.types;
-      const stringTypes = arrayTypes.toString();
-      const betterStringTypes = stringTypes.replace(/,/g, ', ');
-      const stringsWithoutSpace = betterStringTypes.replaceAll('_', ' ');
-      console.log('check', stringsWithoutSpace);
-      setTheTypes(stringsWithoutSpace);
+      // const stringTypes = arrayTypes.toString();
+      // const betterStringTypes = stringTypes.replace(/,/g, ', ');
+      // const stringsWithoutSpace = betterStringTypes.replaceAll('_', ' ');
+      // console.log(typeof stringsWithoutSpace);
+      // setTheTypes(stringsWithoutSpace);
 
+      setTheTypes(result.types[0]);
       return {};
     };
     if (idPlace) {
