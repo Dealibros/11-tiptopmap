@@ -406,7 +406,7 @@ export default function Map(props) {
 
       setLongitude(result.geometry.location.lng);
 
-      const arrayTypes = result.types;
+      // const arrayTypes = result.types;
       // const stringTypes = arrayTypes.toString();
       // const betterStringTypes = stringTypes.replace(/,/g, ', ');
       // const stringsWithoutSpace = betterStringTypes.replaceAll('_', ' ');
