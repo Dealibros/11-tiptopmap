@@ -34,7 +34,7 @@ const form = css`
 const mainForm = css`
   display: block;
   text-align: center;
-  margin-bottom: 6rem;
+  margin-bottom: 7.8rem;
   margin-top: 2rem;
 
   @media (min-width: 601px) and (max-width: 800px) {

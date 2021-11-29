@@ -12,7 +12,7 @@ const contentContainer = css`
   text-align: center;
   display: flex;
   flex-direction: row;
-  height: 89vh;
+  height: 86.5vh;
   justify-content: center;
   background-color: #e4e9f7;
   font-family: 'Caveat', cursive;

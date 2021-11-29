@@ -7,9 +7,9 @@ import Layout from '../components/Layout';
 const main = css`
   padding: 0 2rem 0 2rem;
   text-align: center;
-  margin-top: -1.9rem;
+  margin-top: -2rem;
   width: 100vw;
-  height: 85vh;
+  height: 86.4vh;
   background-image: url('../images/background-Profile/background3.jpg');
   background-color: rgba(230, 217, 217, 0.4);
   background-blend-mode: lighten;
@@ -35,10 +35,11 @@ const title = css`
   font-family: 'New Tegomin';
   color: black;
   font-weight: 700;
-  font-size: 4rem;
+  font-size: 4.5rem;
   text-align: center;
   margin-bottom: 0.5rem;
   margin-top: 2rem !important;
+  padding-top: 0.5rem;
   @media (min-width: 400px) and (max-width: 600px) {
     font-size: 2.9rem;
     padding-top: 2rem !important;

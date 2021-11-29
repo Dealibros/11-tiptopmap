@@ -8,12 +8,12 @@ import Layout from '../../components/Layout';
 
 const title = css`
   font-family: 'New Tegomin';
-  margin-top: 1rem;
+  margin-top: 0.2rem;
   color: black;
   font-weight: 700;
   font-size: 4.6rem;
   text-align: center;
-  margin-bottom: -5.5rem;
+  margin-bottom: -5.8rem;
 
   @media (min-width: 400px) and (max-width: 600px) {
     font-size: 3rem;
@@ -46,6 +46,7 @@ const secondTitle = css`
 const secondMain = css`
   display: flex;
   width: 100%;
+  height: 85vh;
 
   @media (min-width: 400px) and (max-width: 600px) {
   }

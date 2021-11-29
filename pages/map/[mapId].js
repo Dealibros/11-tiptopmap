@@ -93,6 +93,7 @@ const titleCard = css`
   text-align: center;
   margin: 1.2rem 0 0.3rem 0;
   font-weight: 700;
+
   @media (min-width: 400px) and (max-width: 600px) {
     font-size: 2rem;
   }
