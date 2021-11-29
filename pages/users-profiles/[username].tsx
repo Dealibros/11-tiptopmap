@@ -37,7 +37,7 @@ const contentContainer = css`
 const container = css`
   margin-right: auto 0 !important;
   margin-left: auto 0 !important;
-  margin-top: 1rem;
+  margin-top: 2rem;
 
   h1 {
     font-family: 'New Tegomin';
@@ -365,7 +365,7 @@ const beCool = css`
   background-color: #f66f6f;
   box-sizing: border-box;
   position: absolute;
-  right: 70rem;
+  right: 73rem;
   bottom: -23rem;
   margin: auto;
   top: 1px;
