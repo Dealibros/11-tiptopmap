@@ -292,7 +292,7 @@ export default function Map(props) {
   const [website, setWebsite] = useState('');
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
-  const [types, setTypes] = useState('');
+  const [theTypes, setTheTypes] = useState('');
 
   async function create(
     restaurantName,
@@ -410,7 +410,7 @@ export default function Map(props) {
       const betterStringTypes = stringTypes.replace(/,/g, ', ');
       const stringsWithoutSpace = betterStringTypes.replaceAll('_', ' ');
       console.log('check', stringsWithoutSpace);
-      setTypes(stringsWithoutSpace);
+      setTheTypes(stringsWithoutSpace);
 
       return {};
     };
@@ -608,7 +608,7 @@ export default function Map(props) {
                     website,
                     latitude,
                     longitude,
-                    types,
+                    theTypes,
                   );
                   props.fetchList();
                 } else {
