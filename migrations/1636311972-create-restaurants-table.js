@@ -11,7 +11,7 @@ exports.up = async function up(sql) {
 			website varchar(150),
 			latitude varchar(100),
       longitude varchar(100),
-      types varchar(400)
+      types varchar (400)
     )
   `;
 };

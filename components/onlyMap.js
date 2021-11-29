@@ -408,7 +408,9 @@ export default function Map(props) {
       const arrayTypes = result.types;
       const stringTypes = arrayTypes.toString();
       const betterStringTypes = stringTypes.replace(/,/g, ', ');
-      setTypes(betterStringTypes);
+      const stringsWithoutSpace = betterStringTypes.replaceAll('_', ' ');
+      console.log('check', stringsWithoutSpace);
+      setTypes(stringsWithoutSpace);
 
       return {};
     };
