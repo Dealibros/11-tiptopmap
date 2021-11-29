@@ -292,7 +292,7 @@ export default function Map(props) {
   const [website, setWebsite] = useState('');
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
-  const [theTypes, setTheTypes] = useState('');
+  // const [theTypes, setTheTypes] = useState('');
 
   async function create(
     restaurantName,
@@ -304,7 +304,6 @@ export default function Map(props) {
     websiTe,
     latituDe,
     longituDe,
-    tyPes,
   ) {
     try {
       const restaurantsResponse = await fetch(`/api/restaurants`, {
@@ -323,7 +322,6 @@ export default function Map(props) {
           websiTe,
           latituDe,
           longituDe,
-          tyPes,
         }),
       });
 
@@ -351,7 +349,6 @@ export default function Map(props) {
       const result = resJson.result;
       setRestaurantname(result.name);
       setAddressplace(result.formatted_address);
-      console.log(typeof addressplace);
 
       // Step 2 works. The info from the mainApi is correct
 
@@ -413,7 +410,7 @@ export default function Map(props) {
       // console.log(typeof stringsWithoutSpace);
       // setTheTypes(stringsWithoutSpace);
 
-      setTheTypes(result.types[0]);
+      // setTheTypes(result.types[0]);
       return {};
     };
     if (idPlace) {
@@ -610,7 +607,6 @@ export default function Map(props) {
                     website,
                     latitude,
                     longitude,
-                    theTypes,
                   );
                   props.fetchList();
                 } else {

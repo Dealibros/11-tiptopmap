@@ -6,7 +6,7 @@ export default async function GetInfo(req, res) {
 
     const response = await fetch(url);
     const resJson = await response.json();
-    console.log('new Types', resJson);
+
     res.send(resJson);
     return {
       props: {
