@@ -202,7 +202,7 @@ export default function Home(props) {
         <h1 css={secondTitle}>Your favourite Spots</h1>
         <main css={secondMain}>
           <section css={leftMain}>
-            <h1 css={titleCard}> Your favourite Spots in . </h1>
+            <h1 css={titleCard}> Your favourite Spots</h1>
             <div css={infoCard}>
               {updateList.map((restaurant) => {
                 return (
