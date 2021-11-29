@@ -103,7 +103,7 @@ const mapDiv = css`
 `;
 
 const infoCard = css`
-  height: 84vh;
+  height: 75vh;
   overflow-x: hidden !important;
 
   @media (min-width: 400px) and (max-width: 600px) {
