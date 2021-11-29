@@ -1,3 +1,47 @@
+
+## Tiptop Map Project
+
+## Description
+Tiptop Map Project is a web application that allows you and your family and friends to collect and save your favourite spots and places of Vienna on a map (in the future the idea is to expand to any wished city). 
+In this project you will be able to rate selected places and to leave a review.
+
+## Features
+- Users can create an account with the personal details.
+- Users can see all spots added and opinions about the place.
+- Users can edit and comment on each spot selected. 
+- Only the author will be able to edit and delete his review.
+- A rating system that allows you to rate the selected spot. An average of all ratings given by you and your friends will be shown.
+
+## Technologies
+The application will be built using the following technologies:
+
+- Next.js
+- React.js
+- PostgreSQL
+- Google maps
+- API places
+- Typescript
+- Three.js
+- Emotion
+- Figma
+
+Figma Prototype
+![261968994_421022506348794_3242969160375874505_n](https://user-images.githubusercontent.com/77852951/143866053-4e3272a9-252a-4424-8bce-5c5fe1cfca45.png)
+
+
+Project Screenshots
+![1](https://user-images.githubusercontent.com/77852951/143866104-e488c94c-f86b-4120-b155-9897e1fafe8a.jpg)
+
+
+
+![2](https://user-images.githubusercontent.com/77852951/143866129-a1848751-bce2-4fb8-b03f-ec66dff9c7e8.jpg)
+
+
+![4](https://user-images.githubusercontent.com/77852951/143866145-381c27b4-2bc4-4b3f-ba5a-c4ec620ea542.jpg)
+
+
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
