@@ -24,12 +24,14 @@ The application will be built using the following technologies:
 - Three.js
 - Emotion
 - Figma
+- 
+## Figma Prototype
 
-Figma Prototype
 ![261968994_421022506348794_3242969160375874505_n](https://user-images.githubusercontent.com/77852951/143866053-4e3272a9-252a-4424-8bce-5c5fe1cfca45.png)
 
 
-Project Screenshots
+## Project Screenshots
+
 ![1](https://user-images.githubusercontent.com/77852951/143866104-e488c94c-f86b-4120-b155-9897e1fafe8a.jpg)
 
 
